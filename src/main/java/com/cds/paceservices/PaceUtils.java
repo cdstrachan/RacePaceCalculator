@@ -73,6 +73,14 @@ public class PaceUtils {
 		    	return Character.toString(alphabet[small]);
 		}
 		
+		static double calcPaceImpact(double elevation) {
+			if (elevation > 25) return 0.4;
+			if (elevation > 0) return 0.5;
+			if (elevation < -20) return 0.15;
+			if (elevation < 0) return 0.3;
+			return 0;
+		}
+		
 
 		
 

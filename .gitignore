@@ -23,3 +23,10 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+.metadata/
+.recommenders/
+.DS_Store
+RemoteSystemTempFiles
+/bin/

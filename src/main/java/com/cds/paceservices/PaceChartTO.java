@@ -5,18 +5,18 @@ import java.util.ArrayList;
 
 public class PaceChartTO {
 	private double distance;
-	double[] elevation;
-	double[] manualWeighting;
-	LocalTime averageMovingPace;
-	LocalTime averageEndToEndPace;
-	ArrayList<SplitTo> raceSplits;
-	String raceName;
-	LocalTime plannedRaceTimeFirst;
-	LocalTime plannedRaceTimeLast;
-	LocalTime plannedRaceTimeDelta;
-	LocalTime startDelay;
-	int firstFade;
-	int lastFade;
+	private double[] elevation;
+	private double[] manualWeighting;
+	private LocalTime averageMovingPace;
+	private LocalTime averageEndToEndPace;
+	private ArrayList<SplitTo> raceSplits;
+	private String raceName;
+	private LocalTime plannedRaceTimeFirst;
+	private LocalTime plannedRaceTimeLast;
+	private LocalTime plannedRaceTimeDelta;
+	private LocalTime startDelay;
+	private int firstFade;
+	private int lastFade;
 	
 
 	public double[] getManualWeighting() {
