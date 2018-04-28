@@ -3,13 +3,12 @@ package com.cds.paceservices;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+
 public class PaceChartTO {
+	// inputs
 	private double distance;
 	private double[] elevation;
 	private double[] manualWeighting;
-	private LocalTime averageMovingPace;
-	private LocalTime averageEndToEndPace;
-	private ArrayList<SplitTo> raceSplits;
 	private String raceName;
 	private LocalTime plannedRaceTimeFirst;
 	private LocalTime plannedRaceTimeLast;
@@ -17,7 +16,16 @@ public class PaceChartTO {
 	private LocalTime startDelay;
 	private int firstFade;
 	private int lastFade;
+	ArrayList<PaceChartInstanceTO> paceChartInstances;
 	
+
+	public ArrayList<PaceChartInstanceTO> getPaceChartInstances() {
+		return paceChartInstances;
+	}
+
+	public void setPaceChartInstances(ArrayList<PaceChartInstanceTO> paceChartInstances) {
+		this.paceChartInstances =  paceChartInstances;
+	}
 
 	public double[] getManualWeighting() {
 		return manualWeighting;
@@ -26,30 +34,7 @@ public class PaceChartTO {
 	public void setManualWeighting(double[] manualWeighting) {
 		this.manualWeighting = manualWeighting;
 	}
-
-	public LocalTime getAverageMovingPace() {
-		return averageMovingPace;
-	}
-
-	public void setAverageMovingPace(LocalTime averageMovingPace) {
-		this.averageMovingPace = averageMovingPace;
-	}
-
-	public LocalTime getAverageEndToEndPace() {
-		return averageEndToEndPace;
-	}
-
-	public void setAverageEndToEndPace(LocalTime averageEndToEndPace) {
-		this.averageEndToEndPace = averageEndToEndPace;
-	}
-
-	public ArrayList<SplitTo> getRaceSplits() {
-		return raceSplits;
-	}
-
-	public void setRaceSplits(ArrayList<SplitTo> raceSplits) {
-		this.raceSplits = raceSplits;
-	}
+	
 
 	public String getRaceName() {
 		return raceName;

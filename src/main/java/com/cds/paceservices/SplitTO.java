@@ -2,7 +2,7 @@ package com.cds.paceservices;
 
 import java.time.LocalTime;
 
-public class SplitTo {
+public class SplitTO {
 
 	private int splitNumber;
 	private double distance;
@@ -123,7 +123,27 @@ public class SplitTo {
 		timeDelta = paceImpact * gradient; // seconds
 		nominalTimeDec = PaceUtils.TimeToDouble(nominalTime);  // decimal time eg 8:30 is 8.5		
 		timeWithGradientDec = 60 / ((60 / nominalTimeDec) - timeDelta);  // convert to KM/H; add the gradient impact and convert back to min/km
-		weightedTimeDec = timeWithGradientDec * manualWeighting * fadeFactor / 100;
+		setWeightedTimeDec(timeWithGradientDec * manualWeighting * fadeFactor / 100);
+	}
+
+
+	public double getWeightedTimeDec() {
+		return weightedTimeDec;
+	}
+
+
+	public void setWeightedTimeDec(double weightedTimeDec) {
+		this.weightedTimeDec = weightedTimeDec;
+	}
+
+
+	public double getFinalTimeDec() {
+		return finalTimeDec;
+	}
+
+
+	public void setFinalTimeDec(double finalTimeDec) {
+		this.finalTimeDec = finalTimeDec;
 	}
 	
 	
