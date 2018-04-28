@@ -36,17 +36,18 @@ public class PaceCalculatorController {
         
         // setup elevation profiles
         // +1 is just to make user input easier
-		elevation = new double[(int) Math.ceil(distance) + 1];  // create elevation profiles
-		elevation[1] = 1;
-		elevation[2] = 2;
-		elevation[3] = 3;
-		elevation[4] = 4;
-		elevation[5] = 5;
-		elevation[6] = 4;
-		elevation[7] = 3;
-		elevation[8] = 2;
-		elevation[9] = 1;
-		elevation[10] = 0;
+		elevation = new double[(int) Math.ceil(distance) ];  // create elevation profiles
+		elevation[0] = 1;
+		elevation[1] = 2;
+		elevation[2] = 3;
+		elevation[3] = 4;
+		elevation[4] = 5;
+		elevation[5] = 4;
+		elevation[6] = 3;
+		elevation[7] = 2;
+		elevation[8] = 1;
+		elevation[9] = 0;
+		//elevation[10] = 0;
 		
 		paceChartTO.setElevation(elevation);
 		
@@ -55,7 +56,7 @@ public class PaceCalculatorController {
 		// setup manual weighting
 		
 		// TODO check if the elevation is  >1, and then allow for a base weighting delta of hills
-		manualWeighting = new double[(int) Math.ceil(distance) + 1];  // create elevation profiles
+		manualWeighting = new double[(int) Math.ceil(distance) ];  // create elevation profiles
 		manualWeighting [1] = 100;
 		manualWeighting [2] = 100;
 		manualWeighting [3] = 100 + baseWeightDelta;
@@ -65,9 +66,9 @@ public class PaceCalculatorController {
 		manualWeighting [7] = 100;
 		manualWeighting [8] = 100;
 		manualWeighting [9] = 100 + baseWeightDelta;
-		manualWeighting [10] = 100;
+	//	manualWeighting [10] = 100;
 		paceChartTO.setManualWeighting(manualWeighting);
-		paceChartTO.setRaceName("Test");
+		paceChartTO.setRaceName("Testing3");
 		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
 		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,30,00));
 		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,55,00));
@@ -130,14 +131,14 @@ public class PaceCalculatorController {
 		paceChartInstanceTO.setAverageEndToEndPace(PaceUtils.DoubleToTime((PaceUtils.TimeToDouble(plannedRaceTime)) / paceChartTO.getDistance()));
 		
 		// calculate what we can without totals
-		for (int counter = 1;counter < Math.ceil(paceChartTO.getDistance()) + 1; counter ++)
+		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
 		{
 			SplitTO raceSplit = new SplitTO();
 			
 	        // the last lap may be a different (shorter) distance
-			raceSplit.setSplitNumber(counter);
+			raceSplit.setSplitNumber(counter+1);
 			//System.out.println("Split #: " + counter);
-	        if (counter == Math.ceil(paceChartTO.getDistance()) && paceChartTO.getDistance() < Math.ceil(paceChartTO.getDistance()))   // last split of an (eg) 21.1 race
+	        if (counter+1 == Math.ceil(paceChartTO.getDistance()) && paceChartTO.getDistance() < Math.ceil(paceChartTO.getDistance()))   // last split of an (eg) 21.1 race
 	        	raceSplit.setDistance(((double)Math.round((paceChartTO.getDistance() - Math.floor(paceChartTO.getDistance()))*100))/100);
 	        else
 	        	raceSplit.setDistance(1);
@@ -148,7 +149,7 @@ public class PaceCalculatorController {
 	        raceSplit.setManualWeighting(100); //manualWeighting[counter];
 	        
 			// calculate the split time
-	        if (counter == 1)
+	        if (counter == 0)
 			{
 				raceSplit.setNominalTime(PaceUtils.DoubleToTime((PaceUtils.TimeToDouble(paceChartInstanceTO.getAverageMovingPace()) + PaceUtils.TimeToDouble(paceChartTO.getStartDelay())) * raceSplit.getDistance()));
 			}
@@ -158,7 +159,7 @@ public class PaceCalculatorController {
 			// cater for the fade 
 			// Todo: change to be linear per split
 			
-			if (counter < 1+ paceChartTO.getDistance()/2) 
+			if (counter <  paceChartTO.getDistance()/2) 
 			{
 				raceSplit.setFadeFactor( 1 - fade/100);
 				//raceSplit.fadeFactor = 1 + (raceSplit.splitNumber-1) * (fade/100/distance)*2;

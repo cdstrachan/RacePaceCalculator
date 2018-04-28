@@ -2,12 +2,16 @@ package com.cds.paceservices;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SplitTO {
 
 	private int splitNumber;
 	private double distance;
+	@JsonIgnore
 	private LocalTime nominalTime;
 	private double elevation;
+	@JsonIgnore
 	private double fadeFactor;
 	private double manualWeighting;
 	private LocalTime finalTime;
@@ -16,12 +20,19 @@ public class SplitTO {
 
 	
 	// calculated fields
+	@JsonIgnore
 	private double gradient;
+	@JsonIgnore
 	private double paceImpact;
+	@JsonIgnore
 	private double timeDelta;
+	@JsonIgnore
 	private double nominalTimeDec;
+	@JsonIgnore
 	private double timeWithGradientDec;
+	@JsonIgnore
 	private double weightedTimeDec;
+	@JsonIgnore
 	private double finalTimeDec;
 	
 	
