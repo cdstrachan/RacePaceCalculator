@@ -1,0 +1,134 @@
+{
+	"distance": 10.0,
+	"elevation": [
+		1.0,
+		2.0,
+		3.0,
+		4.0,
+		5.0,
+		4.0,
+		3.0,
+		2.0,
+		1.0,
+		0.0
+	],
+	"manualWeighting": [
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0,
+		100.0
+	],
+	"raceName": "Testing3",
+	"plannedRaceTimeFirst": "01:00:00",
+	"plannedRaceTimeLast": "01:30:00",
+	"plannedRaceTimeDelta": "00:55:00",
+	"startDelay": "00:00:30",
+	"firstFade": 3,
+	"lastFade": 3,
+	"paceChartInstances": [
+		{
+			"averageMovingPace": "00:05:57",
+			"averageEndToEndPace": "00:06:00",
+			"fade": 3.0,
+			"plannedRaceTime": "01:00:00",
+			"raceSplits": [
+				{
+					"splitNumber": 1,
+					"distance": 1.0,
+					"elevation": 1.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:13",
+					"finalElapsedTime": "00:06:13",
+					"finalPace": "00:06:13"
+				},
+				{
+					"splitNumber": 2,
+					"distance": 1.0,
+					"elevation": 2.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:05:46",
+					"finalElapsedTime": "00:11:58",
+					"finalPace": "00:05:46"
+				},
+				{
+					"splitNumber": 3,
+					"distance": 1.0,
+					"elevation": 3.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:05:47",
+					"finalElapsedTime": "00:17:46",
+					"finalPace": "00:05:47"
+				},
+				{
+					"splitNumber": 4,
+					"distance": 1.0,
+					"elevation": 4.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:05:49",
+					"finalElapsedTime": "00:23:35",
+					"finalPace": "00:05:49"
+				},
+				{
+					"splitNumber": 5,
+					"distance": 1.0,
+					"elevation": 5.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:05:51",
+					"finalElapsedTime": "00:29:25",
+					"finalPace": "00:05:51"
+				},
+				{
+					"splitNumber": 6,
+					"distance": 1.0,
+					"elevation": 4.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:11",
+					"finalElapsedTime": "00:35:36",
+					"finalPace": "00:06:11"
+				},
+				{
+					"splitNumber": 7,
+					"distance": 1.0,
+					"elevation": 3.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:09",
+					"finalElapsedTime": "00:41:45",
+					"finalPace": "00:06:09"
+				},
+				{
+					"splitNumber": 8,
+					"distance": 1.0,
+					"elevation": 2.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:07",
+					"finalElapsedTime": "00:47:52",
+					"finalPace": "00:06:07"
+				},
+				{
+					"splitNumber": 9,
+					"distance": 1.0,
+					"elevation": 1.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:05",
+					"finalElapsedTime": "00:53:57",
+					"finalPace": "00:06:05"
+				},
+				{
+					"splitNumber": 10,
+					"distance": 1.0,
+					"elevation": 0.0,
+					"manualWeighting": 100.0,
+					"finalTime": "00:06:03",
+					"finalElapsedTime": "01:00:00",
+					"finalPace": "00:06:03"
+				}
+			]
+		}
+	]
+}

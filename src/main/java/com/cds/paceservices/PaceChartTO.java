@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PaceChartTO {
 	// inputs
 	private double distance;
-	@JsonIgnore
+	//@JsonIgnore
 	private double[] elevation;
-	@JsonIgnore
+	//@JsonIgnore
 	private double[] manualWeighting;
 	private String raceName;
 	private LocalTime plannedRaceTimeFirst;
