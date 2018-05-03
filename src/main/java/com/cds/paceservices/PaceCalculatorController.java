@@ -4,12 +4,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+@CrossOrigin
 @RestController
 public class PaceCalculatorController {
 	
@@ -64,9 +66,9 @@ public class PaceCalculatorController {
 		paceChartTO.setRaceName("Testing3");
 		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
 		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,30,00));
-		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,55,00));
+		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,15,00));
 		paceChartTO.setStartDelay(LocalTime.of(0,0,30));
-		paceChartTO.setFirstFade(3);
+		paceChartTO.setFirstFade(2);
 		paceChartTO.setLastFade(3);
 		
 		String uri = "http://localhost:8080/pacechart";
@@ -153,9 +155,9 @@ public class PaceCalculatorController {
 			raceSplit.setSplitNumber(counter+1);
 			//System.out.println("Split #: " + counter);
 	        if (counter+1 == Math.ceil(paceChartTO.getDistance()) && paceChartTO.getDistance() < Math.ceil(paceChartTO.getDistance()))   // last split of an (eg) 21.1 race
-	        	raceSplit.setDistance(((double)Math.round((paceChartTO.getDistance() - Math.floor(paceChartTO.getDistance()))*100))/100);
+	        	raceSplit.setSplitDistance(((double)Math.round((paceChartTO.getDistance() - Math.floor(paceChartTO.getDistance()))*100))/100);
 	        else
-	        	raceSplit.setDistance(1);
+	        	raceSplit.setSplitDistance(1);
 	        
 			raceSplit.setElevation(paceChartTO.getElevation()[counter]);
 
@@ -165,10 +167,10 @@ public class PaceCalculatorController {
 			// calculate the split time
 	        if (counter == 0)
 			{
-				raceSplit.setNominalTime(PaceUtils.DoubleToTime((PaceUtils.TimeToDouble(paceChartInstanceTO.getAverageMovingPace()) + PaceUtils.TimeToDouble(paceChartTO.getStartDelay())) * raceSplit.getDistance()));
+				raceSplit.setNominalTime(PaceUtils.DoubleToTime((PaceUtils.TimeToDouble(paceChartInstanceTO.getAverageMovingPace()) + PaceUtils.TimeToDouble(paceChartTO.getStartDelay())) * raceSplit.getSplitDistance()));
 			}
 			else
-				raceSplit.setNominalTime(PaceUtils.DoubleToTime(PaceUtils.TimeToDouble(paceChartInstanceTO.getAverageMovingPace()) * raceSplit.getDistance()));
+				raceSplit.setNominalTime(PaceUtils.DoubleToTime(PaceUtils.TimeToDouble(paceChartInstanceTO.getAverageMovingPace()) * raceSplit.getSplitDistance()));
 
 			// cater for the fade 
 			// Todo: change to be linear per split
@@ -184,6 +186,7 @@ public class PaceCalculatorController {
 			}
 
 			raceSplit.calculatePacePerSplit();
+			raceSplit.setTotalDistance(raceSplit.getSplitDistance() + counter);
 	        totalWeightedTimeDec += raceSplit.getWeightedTimeDec();
 			raceSplits.add((raceSplit));	 
 		
@@ -197,7 +200,7 @@ public class PaceCalculatorController {
 		{
 			raceSplit.setFinalTimeDec(raceSplit.getWeightedTimeDec() / timeOverrunFactor);
 			raceSplit.setFinalTime(PaceUtils.DoubleToTime(raceSplit.getFinalTimeDec()));
-			raceSplit.setFinalPace(PaceUtils.DoubleToTime(raceSplit.getFinalTimeDec() / raceSplit.getDistance())); 
+			raceSplit.setFinalPace(PaceUtils.DoubleToTime(raceSplit.getFinalTimeDec() / raceSplit.getSplitDistance())); 
 			finalElapsedTimeDec += raceSplit.getFinalTimeDec();
 			raceSplit.setFinalElapsedTime(PaceUtils.DoubleToTime(finalElapsedTimeDec));
 		}

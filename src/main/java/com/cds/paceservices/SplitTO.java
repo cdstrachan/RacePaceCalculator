@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class SplitTO {
 
 	private int splitNumber;
-	private double distance;
+	private double splitDistance;
+	private double totalDistance;
 	@JsonIgnore
 	private LocalTime nominalTime;
 	private double elevation;
@@ -44,16 +45,6 @@ public class SplitTO {
 
 	public void setSplitNumber(int splitNumber) {
 		this.splitNumber = splitNumber;
-	}
-
-
-	public double getDistance() {
-		return distance;
-	}
-
-
-	public void setDistance(double distance) {
-		this.distance = distance;
 	}
 
 
@@ -129,7 +120,7 @@ public class SplitTO {
 
 	
 	public void calculatePacePerSplit(){
-		gradient = elevation / distance / 10;
+		gradient = elevation / splitDistance / 10;
 		paceImpact = PaceUtils.calcPaceImpact(elevation);  // some of this can be combined
 		timeDelta = paceImpact * gradient; // seconds
 		nominalTimeDec = PaceUtils.TimeToDouble(nominalTime);  // decimal time eg 8:30 is 8.5		
@@ -155,6 +146,26 @@ public class SplitTO {
 
 	public void setFinalTimeDec(double finalTimeDec) {
 		this.finalTimeDec = finalTimeDec;
+	}
+
+
+	public double getSplitDistance() {
+		return splitDistance;
+	}
+
+
+	public void setSplitDistance(double splitDistance) {
+		this.splitDistance = splitDistance;
+	}
+
+
+	public double getTotalDistance() {
+		return totalDistance;
+	}
+
+
+	public void setTotalDistance(double totalDistance) {
+		this.totalDistance = totalDistance;
 	}
 	
 	
