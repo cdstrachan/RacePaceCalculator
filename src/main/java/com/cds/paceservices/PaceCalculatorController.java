@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,52 +18,94 @@ public class PaceCalculatorController {
 	
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 
+	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.GET)
+	public PaceChartTO createPaceChartTemplate(@RequestParam("distance") double distance) {
+    	log.info("pacecharttemplate: start - received test operation for distance: " + distance);
+    	
+    	ArrayList<ElevationTO> elevations;
+    	ArrayList<ManualWeightingTO> manualWeightings;
+		
+		log.info("pacecharttemplate: creating input");
+		PaceChartTO  paceChartTO = new PaceChartTO();
+	    
+        // setup race distance
+		paceChartTO.setDistance(distance);        
+        
+		// setup elevations weighting
+		elevations = new ArrayList<ElevationTO>();
+		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
+		{
+			ElevationTO elevation = new ElevationTO();
+			elevation.setSplitNumber(counter+1);
+			elevation.setElevation(0);
+			elevations.add((elevation));	 
+		
+		}
+		paceChartTO.setElevations(elevations);
+		
+		// setup manual weighting
+		manualWeightings = new ArrayList<ManualWeightingTO>();
+		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
+		{
+			ManualWeightingTO manualWeighting = new ManualWeightingTO();
+			manualWeighting.setSplitNumber(counter+1);
+			manualWeighting.setManualWeight(100);
+			manualWeightings.add((manualWeighting));	 
+		
+		}
+		paceChartTO.setManualWeightings(manualWeightings);		
+		paceChartTO.setRaceName("My pace chart");
+		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
+		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,30,00));
+		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,15,00));
+		paceChartTO.setStartDelay(LocalTime.of(0,0,30));
+		paceChartTO.setFirstFade(0);
+		paceChartTO.setLastFade(2);
+		
+		log.info("pacecharttemplate: Finished");
+		return paceChartTO;
+    }
+	
+	
     @RequestMapping(value = "/pacecharttest", method = RequestMethod.GET)
 	public PaceChartTO createPaceChartTest() {
     	log.info("pacecharttest: start - received test operation");
-    	double[] elevation;
-		double [] manualWeighting;    	
+    	
+    	double distance = 10;
+    	
+    	ArrayList<ElevationTO> elevations;
+    	ArrayList<ManualWeightingTO> manualWeightings;
 		
 		log.info("pacecharttest: creating test input");
 		PaceChartTO  paceChartTO = new PaceChartTO();
 	    
-		double distance = 10;
-        
         // setup race distance
 		paceChartTO.setDistance(distance);        
         
-        // setup elevation profiles
-		elevation = new double[(int) Math.ceil(distance) ];  // create elevation profiles
-		elevation[0] = 1;
-		elevation[1] = 2;
-		elevation[2] = 3;
-		elevation[3] = 4;
-		elevation[4] = 5;
-		elevation[5] = 4;
-		elevation[6] = 3;
-		elevation[7] = 2;
-		elevation[8] = 1;
-		elevation[9] = 0;
+		// setup elevations weighting
+		elevations = new ArrayList<ElevationTO>();
+		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
+		{
+			ElevationTO elevation = new ElevationTO();
+			elevation.setSplitNumber(counter);
+			elevation.setElevation(100);
+			elevations.add((elevation));	 
 		
-		paceChartTO.setElevation(elevation);
-		
-		int baseWeightDelta = 0; //tweaking the hills
+		}
+		paceChartTO.setElevations(elevations);
 		
 		// setup manual weighting
+		manualWeightings = new ArrayList<ManualWeightingTO>();
+		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
+		{
+			ManualWeightingTO manualWeighting = new ManualWeightingTO();
+			manualWeighting.setSplitNumber(counter);
+			manualWeighting.setManualWeight(100);
+			manualWeightings.add((manualWeighting));	 
 		
-		// TODO check if the elevation is  >1, and then allow for a base weighting delta of hills
-		manualWeighting = new double[(int) Math.ceil(distance) ];  // create elevation profiles
-		manualWeighting [0] = 100;
-		manualWeighting [1] = 100;
-		manualWeighting [2] = 100;
-		manualWeighting [3] = 100 + baseWeightDelta;
-		manualWeighting	[4] = 100 + baseWeightDelta;
-		manualWeighting [5] = 100 + baseWeightDelta;
-		manualWeighting [6] = 100;
-		manualWeighting [7] = 100;
-		manualWeighting [8] = 100;
-		manualWeighting [9] = 100 + baseWeightDelta;
-		paceChartTO.setManualWeighting(manualWeighting);
+		}
+		paceChartTO.setManualWeightings(manualWeightings);
+		
 		paceChartTO.setRaceName("Testing3");
 		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
 		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,30,00));
@@ -120,7 +163,6 @@ public class PaceCalculatorController {
 		        log.info("createpacecharts: creating chart complete");
 	        }
 		}
-		// TODO Get/SET
 		paceChartTO.paceChartInstances = paceChartInstances;
 		log.info("createpacecharts - end");
 		return paceChartTO;
@@ -159,9 +201,10 @@ public class PaceCalculatorController {
 	        else
 	        	raceSplit.setSplitDistance(1);
 	        
-			raceSplit.setElevation(paceChartTO.getElevation()[counter]);
+	        
 
-	        raceSplit.setManualWeighting(paceChartTO.getManualWeighting()[counter]);
+	        raceSplit.setElevation(paceChartTO.getElevations().get(counter).getElevation());
+	        raceSplit.setManualWeighting(paceChartTO.getManualWeightings().get(counter).getManualWeight());
 	        //raceSplit.setManualWeighting(100);
 	        
 			// calculate the split time
