@@ -20,6 +20,8 @@ public class PaceChartTO {
 	private LocalTime startDelay;
 	private int firstFade;
 	private int lastFade;
+	private ArrayList<ErrorMessageTO> ValidationErrorMessages;
+	
 	ArrayList<PaceChartInstanceTO> paceChartInstances;
 	
 
@@ -110,7 +112,16 @@ public class PaceChartTO {
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
-	
+
+	public ArrayList<ErrorMessageTO> getValidationErrorMessages() {
+		return ValidationErrorMessages;
+	}
+
+	public void setValidationErrorMessages(ArrayList<ErrorMessageTO> validationErrorMessages) {
+		ValidationErrorMessages = validationErrorMessages;
+	}
+
+
 }
 
 

@@ -1,0 +1,82 @@
+@mainbordercolor:        rgb(197, 217, 238);
+@subbordercolor:        rgb(254, 233, 219);
+@maindatacolor: white;
+@basepadding: 2px;
+@basefontsize: 14px;
+@basewidth : 30px;
+@basefontfamily: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+body {
+    font-size: @basefontsize;
+    font-family: @basefontfamily;
+}
+
+h1 {
+    font-size: 12pt;
+    font-family: @basefontfamily
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.inputsmall {
+    width: @basewidth;
+}
+
+.inputmedium {
+    width: @basewidth *2;
+}
+
+.inputlarge {
+    width: @basewidth *3;
+}
+
+
+.baseborder {
+    font-size: @basefontsize;
+    font-family: @basefontfamily;
+    border: solid 1px;
+    padding: @basepadding;
+    vertical-align: top;
+}
+
+.mainborder {
+    &:extend(.baseborder);
+    background-color: @mainbordercolor;
+}
+
+.noborder {
+    &:extend(.baseborder);
+    border: none;
+    
+}
+.subborder {
+    &:extend(.baseborder);
+    background-color: @subbordercolor;
+}
+
+.maindata {
+    &:extend(.baseborder);
+    background-color: @maindatacolor;
+}
+
+.number {
+    text-align: right;
+}
+
+.criticalerror {
+    background-color: red;
+    font-size: @basefontsize *2;
+    color: white;
+    text-align: center;
+}
+
+.validationerror {
+    color: red;
+    font-size: @basefontsize *1.2;
+    text-vert
+    vertical-align: top;
+
+}
