@@ -173,9 +173,12 @@ public class PaceCalculatorController {
 
 			// no more than 100 records returned
 			//Additional is valid check here because bad data already trapped could break the counter function
-			if (isValid) if (CountDryRun(paceChartTO)>100) {
-				validationErrorMessages.add(createValidationMessage(1,"You are trying to create too many pace charts. Please narrow your input. The max returned is 100 charts. Reduce the increments, last start time or fades."));
-				isValid=false;
+			if (isValid) {
+				int chartCount = CountDryRun(paceChartTO);
+				if (chartCount>100) {
+					validationErrorMessages.add(createValidationMessage(1,"You are trying to create " + chartCount +" pace charts. That is too many pace charts. Please narrow your input. The max returned is 100 charts. Reduce the increments, last start time or fades."));
+					isValid=false;
+				}
 			}	
 
 			// calculate results
