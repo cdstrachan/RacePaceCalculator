@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -174,7 +173,7 @@ public class PaceCalculatorController {
 
 			// no more than 100 records returned
 			//Additional is valid check here because bad data already trapped could break the counter function
-			if (! isValid) if (CountDryRun(paceChartTO)>100) {
+			if (isValid) if (CountDryRun(paceChartTO)>100) {
 				validationErrorMessages.add(createValidationMessage(1,"You are trying to create too many pace charts. Please narrow your input. The max returned is 100 charts. Reduce the increments, last start time or fades."));
 				isValid=false;
 			}	
