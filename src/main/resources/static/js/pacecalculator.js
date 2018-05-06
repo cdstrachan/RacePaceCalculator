@@ -3,7 +3,7 @@ var app = angular.module('PaceChartCalculator', []);
 
 app.controller('Pacecalculator', function($scope, $http) {
     $scope.ErrorMessage = "";
-    $http.get('http://localhost:8080/pacecharttemplate?distance=10').
+    $http.get('/pacecharttemplate?distance=10').
     then(function(response) {
         $scope.paceChartInput = response.data;
     }).catch(function(e){
@@ -15,7 +15,7 @@ app.controller('Pacecalculator', function($scope, $http) {
             $scope.ErrorMessage = "";
             $scope.paceChart = null;
             $scope.loadingmessage = "Loading";
-            $http.post('http://localhost:8080/pacechart', $scope.paceChartInput).then(function (response) {
+            $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
                 $scope.paceChart = response.data;
                 $scope.loadingmessage = "";
             }).catch(function(e){
@@ -27,7 +27,7 @@ app.controller('Pacecalculator', function($scope, $http) {
         $scope.createChartTemplate = function (distance) {
             $scope.ErrorMessage = "";
             $scope.paceChart = null;
-            var sQuery = 'http://localhost:8080/pacecharttemplate?distance=' + distance;
+            var sQuery = '/pacecharttemplate?distance=' + distance;
             $http.get(sQuery).then(function (response) {
                 $scope.paceChartInput = response.data;
             }).catch(function(e){
