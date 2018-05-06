@@ -53,9 +53,9 @@ public class PaceCalculatorController {
 		}
 		paceChartTO.setManualWeightings(manualWeightings);		
 		paceChartTO.setRaceName("My pace chart");
-		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
-		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,30,00));
-		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,15,00));
+		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0,59,00));
+		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,29,00));
+		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,10,00));
 		paceChartTO.setStartDelay(LocalTime.of(0,0,30));
 		paceChartTO.setFirstFade(0);
 		paceChartTO.setLastFade(2);
@@ -176,7 +176,7 @@ public class PaceCalculatorController {
 			if (isValid) {
 				int chartCount = CountDryRun(paceChartTO);
 				if (chartCount>100) {
-					validationErrorMessages.add(createValidationMessage(1,"You are trying to create " + chartCount +" pace charts. That is too many pace charts. Please narrow your input. The max returned is 100 charts. Reduce the increments, last start time or fades."));
+					validationErrorMessages.add(createValidationMessage(1,"You are trying to create " + chartCount +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
 					isValid=false;
 				}
 			}	
