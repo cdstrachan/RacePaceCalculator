@@ -81,8 +81,8 @@
 				<table>
 					<tr>
 						<td class="subborder">Split</td>
-						<td class="subborder">Elevation</td>
-						<td class="subborder">Manual Weighting</td>
+						<td class="subborder">Elevation (m)</td>
+						<td class="subborder">Manual Weighting </td>
 					</tr>
 					<tr ng-repeat="elevation in paceChartInput.elevations">
 						<td class="maindata">{{elevation.splitNumber}}</td>
@@ -90,7 +90,7 @@
 							<input class="inputsmall" type="number" ng-model="elevation.elevation" min="-50" max="50"/>
 						</td>
 						<td class="maindata">
-							<input class="inputmedium" type="number" ng-model="paceChartInput.manualWeightings[elevation.splitNumber-1].manualWeight"  min="-200" max="200" step="10"/>
+							<input class="inputmedium" type="number" ng-model="paceChartInput.manualWeightings[elevation.splitNumber-1].manualWeight"  min="-200" max="200" step="5"/>
 						</td>
 					</tr>
 
