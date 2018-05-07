@@ -10,9 +10,8 @@ public class PaceChartTO {
 	// inputs
 	private double distance;
 	//@JsonIgnore
-	ArrayList<ElevationTO> elevations;
+	ArrayList<SplitInputTO> splitInputs;
 	//@JsonIgnore
-	ArrayList<ManualWeightingTO> manualWeightings;
 	private String raceName;
 	private LocalTime plannedRaceTimeFirst;
 	private LocalTime plannedRaceTimeLast;
@@ -33,20 +32,12 @@ public class PaceChartTO {
 		this.paceChartInstances =  paceChartInstances;
 	}
 	
-	public ArrayList<ElevationTO> getElevations() {
-		return elevations;
+	public ArrayList<SplitInputTO> getSplitInputs() {
+		return splitInputs;
 	}
 
-	public void setElevations(ArrayList<ElevationTO> elevations) {
-		this.elevations = elevations;
-	}
-
-	public ArrayList<ManualWeightingTO> getManualWeightings() {
-		return manualWeightings;
-	}
-
-	public void setManualWeightings(ArrayList<ManualWeightingTO> manualWeightings) {
-		this.manualWeightings = manualWeightings;
+	public void setSplitInputs(ArrayList<SplitInputTO> splitInputs) {
+		this.splitInputs = splitInputs;
 	}
 
 	public String getRaceName() {

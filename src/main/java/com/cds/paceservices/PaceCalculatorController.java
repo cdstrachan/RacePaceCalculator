@@ -16,53 +16,87 @@ public class PaceCalculatorController {
 
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 
-	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.GET)
-	public PaceChartTO createPaceChartTemplate(@RequestParam("distance") double distance) {
-		log.info("pacecharttemplate: start - received test operation for distance: " + distance);
+	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
+	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) {
+		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
 
-		ArrayList<ElevationTO> elevations;
-		ArrayList<ManualWeightingTO> manualWeightings;
+		ArrayList<SplitInputTO> splitInputs;
 
-		log.info("pacecharttemplate: creating input");
-		PaceChartTO  paceChartTO = new PaceChartTO();
+		//log.info("pacecharttemplate: creating input");
+		//PaceChartTO  paceChartTO = new PaceChartTO();
 
 		// setup race distance
-		paceChartTO.setDistance(distance);        
+		//paceChartTO.setDistance(distance);        
 
-		// setup elevations weighting
-		elevations = new ArrayList<ElevationTO>();
+		// setup elevations & manual weighting
+		splitInputs = new ArrayList<SplitInputTO>();
 		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
 		{
-			ElevationTO elevation = new ElevationTO();
-			elevation.setSplitNumber(counter+1);
-			elevation.setElevation(0);
-			elevations.add((elevation));	 
+			SplitInputTO splitInput = new SplitInputTO();
+			splitInput.setSplitNumber(counter+1);
+			splitInput.setElevation(0);
+			splitInput.setManualWeight(100);
+			if (counter + 1 > paceChartTO.getDistance())
+				splitInput.setSplitDistance(paceChartTO.getDistance());
+			else
+				splitInput.setSplitDistance(counter+1);
+			splitInputs.add((splitInput));	 
 
 		}
-		paceChartTO.setElevations(elevations);
+		paceChartTO.setSplitInputs(splitInputs);
 
-		// setup manual weighting
-		manualWeightings = new ArrayList<ManualWeightingTO>();
-		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
-		{
-			ManualWeightingTO manualWeighting = new ManualWeightingTO();
-			manualWeighting.setSplitNumber(counter+1);
-			manualWeighting.setManualWeight(100);
-			manualWeightings.add((manualWeighting));	 
-
-		}
-		paceChartTO.setManualWeightings(manualWeightings);		
 		paceChartTO.setRaceName("My pace chart");
-		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0,59,00));
+		/*paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0,59,00));
 		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,29,00));
 		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,10,00));
 		paceChartTO.setStartDelay(LocalTime.of(0,0,30));
 		paceChartTO.setFirstFade(0);
 		paceChartTO.setLastFade(2);
-
+*/
 		log.info("pacecharttemplate: Finished");
 		return paceChartTO;
 	}
+	
+		@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
+		public PaceChartTO createPaceChartBootstrap(@RequestParam("distance") double distance) {
+			log.info("pacechartbootstrap: start - received test operation for distance: " + distance);
+
+			ArrayList<SplitInputTO> splitInputs;
+
+			log.info("pacechartbootstrap: creating input");
+			PaceChartTO  paceChartTO = new PaceChartTO();
+
+			// setup race distance
+			paceChartTO.setDistance(distance);        
+
+			// setup elevations & manual weighting
+			splitInputs = new ArrayList<SplitInputTO>();
+			for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
+			{
+				SplitInputTO splitInput = new SplitInputTO();
+				splitInput.setSplitNumber(counter+1);
+				splitInput.setElevation(0);
+				splitInput.setManualWeight(100);
+				if (counter + 1 > paceChartTO.getDistance())
+					splitInput.setSplitDistance(paceChartTO.getDistance());
+				else
+					splitInput.setSplitDistance(counter+1);
+				splitInputs.add((splitInput));	 
+
+			}
+			paceChartTO.setSplitInputs(splitInputs);
+
+			paceChartTO.setRaceName("My pace chart");
+			paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0,59,00));
+			paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,29,00));
+			paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,10,00));
+			paceChartTO.setStartDelay(LocalTime.of(0,0,30));
+			paceChartTO.setFirstFade(0);
+			paceChartTO.setLastFade(2);
+
+			log.info("pacechartbootstrap: Finished");
+			return paceChartTO;
+		}
 
 
 	@RequestMapping(value = "/pacecharttest", method = RequestMethod.GET)
@@ -71,8 +105,7 @@ public class PaceCalculatorController {
 
 		double distance = 10;
 
-		ArrayList<ElevationTO> elevations;
-		ArrayList<ManualWeightingTO> manualWeightings;
+		ArrayList<SplitInputTO> splitInputs;
 
 		log.info("pacecharttest: creating test input");
 		PaceChartTO  paceChartTO = new PaceChartTO();
@@ -81,28 +114,17 @@ public class PaceCalculatorController {
 		paceChartTO.setDistance(distance);        
 
 		// setup elevations weighting
-		elevations = new ArrayList<ElevationTO>();
+		splitInputs = new ArrayList<SplitInputTO>();
 		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
 		{
-			ElevationTO elevation = new ElevationTO();
-			elevation.setSplitNumber(counter);
-			elevation.setElevation(100);
-			elevations.add((elevation));	 
+			SplitInputTO splitInput = new SplitInputTO();
+			splitInput.setSplitNumber(counter);
+			splitInput.setManualWeight(100);
+			splitInput.setElevation(100);
+			splitInputs.add((splitInput));	 
 
 		}
-		paceChartTO.setElevations(elevations);
-
-		// setup manual weighting
-		manualWeightings = new ArrayList<ManualWeightingTO>();
-		for (int counter = 0;counter < Math.ceil(paceChartTO.getDistance()); counter ++)
-		{
-			ManualWeightingTO manualWeighting = new ManualWeightingTO();
-			manualWeighting.setSplitNumber(counter);
-			manualWeighting.setManualWeight(100);
-			manualWeightings.add((manualWeighting));	 
-
-		}
-		paceChartTO.setManualWeightings(manualWeightings);
+		paceChartTO.setSplitInputs(splitInputs);
 
 		paceChartTO.setRaceName("Testing3");
 		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1,00,00));
@@ -240,7 +262,7 @@ public class PaceCalculatorController {
 			// count through the fades
 			for (int fade = paceChartTO.getFirstFade(); fade <= paceChartTO.getLastFade(); fade ++) {
 
-				log.info("createpacecharts: creating chart for time:" + PaceUtils.formatTime(plannedRaceTime) + ", fade: " +  fade);
+				log.info("createpacecharts: creating chart for time:" + plannedRaceTime + ", fade: " +  fade);
 				paceChartInstances.add(createPaceChart(paceChartTO,plannedRaceTime,fade));
 				log.info("createpacecharts: creating chart complete");
 			}
@@ -285,8 +307,8 @@ public class PaceCalculatorController {
 
 
 
-			raceSplit.setElevation(paceChartTO.getElevations().get(counter).getElevation());
-			raceSplit.setManualWeighting(paceChartTO.getManualWeightings().get(counter).getManualWeight());
+			raceSplit.setElevation(paceChartTO.getSplitInputs().get(counter).getElevation());
+			raceSplit.setManualWeighting(paceChartTO.getSplitInputs().get(counter).getManualWeight());
 
 			// calculate the split time
 			if (counter == 0)

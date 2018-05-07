@@ -14,7 +14,7 @@
 
 	<body>
 		<div ng-controller="Pacecalculator" class="container">
-		<div class="validationerror">*** experimental - trust the data at your peril  (v1.02) ***</div>
+		<div class="validationerror">*** experimental - trust the data at your peril  (v1.03) ***</div>
 			<h1>Input parameters</h1>
 			<form>
 				<table width="100%">
@@ -36,32 +36,32 @@
 					<tr>
 						<td class="mainborder">Distance</td>
 						<td class="subborder">
-							<input class="inputsmall" type="number" ng-model="paceChartInput.distance" min="1" max="99"/>
+							<input class="inputmedium" type="number" ng-model="paceChartInput.distance" min="1" max="99" step="0.1"/>
 							<input type="submit" ng-click="createChartTemplate(paceChartInput.distance)" value="Set"/>
 						</td>
 					</tr>
 					<tr>
 						<td class="mainborder">First finish time<br/>(hh:mm:ss)</td>
 						<td class="subborder">
-							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeFirst" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeFirst" pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
 					</tr>
 					<tr>
 						<td class="mainborder">Last finish time<br/>(hh:mm:ss)</td>
 						<td class="subborder">
-							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeLast"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeLast"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
 					</tr>
 					<tr>
 						<td class="mainborder">Time increment<br/>(hh:mm:ss)</td>
 						<td class="subborder">
-							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeDelta"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeDelta"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
 					</tr>
 					<tr>
 						<td class="mainborder">Start delay<br/>(hh:mm:ss)</td>
 						<td class="subborder">
-							<input class="inputmedium" type="text" ng-model="paceChartInput.startDelay"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+							<input class="inputmedium" type="text" ng-model="paceChartInput.startDelay"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
 					</tr>
 					<tr>
@@ -84,13 +84,13 @@
 						<td class="subborder">Elevation (m)</td>
 						<td class="subborder">Manual Weighting </td>
 					</tr>
-					<tr ng-repeat="elevation in paceChartInput.elevations">
-						<td class="maindata">{{elevation.splitNumber}}</td>
+					<tr ng-repeat="splitInput in paceChartInput.splitInputs">
+						<td class="maindata">{{splitInput.splitDistance}}</td>
 						<td class="maindata">
-							<input class="inputsmall" type="number" ng-model="elevation.elevation" min="-50" max="50"/>
+							<input class="inputsmall" type="number" ng-model="splitInput.elevation" min="-50" max="50"/>
 						</td>
 						<td class="maindata">
-							<input class="inputmedium" type="number" ng-model="paceChartInput.manualWeightings[elevation.splitNumber-1].manualWeight"  min="-200" max="200" step="5"/>
+							<input class="inputmedium" type="number" ng-model="splitInput.manualWeight" min="-200" max="200" step="5"/>
 						</td>
 					</tr>
 
@@ -103,38 +103,41 @@
 				<br/>
 				<table>
 					<tr>
-						<td colspan="2" class="mainborder">Distance and Race</td>
-						<td colspan="2" class="subborder">{{paceChart.distance}}k - {{paceChart.raceName}}</td>
+						<td colspan=2" class="mainborder">Distance and Race</td>
+						<td colspan="3" class="subborder">{{paceChart.distance}}k - {{paceChart.raceName}}</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="mainborder">Time</td>
-						<td colspan="2" class="subborder">{{paceChartInstance.plannedRaceTime}}</td>
+						<td colspan="3" class="subborder">{{paceChartInstance.plannedRaceTime}}</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="mainborder">Start Delay</td>
-						<td colspan="2" class="subborder">{{paceChart.startDelay}}</td>
+						<td colspan="3" class="subborder">{{paceChart.startDelay}}</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="mainborder">Fade</td>
-						<td colspan="2" class="subborder">{{paceChartInstance.fade}} %</td>
+						<td colspan="3" class="subborder">{{paceChartInstance.fade}} %</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="mainborder">Moving pace</td>
-						<td colspan="2" class="subborder">{{paceChartInstance.averageMovingPace}}</td>
+						<td colspan="3" class="subborder">{{paceChartInstance.averageMovingPace}}</td>
 					</tr>
 					<tr>
 						<td colspan="2" class="mainborder">Average Pace</td>
-						<td colspan="2" class="subborder">{{paceChartInstance.averageEndToEndPace}}</td>
+						<td colspan="3" class="subborder">{{paceChartInstance.averageEndToEndPace}}</td>
 					</tr>
 					<tr>
 						<td class="mainborder">Distance</td>
 						<td class="mainborder">Split Time</td>
-						<td class="mainborder">Total Time</td>
+						<td class="mainborder">Split Pace</td>
+						<td class="mainborder">Elapsed Time</td>
 						<td class="mainborder">Elevation</td>
 					</tr>
 					<tr ng-repeat="split in paceChartInstance.raceSplits">
+					{{split}}
 						<td class="mainborder number">{{split.totalDistance}}</td>
 						<td class="maindata">{{split.finalTime}}</td>
+						<td class="maindata">{{split.finalPace}}</td>
 						<td class="maindata">{{split.finalElapsedTime}}</td>
 						<td class="maindata number">{{split.elevation}}</td>
 					</tr>
