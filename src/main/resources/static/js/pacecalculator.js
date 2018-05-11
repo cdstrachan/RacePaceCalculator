@@ -1,5 +1,11 @@
-var app = angular.module('PaceChartCalculator', []);
-
+var app = angular.module('PaceChartCalculator', [])
+.filter('formatTime', function ($filter) {
+	return function (time, format) {
+	    var parts = time.split(':');
+	    var date = new Date(0, 0, 0, parts[0], parts[1], parts[2]);
+	    return $filter('date')(date, format || 'mm:ss');
+	};
+	})
 
 app.controller('Pacecalculator', function($scope, $http) {
     $scope.ErrorMessage = "";
@@ -36,5 +42,6 @@ app.controller('Pacecalculator', function($scope, $http) {
                 $scope.CriticalErrorMessage = "Error connecting to server";
              })
         }
-
+       
+        
 });

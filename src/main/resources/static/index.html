@@ -103,41 +103,33 @@
 				<br/>
 				<table>
 					<tr>
-						<td colspan=2" class="mainborder">Distance and Race</td>
-						<td colspan="3" class="subborder">{{paceChart.distance}}k - {{paceChart.raceName}}</td>
+						<td colspan="1" class="mainborder">Race</td>
+						<td colspan="4" class="subborder">{{paceChart.distance}}k - {{paceChart.raceName}}, {{paceChartInstance.fade}}% fade</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="mainborder">Time</td>
-						<td colspan="3" class="subborder">{{paceChartInstance.plannedRaceTime}}</td>
+						<td colspan="1" class="mainborder">Time</td>
+						<td colspan="1" class="subborder">{{paceChartInstance.plannedRaceTime}}</td>
+						<td colspan="1" class="mainborder">Start Delay</td>
+						<td colspan="2" class="subborder">{{paceChart.startDelay}}</td>
 					</tr>
 					<tr>
-						<td colspan="2" class="mainborder">Start Delay</td>
-						<td colspan="3" class="subborder">{{paceChart.startDelay}}</td>
-					</tr>
-					<tr>
-						<td colspan="2" class="mainborder">Fade</td>
-						<td colspan="3" class="subborder">{{paceChartInstance.fade}} %</td>
-					</tr>
-					<tr>
-						<td colspan="2" class="mainborder">Moving pace</td>
-						<td colspan="3" class="subborder">{{paceChartInstance.averageMovingPace}}</td>
-					</tr>
-					<tr>
-						<td colspan="2" class="mainborder">Average Pace</td>
-						<td colspan="3" class="subborder">{{paceChartInstance.averageEndToEndPace}}</td>
+						<td colspan="1" class="mainborder">Moving pace</td>
+						<td colspan="1" class="subborder">{{paceChartInstance.averageMovingPace | formatTime}}</td>
+						<td colspan="1" class="mainborder">Avg. Pace</td>
+						<td colspan="2" class="subborder">{{paceChartInstance.averageEndToEndPace | formatTime}}</td>
 					</tr>
 					<tr>
 						<td class="mainborder">Distance</td>
 						<td class="mainborder">Split Time</td>
 						<td class="mainborder">Split Pace</td>
-						<td class="mainborder">Elapsed Time</td>
-						<td class="mainborder">Elevation</td>
+						<td class="mainborder">Elapsed</td>
+						<td class="mainborder">Elev.</td>
 					</tr>
 					<tr ng-repeat="split in paceChartInstance.raceSplits">
 					{{split}}
 						<td class="mainborder number">{{split.totalDistance}}</td>
-						<td class="maindata">{{split.finalTime}}</td>
-						<td class="maindata">{{split.finalPace}}</td>
+						<td class="maindata">{{split.finalTime | formatTime}}</td>
+						<td class="maindata">{{split.finalPace | formatTime}}</td>
 						<td class="maindata">{{split.finalElapsedTime}}</td>
 						<td class="maindata number">{{split.elevation}}</td>
 					</tr>
