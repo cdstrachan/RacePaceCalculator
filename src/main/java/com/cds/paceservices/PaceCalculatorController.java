@@ -15,18 +15,13 @@ import org.springframework.web.client.RestTemplate;
 public class PaceCalculatorController {
 
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
-
+	private static final int MAX_CHART_COUNT = 100;
+	
 	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
 	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) {
 		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
 
 		ArrayList<SplitInputTO> splitInputs;
-
-		//log.info("pacecharttemplate: creating input");
-		//PaceChartTO  paceChartTO = new PaceChartTO();
-
-		// setup race distance
-		//paceChartTO.setDistance(distance);        
 
 		// setup elevations & manual weighting
 		splitInputs = new ArrayList<SplitInputTO>();
@@ -46,13 +41,6 @@ public class PaceCalculatorController {
 		paceChartTO.setSplitInputs(splitInputs);
 
 		paceChartTO.setRaceName("My pace chart");
-		/*paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0,59,00));
-		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1,29,00));
-		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0,10,00));
-		paceChartTO.setStartDelay(LocalTime.of(0,0,30));
-		paceChartTO.setFirstFade(0);
-		paceChartTO.setLastFade(2);
-*/
 		log.info("pacecharttemplate: Finished");
 		return paceChartTO;
 	}
@@ -196,9 +184,8 @@ public class PaceCalculatorController {
 			// no more than 100 records returned
 			//Additional is valid check here because bad data already trapped could break the counter function
 			if (isValid) {
-				int chartCount = CountDryRun(paceChartTO);
-				if (chartCount>100) {
-					validationErrorMessages.add(createValidationMessage(1,"You are trying to create " + chartCount +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
+				if (!DryRunCountOK(paceChartTO)) {
+					validationErrorMessages.add(createValidationMessage(1,"You are trying to create more than" + MAX_CHART_COUNT +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
 					isValid=false;
 				}
 			}	
@@ -227,7 +214,7 @@ public class PaceCalculatorController {
 		return validationMessage;
 	}
 
-	private int CountDryRun(PaceChartTO paceChartTO) {
+	private boolean DryRunCountOK(PaceChartTO paceChartTO) {
 		log.info("counting pace charts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst()); 
 		double plannedRaceTimeLastDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeLast());
@@ -238,10 +225,14 @@ public class PaceCalculatorController {
 		for (double raceTimeDec = plannedRaceTimeFirstDec; raceTimeDec <= plannedRaceTimeLastDec; raceTimeDec += plannedRaceTimeDeltaDec) {
 			for (int fade = paceChartTO.getFirstFade(); fade <= paceChartTO.getLastFade(); fade ++) {
 				counter ++;
+				if (counter > MAX_CHART_COUNT) {
+					log.info("counting pace charts - count not ok");
+					return false;
+				}
 			}
 		}
-		log.info("counting pace charts - end. total=" + counter);
-		return counter;
+		log.info("counting pace charts - count ok");
+		return true;
 	
 	}
 	
