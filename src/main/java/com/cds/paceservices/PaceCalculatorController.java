@@ -185,7 +185,7 @@ public class PaceCalculatorController {
 			//Additional is valid check here because bad data already trapped could break the counter function
 			if (isValid) {
 				if (!DryRunCountOK(paceChartTO)) {
-					validationErrorMessages.add(createValidationMessage(1,"You are trying to create more than" + MAX_CHART_COUNT +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
+					validationErrorMessages.add(createValidationMessage(1,"You are trying to create more than " + MAX_CHART_COUNT +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
 					isValid=false;
 				}
 			}	
