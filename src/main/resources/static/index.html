@@ -22,7 +22,7 @@
 						<td class="mainborder" width="120px">Race name</td>
 						<td class="subborder"  width="120px">
 							<input class="inputlarge" type="text" ng-model="paceChartInput.raceName" maxlength="20" /></td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">The name of your race.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">The name of your race.</span></div></td>
 						<td rowspan=8 style="vertical-align: top">
 This calculator is used to calculated suggested paces for running events. It takes into account the elevation of each split, delay at the start due to congestion, and fade due to the runner getting tired towards the end.<br/>
 <br/>
@@ -40,57 +40,57 @@ This is just a guide, you are responsible for running your own race, and you are
 							<input class="inputmedium" type="number" ng-model="paceChartInput.distance" min="1" max="99" step="0.1"/>
 							<input type="submit" ng-click="createChartTemplate(paceChartInput.distance)" value="Set"/></td>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Enter the distance and hit <i>set</i> - splits will be created to match the distance.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the distance and hit <i>set</i> - splits will be created to match the distance.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">First finish time<br/>(hh:mm:ss)</td>
 						<td class="subborder">
 							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeFirst" pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Finish time for first finish.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for first finish.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">Last finish time<br/>(hh:mm:ss)</td>
 						<td class="subborder">
 							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeLast"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Finish time for last finish.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for last finish.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">Time increment<br/>(hh:mm:ss)</td>
 						<td class="subborder">
 							<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeDelta"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Finish time increment - e.g. create a chart every 10 mintues from the first finish time to the last finish time.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time increment - e.g. create a chart every 10 mintues from the first finish time to the last finish time.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">Start delay<br/>(hh:mm:ss)</td>
 						<td class="subborder">
 							<input class="inputmedium" type="text" ng-model="paceChartInput.startDelay"  pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Anticipated delay due to start line congestion.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Anticipated delay due to start line congestion.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">First fade %</td>
 						<td class="subborder">
 							<input class="inputsmall" type="number" ng-model="paceChartInput.firstFade" min="0" max="99"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">A 2% fade means that the second half of a flat course is 2% slower than the first half. You can calculate charts for multiple fades. A chart will be create for each % from the first fade to the last fade.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">A 2% fade means that the second half of a flat course is 2% slower than the first half. You can calculate charts for multiple fades. A chart will be create for each % from the first fade to the last fade.</span></div></td>
 					</tr>
 					<tr>
 						<td class="mainborder">Last fade %</td>
 						<td class="subborder">
 							<input class="inputsmall" type="number" ng-model="paceChartInput.lastFade" min="0" max="99"/>
 						</td>
-						<td class="subborder">&nbsp;<div class="tooltip">?<span class="tooltiptext">Enter the last fade.</span></div>&nbsp;</td>
+						<td class="subborder"><div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the last fade.</span></div></td>
 					</tr>
 				</table>
 				<h1>Split data</h1>
 				<table wicth="100%">
 					<tr>
 						<td class="subborder" width="60px">Split</td>
-						<td class="subborder" width="120px">Elevation (m) <div class="tooltip">?<span class="tooltiptext">Enter the total change in elevation for each split.</span></div></td>
-						<td class="subborder" width="150px">Manual Weighting <div class="tooltip">?<span class="tooltiptext">The manual weighting can be used to override the default calculations. Make it a little lower to make the split faster, or higher to make the split slower. Usually you can ignore it.</span></div></td>
+						<td class="subborder" width="120px">Elevation (m) <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the total change in elevation for each split.</span></div></td>
+						<td class="subborder" width="150px">Manual Weighting <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">The manual weighting can be used to override the default calculations. Make it a little lower to make the split faster, or higher to make the split slower. Usually you can ignore it.</span></div></td>
 						<td class="noborder" rowspan="8" width="50%">
 							
 							<div class="validationerror" >{{loadingmessage}}</div>
@@ -117,7 +117,7 @@ This is just a guide, you are responsible for running your own race, and you are
 			</form>
 			<h1>Pacecharts</h1>
 			<div ng-repeat="paceChartInstance in paceChart.paceChartInstances">
-				&nbsp;
+				
 				<br/>
 				<table>
 					<tr>
@@ -152,7 +152,7 @@ This is just a guide, you are responsible for running your own race, and you are
 						<td class="maindata number">{{split.elevation}}</td>
 					</tr>
 				</table>
-				&nbsp;
+				
 				<br/>
 			</div>
 		</div>
