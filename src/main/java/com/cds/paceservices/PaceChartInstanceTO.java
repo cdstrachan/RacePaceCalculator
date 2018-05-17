@@ -2,7 +2,6 @@ package com.cds.paceservices;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 public class PaceChartInstanceTO {
 	// calculated

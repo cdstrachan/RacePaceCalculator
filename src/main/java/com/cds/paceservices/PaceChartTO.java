@@ -3,9 +3,6 @@ package com.cds.paceservices;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 public class PaceChartTO {
 	// inputs
 	private double distance;
