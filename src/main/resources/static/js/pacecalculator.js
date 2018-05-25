@@ -23,7 +23,7 @@ app.controller('Pacecalculator', function($scope, $http) {
             $scope.loadingmessage = "Loading";
             $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
                 $scope.paceChart = response.data;
-                $scope.loadingmessage = "Done";
+                $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
             }).catch(function(e){
                 console.log("Error creating chart",e);
                 $scope.CriticalErrorMessage = "Error connecting to server";
