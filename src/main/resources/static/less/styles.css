@@ -1,9 +1,9 @@
 body {
-  font-size: 14px;
+  font-size: 11px;
   font-family: 'Calibra', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 h1 {
-  font-size: 11pt;
+  font-size: 12pt;
   font-family: 'Calibra', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 table {
@@ -24,7 +24,7 @@ table {
 .noborder,
 .subborder,
 .maindata {
-  font-size: 14px;
+  font-size: 11px;
   font-family: 'Calibra', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   border: solid 1px;
   padding: 2px;
@@ -47,13 +47,13 @@ table {
 }
 .criticalerror {
   background-color: red;
-  font-size: 28px;
+  font-size: 22px;
   color: white;
   text-align: center;
 }
 .validationerror {
   color: red;
-  font-size: 16.8px;
+  font-size: 13.2px;
   text-vertvertical-align: top;
 }
 .tooltip {
