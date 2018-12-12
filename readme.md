@@ -9,3 +9,7 @@ http://localhost:8080/v2/api-docs
 
 ## GIT
 git push heroku master to publish to production
+
+git remote rm heroku
+heroku git:remote -a onlinepacecharts
+
