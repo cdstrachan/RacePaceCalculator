@@ -173,12 +173,12 @@
 					<td class="mainborder">Elapsed</td>
 					<td class="mainborder">Elev.</td>
 				</tr>
-				<tr ng-repeat="split in paceChartInstance.raceSplits" ng-class-odd="maindata" ng-class-even="maindatadark"">
+				<tr ng-repeat="split in paceChartInstance.raceSplits" ng-class-odd="maindata" ng-class-even="maindatalight"">
 					{{split}}
 						<td class="
 				 mainborder number">{{split.totalDistance}}</td>
 					<td class="maindata">{{split.finalTime | formatTime}}</td>
-					<td class="maindata">{{split.finalPace | formatTime}}</td>
+					<td>{{split.finalPace | formatTime}}</td>
 					<td>{{split.finalElapsedTime}}</td>
 					<td class=" number">{{split.elevation}}</td>
 				</tr>
