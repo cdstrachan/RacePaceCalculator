@@ -45,8 +45,10 @@ table {
 .maindatalight {
   background-color: #e7eff8;
 }
-.number {
+.boxborder {
   border: solid 1px;
+}
+.number {
   text-align: right;
 }
 .criticalerror {
