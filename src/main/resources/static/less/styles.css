@@ -43,6 +43,7 @@ table {
   background-color: white;
 }
 .maindatalight {
+  border: solid 1px;
   background-color: #e7eff8;
 }
 .number {
