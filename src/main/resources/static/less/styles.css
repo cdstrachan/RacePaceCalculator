@@ -22,7 +22,8 @@ table {
 .mainborder,
 .noborder,
 .subborder,
-.maindata {
+.maindata,
+.maindatalight {
   font-size: 11px;
   font-family: Calibri, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   border: solid 1px;
@@ -40,6 +41,9 @@ table {
 }
 .maindata {
   background-color: white;
+}
+.maindatalight {
+  background-color: #e7eff8;
 }
 .number {
   text-align: right;

@@ -14,3 +14,7 @@ to publish to production
 git remote rm heroku
 heroku git:remote -a onlinepacecharts
 
+TODO
+Add Excel capability
+Add Default races
+
