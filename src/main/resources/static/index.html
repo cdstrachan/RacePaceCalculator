@@ -131,13 +131,13 @@
 
 					</td>
 				</tr>
-				<tr ng-repeat="splitInput in paceChartInput.splitInputs">
-					<td class="maindata">{{splitInput.splitDistance}}</td>
-					<td class="maindata">
-						<input class="inputsmall" type="number" ng-model="splitInput.elevation" min="-200" max="200" />
+				<tr ng-repeat="splitInput in paceChartInput.splitInputs" ng-class-odd="'maindata'" ng-class-even="'maindatalight'">
+					<td class="boxborder">{{splitInput.splitDistance}}</td>
+					<td class="boxborder">
+						<input class="inputsmall boxborder" type="number" ng-model="splitInput.elevation" min="-200" max="200" />
 					</td>
 					<td class="maindata">
-						<input class="inputmedium" type="number" ng-model="splitInput.manualWeight" min="-200" max="200" step="5" />
+						<input class="inputmedium boxborder" type="number" ng-model="splitInput.manualWeight" min="-200" max="200" step="5" />
 					</td>
 				</tr>
 
@@ -177,9 +177,9 @@
 					{{split}}
 						<td class="
 				 mainborder number">{{split.totalDistance}}</td>
-					<td class="boxborder ">{{split.finalTime | formatTime}}</td>
-					<td>{{split.finalPace | formatTime}}</td>
-					<td>{{split.finalElapsedTime}}</td>
+					<td class="boxborder">{{split.finalTime | formatTime}}</td>
+					<td class="boxborder">{{split.finalPace | formatTime}}</td>
+					<td class="boxborder">{{split.finalElapsedTime}}</td>
 					<td class="number boxborder">{{split.elevation}}</td>
 				</tr>
 			</table>
