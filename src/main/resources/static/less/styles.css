@@ -43,10 +43,10 @@ table {
   background-color: white;
 }
 .maindatalight {
-  border: solid 1px;
   background-color: #e7eff8;
 }
 .number {
+  border: solid 1px;
   text-align: right;
 }
 .criticalerror {
@@ -58,7 +58,7 @@ table {
 .validationerror {
   color: red;
   font-size: 13.2px;
-  text-vertvertical-align: top;
+  vertical-align: top;
 }
 .tooltip {
   position: relative;
