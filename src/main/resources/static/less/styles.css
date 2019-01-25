@@ -21,12 +21,12 @@ table {
 .buttons {
   background-color: #c5d9ee;
   border: none;
-  color: white;
-  padding: 15px 32px;
+  color: black;
+  padding: 10px 10px;
   text-align: center;
   text-decoration: none;
   font-size: 11px 5;
-  margin: 4px 2px;
+  margin: 5px 5px;
   cursor: pointer;
 }
 .baseborder,
