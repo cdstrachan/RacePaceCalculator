@@ -18,7 +18,7 @@ table {
 .inputlarge {
   width: 90px;
 }
-.buttons {
+.buttonbig {
   background-color: #c5d9ee;
   border: solid 1px;
   border-color: black;
@@ -28,6 +28,16 @@ table {
   text-decoration: none;
   font-size: 13.2px;
   margin: 5px 5px;
+  cursor: pointer;
+}
+.buttonsmall {
+  background-color: #c5d9ee;
+  border: solid 1px;
+  border-color: black;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 11px;
   cursor: pointer;
 }
 .baseborder,
