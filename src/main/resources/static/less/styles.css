@@ -20,7 +20,8 @@ table {
 }
 .buttons {
   background-color: #c5d9ee;
-  border: none;
+  border: solid 1px;
+  border-color: black;
   color: black;
   padding: 10px 10px;
   text-align: center;
