@@ -18,6 +18,9 @@ table {
 .inputlarge {
   width: 90px;
 }
+.buttons {
+  background-color: mainbordercolor;
+}
 .baseborder,
 .mainborder,
 .noborder,
