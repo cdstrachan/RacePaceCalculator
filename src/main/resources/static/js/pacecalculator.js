@@ -29,6 +29,23 @@ app.controller('Pacecalculator', function($scope, $http) {
                 $scope.CriticalErrorMessage = "Error connecting to server";
              })
         }
+                
+        $scope.createChartExcel = function (){
+        	  var xhr = new XMLHttpRequest();
+        	  xhr.open("POST", '/pacechartexcel');
+        	  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        	  xhr.responseType = "arraybuffer";
+        	  xhr.onload = function () {
+        	      if (this.status === 200) {
+        	          var blob = new Blob([xhr.response], {type: "application/xlsx"});       
+        	          var a = document.createElement('a');
+        	             a.href = URL.createObjectURL(blob);
+        	             a.download = "paceshart.xlsx";
+        	             a.click();
+        	      }
+        	  };
+        	  xhr.send(JSON.stringify($scope.paceChartInput)); 
+        	 };
 
         $scope.createChartTemplate = function (distance) {
             $scope.ErrorMessage = "";

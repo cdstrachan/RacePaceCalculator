@@ -16,6 +16,7 @@ public class PaceChartTO {
 	private LocalTime startDelay;
 	private int firstFade;
 	private int lastFade;
+	
 	private ArrayList<ErrorMessageTO> ValidationErrorMessages;
 	
 	ArrayList<PaceChartInstanceTO> paceChartInstances;
@@ -108,6 +109,7 @@ public class PaceChartTO {
 	public void setValidationErrorMessages(ArrayList<ErrorMessageTO> validationErrorMessages) {
 		ValidationErrorMessages = validationErrorMessages;
 	}
+
 
 
 }

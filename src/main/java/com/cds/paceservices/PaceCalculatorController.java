@@ -4,6 +4,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,12 +16,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.common.net.HttpHeaders;
+
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+// todo:remove unused imports
+
 @RestController
 public class PaceCalculatorController {
 
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 	private static final int MAX_CHART_COUNT = 100;
 	
+	// create the template splits to full in
 	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
 	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) {
 		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
@@ -45,6 +73,8 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 	
+		// used to create the initial blank pacechart
+		// TODO: create different charts for template races
 		@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
 		public PaceChartTO createPaceChartBootstrap(@RequestParam("distance") double distance) {
 			log.info("pacechartbootstrap: start - received test operation for distance: " + distance);
@@ -87,6 +117,7 @@ public class PaceCalculatorController {
 		}
 
 
+	// test operaton to remove
 	@RequestMapping(value = "/pacecharttest", method = RequestMethod.GET)
 	public PaceChartTO createPaceChartTest() {
 		log.info("pacecharttest: start - received test operation");
@@ -130,6 +161,7 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 
+	// create the actual pace chart
 	@RequestMapping(value = "/pacechart", method = RequestMethod.POST)
 	public PaceChartTO createPaceChart(@RequestBody PaceChartTO paceChartTO) {
 
@@ -195,8 +227,6 @@ public class PaceCalculatorController {
 			
 			if (isValid) paceChartTO = createPaceCharts(paceChartTO);
 			else paceChartTO.setValidationErrorMessages(validationErrorMessages);
-			
-			
 			log.info("pacechart: calculation complete");
 			log.info("pacechart: end - ready to send JSON response");
 			return paceChartTO;
@@ -204,6 +234,96 @@ public class PaceCalculatorController {
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return paceChartTO;
+		}
+	}
+	
+	// create the actual pace chart
+	@RequestMapping(value = "/pacechartexcel", method = RequestMethod.POST)
+	public ResponseEntity<InputStreamResource> createPaceChartExcel(@RequestBody PaceChartTO paceChartTO) {
+
+		try {
+			boolean isValid = true;
+			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
+			log.info("pacechartexcel: received a REST POST request");
+
+			// distance >0 and <100
+			if (paceChartTO.getDistance() <1 || paceChartTO.getDistance()>201) {
+				validationErrorMessages.add(createValidationMessage(1,"Distance must be between 1 and 200"));
+				isValid=false;
+			}
+
+			// first & second fades 0 or more
+			if (paceChartTO.getFirstFade() <0 || paceChartTO.getFirstFade()>99) {
+				validationErrorMessages.add(createValidationMessage(1,"First fade must be between 0 and 99"));
+				isValid=false;
+			}
+			if (paceChartTO.getLastFade() <0 || paceChartTO.getLastFade()>99) {
+				validationErrorMessages.add(createValidationMessage(1,"Last fade must be between 0 and 99"));
+				isValid=false;
+			}
+						
+			// first fade must be <= then second fade
+			if (paceChartTO.getFirstFade() > paceChartTO.getLastFade()) {
+				validationErrorMessages.add(createValidationMessage(1,"First fade may not be larger than last fade"));
+				isValid=false;
+			}
+
+			// last start time >= first start time
+			if (paceChartTO.getPlannedRaceTimeFirst().isAfter(paceChartTO.getPlannedRaceTimeLast())) {
+				validationErrorMessages.add(createValidationMessage(1,"First start time may not be larger than last start time"));
+				isValid=false;
+				
+			}
+				
+			// delta delay positive
+			if (paceChartTO.getPlannedRaceTimeDelta().isBefore(LocalTime.of(0, 0,0))) {
+				validationErrorMessages.add(createValidationMessage(1,"Time increment cannot be negative"));
+				isValid=false;
+				
+			}
+			
+			// start delay positive
+			if (paceChartTO.getStartDelay().isBefore(LocalTime.of(0, 0,0))) {
+				validationErrorMessages.add(createValidationMessage(1,"Start delay cannot be negative"));
+				isValid=false;
+				
+			}
+
+			// no more than 100 records returned
+			//Additional is valid check here because bad data already trapped could break the counter function
+			if (isValid) {
+				if (!DryRunCountOK(paceChartTO)) {
+					validationErrorMessages.add(createValidationMessage(1,"You are trying to create more than " + MAX_CHART_COUNT +" pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
+					isValid=false;
+				}
+			}	
+
+			// calculate results
+			log.info("pacechartexcel: about to calculate");
+			
+			if (isValid) paceChartTO = createPaceCharts(paceChartTO);
+			// TODO: fix error handling here
+			else paceChartTO.setValidationErrorMessages(validationErrorMessages);
+			
+				// create the spreadsheet
+				SpreadsheetUtils spreadsheet = new SpreadsheetUtils();
+				String outputFileLocation = spreadsheet.CreateSpreadsheet(paceChartTO);				
+
+				File file = ResourceUtils.getFile(outputFileLocation);
+		        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		        
+				log.info("pacechartexcel: calculation complete");
+				log.info("pacechartexcel: end - ready to send JSON response");
+
+		        return ResponseEntity.ok()              
+		                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+		                .contentType(MediaType.TEXT_HTML)
+		                .body(resource);
+
+
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return null;
 		}
 	}
 	
@@ -259,6 +379,7 @@ public class PaceCalculatorController {
 			}
 		}
 		paceChartTO.setPaceChartInstances(paceChartInstances);
+		
 		log.info("createpacecharts - end");
 		return paceChartTO;
 	}
