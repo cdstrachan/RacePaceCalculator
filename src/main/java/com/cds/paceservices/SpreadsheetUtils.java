@@ -4,18 +4,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +25,10 @@ public class SpreadsheetUtils {
 	public String CreateSpreadsheet(PaceChartTO paceChart) throws IOException {
 		// create a spreadsheet
 		log.info("createspreadsheet - about to create spreadsheet");
-		Workbook wb = new XSSFWorkbook();
+		XSSFWorkbook wb = new XSSFWorkbook();
 		LocalTime lastFinishTime = null;
 		int colOffset = 1;
-		Sheet sheet = null;
+		XSSFSheet sheet = null;
 
 		for (PaceChartInstanceTO instanceTO : paceChart.paceChartInstances) {
 
@@ -47,41 +46,137 @@ public class SpreadsheetUtils {
 			}
 
 			// start creating the actual spreadsheet
-			Map<String, CellStyle> styles = createStyles(wb);
+			
+			// setup the font
+			String defaultFont = "Calibri";
+			XSSFFont font = wb.createFont();
+			font.setFontHeightInPoints((short) 12);
+			font.setFontName(defaultFont);
+
+			XSSFFont fontBold = wb.createFont();
+			fontBold.setFontHeightInPoints((short) 12);
+			fontBold.setFontName(defaultFont);
+			fontBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+			
+			// setup cell styles - title main
+			XSSFCellStyle styleTitleMain = wb.createCellStyle();
+			styleTitleMain.setFont(fontBold);
+			styleTitleMain.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+			styleTitleMain.setBorderTop(XSSFCellStyle.BORDER_THIN);
+			styleTitleMain.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+			styleTitleMain.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleTitleMain.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleMain.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleMain.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleMain.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleMain.setFillForegroundColor(new XSSFColor(new java.awt.Color(197, 217, 238)));
+			styleTitleMain.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleTitleMain.setWrapText(true);
+			styleTitleMain.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+			styleTitleMain.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			
+			XSSFCellStyle styleTitleSub = wb.createCellStyle();
+			styleTitleSub.setFont(font);
+			styleTitleSub.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+			styleTitleSub.setBorderTop(XSSFCellStyle.BORDER_THIN);
+			styleTitleSub.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+			styleTitleSub.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleTitleSub.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleSub.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleSub.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleSub.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			styleTitleSub.setFillForegroundColor(new XSSFColor(new java.awt.Color(254, 233, 219)));
+			styleTitleSub.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleTitleSub.setWrapText(true);
+			styleTitleSub.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+			styleTitleSub.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			
+			XSSFCellStyle styleRight = wb.createCellStyle();
+			styleRight = wb.createCellStyle();
+			styleRight.setFont(fontBold);
+			styleRight.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+			styleRight.setBorderTop(XSSFCellStyle.BORDER_THIN);
+			styleRight.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+			styleRight.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleRight.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			styleRight.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			styleRight.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			styleRight.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			styleRight.setFillForegroundColor(new XSSFColor(new java.awt.Color(197, 217, 238)));
+			styleRight.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleRight.setWrapText(true);
+			styleRight.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+			styleRight.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			
+
+			XSSFCellStyle styleClean = wb.createCellStyle();
+			styleClean = wb.createCellStyle();
+			styleClean.setFont(font);
+			styleClean.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+			styleClean.setBorderTop(XSSFCellStyle.BORDER_THIN);
+			styleClean.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+			styleClean.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleClean.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			styleClean.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			styleClean.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			styleClean.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			styleClean.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 255, 255)));
+			styleClean.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleClean.setWrapText(true);
+			styleClean.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+			styleClean.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+
+			XSSFCellStyle styleCleanOdd = wb.createCellStyle();
+			styleCleanOdd = wb.createCellStyle();
+			styleCleanOdd.setFont(font);
+			styleCleanOdd.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+			styleCleanOdd.setBorderTop(XSSFCellStyle.BORDER_THIN);
+			styleCleanOdd.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+			styleCleanOdd.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleCleanOdd.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			styleCleanOdd.setTopBorderColor(IndexedColors.BLACK.getIndex());
+			styleCleanOdd.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			styleCleanOdd.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			styleCleanOdd.setFillForegroundColor(new XSSFColor(new java.awt.Color(231, 239, 248)));
+			styleCleanOdd.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleCleanOdd.setWrapText(true);
+			styleCleanOdd.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
+			styleCleanOdd.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+
 			int rowOffset = 0;
-			Row row;
-			Cell cell;
+			XSSFRow row;
+			XSSFCell cell;
 			rowOffset++;
 
 			log.info("createspreadsheet - creating records");
 			// start populating the spreadsheet
 			row = createRow(sheet, rowOffset);
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset, "Race");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 1,
+			cell = CreateCell(styleTitleMain, row, colOffset, "Race");
+			cell = CreateCell(styleTitleSub, row, colOffset + 1,
 					paceChart.getRaceName() + " " + (int) instanceTO.getFade() + "% fade");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 2, "");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 3, "");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 4, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 2, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 3, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 4, "");
 			rowOffset++;
 
 			row = createRow(sheet, rowOffset);
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset, "Time");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 1,
+			cell = CreateCell(styleTitleMain, row, colOffset, "Time");
+			cell = CreateCell(styleTitleSub, row, colOffset + 1,
 					PaceUtils.formatTime(instanceTO.getPlannedRaceTime(),true));
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 2, "Start Delay");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 3,
+			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Start Delay");
+			cell = CreateCell(styleTitleSub, row, colOffset + 3,
 					PaceUtils.formatTime(paceChart.getStartDelay(),false));
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 4, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 4, "");
 			rowOffset++;
 
 			row = createRow(sheet, rowOffset);
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset, "Moving Pace");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 1,
+			cell = CreateCell(styleTitleMain, row, colOffset, "Moving Pace");
+			cell = CreateCell(styleTitleSub, row, colOffset + 1,
 					PaceUtils.formatTime(instanceTO.getAverageMovingPace(),false));
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 2, "Avg. Pace");
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 3,
+			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Avg. Pace");
+			cell = CreateCell(styleTitleSub, row, colOffset + 3,
 					PaceUtils.formatTime(instanceTO.getAverageEndToEndPace(),false));
-			cell = CreateCell(styles, row, "styleTitleSub", colOffset + 4, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 4, "");
 			rowOffset++;
 
 			String first = PaceUtils.getCharForNumber(colOffset + 1);
@@ -101,11 +196,11 @@ public class SpreadsheetUtils {
 
 			row = createRow(sheet, rowOffset);
 			row.setHeightInPoints(35);
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset, "Distance");
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 1, "Split time");
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 2, "Elapsed");
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 3, "Pace");
-			cell = CreateCell(styles, row, "styleTitleMain", colOffset + 4, "Elev.");
+			cell = CreateCell(styleTitleMain, row, colOffset, "Distance");
+			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Split time");
+			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Elapsed");
+			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Pace");
+			cell = CreateCell(styleTitleMain, row, colOffset + 4, "Elev.");
 
 			sheet.setColumnWidth(colOffset, 12 * 256); // split number
 			sheet.setColumnWidth(colOffset + 1, 10 * 256); // split time
@@ -118,28 +213,28 @@ public class SpreadsheetUtils {
 			boolean isOddRow = false;
 			for (SplitTO raceSplit : instanceTO.getRaceSplits()) {
 
-				String cellStype;
+				XSSFCellStyle cellStype;
 				if (isOddRow)
-					cellStype = "styleCleanOdd";
+					cellStype =  styleCleanOdd;
 				else
-					cellStype = "styleClean";
+					cellStype = styleClean;
 
 				isOddRow = !isOddRow;
 
 				row = createRow(sheet, rowOffset);
 				distance += raceSplit.getSplitDistance();
 				if (Math.ceil(distance) > distance) // we are at a fraction - the last split. EG 21.1
-					cell = CreateCell(styles, row, "styleRightAligned", colOffset, String.valueOf(distance));
+					cell = CreateCell(styleRight, row, colOffset, String.valueOf(distance));
 				else
-					cell = CreateCell(styles, row, "styleRightAligned", colOffset,
+					cell = CreateCell(styleRight, row, colOffset,
 							String.valueOf(raceSplit.getSplitNumber()));
-				cell = CreateCell(styles, row, cellStype, colOffset + 1,
+				cell = CreateCell(cellStype, row, colOffset + 1,
 						PaceUtils.formatTime(raceSplit.getFinalPace(),false));
-				cell = CreateCell(styles, row, cellStype, colOffset + 2,
+				cell = CreateCell(cellStype, row, colOffset + 2,
 						PaceUtils.formatTime(raceSplit.getFinalTime(),false));
-				cell = CreateCell(styles, row, cellStype, colOffset + 3,
+				cell = CreateCell(cellStype, row, colOffset + 3,
 						PaceUtils.formatTime(raceSplit.getFinalElapsedTime(),true));
-				cell = CreateCell(styles, row, cellStype, colOffset + 4,
+				cell = CreateCell(cellStype, row, colOffset + 4,
 						String.valueOf((int) raceSplit.getElevation()));
 				rowOffset++;
 			}
@@ -147,7 +242,7 @@ public class SpreadsheetUtils {
 			colOffset += 6;
 
 		}
-		log.info("About to create file");
+		log.info("createspreadsheet - About to create file");
 		File excelFile = File.createTempFile("results_", ".xlsx");
 		FileOutputStream excelFileStream = new FileOutputStream(excelFile);
 		wb.write(excelFileStream);
@@ -156,121 +251,22 @@ public class SpreadsheetUtils {
 		return excelFile.getPath();
 
 	}
-
-	private Cell CreateCell(Map<String, CellStyle> styles, Row row, String cellStyle, int col, String value) {
-		Cell cell = row.createCell(col);
-		cell.setCellStyle(styles.get(cellStyle));
+	
+	
+	private XSSFCell CreateCell(XSSFCellStyle styles, XSSFRow row, int col, String value) {
+		XSSFCell cell = row.createCell(col);
+		cell.setCellStyle(styles);
 		cell.setCellValue(value);
 		return cell;
 	}
 
 	// utility to get a row or create it if it does not already exist
-	private Row createRow(Sheet sheet, int rowOffset) {
-		Row row = sheet.getRow(rowOffset);
+	private XSSFRow createRow(XSSFSheet sheet, int rowOffset) {
+		XSSFRow row = sheet.getRow(rowOffset);
 		if (row == null)
 			row = sheet.createRow(rowOffset);
 		return row;
 	}
 
-	private static Map<String, CellStyle> createStyles(Workbook wb) {
-		String defaultFont = "Calibri";
-		Map<String, CellStyle> styles = new HashMap<>();
-
-		// setup the font
-		Font font = wb.createFont();
-		font.setFontHeightInPoints((short) 12);
-		font.setFontName(defaultFont);
-
-		Font fontBold = wb.createFont();
-		fontBold.setFontHeightInPoints((short) 12);
-		fontBold.setFontName(defaultFont);
-		fontBold.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		
-		CellStyle style = wb.createCellStyle();
-		style.setFont(fontBold);
-		style.setBorderBottom(CellStyle.BORDER_THIN);
-		style.setBorderTop(CellStyle.BORDER_THIN);
-		style.setBorderLeft(CellStyle.BORDER_THIN);
-		style.setBorderRight(CellStyle.BORDER_THIN);
-		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setWrapText(true);
-		style.setAlignment(CellStyle.ALIGN_LEFT);
-		style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-		styles.put("styleTitleMain", style);
-
-		style = wb.createCellStyle();
-		style.setFont(font);
-		style.setBorderBottom(CellStyle.BORDER_THIN);
-		style.setBorderTop(CellStyle.BORDER_THIN);
-		style.setBorderLeft(CellStyle.BORDER_THIN);
-		style.setBorderRight(CellStyle.BORDER_THIN);
-		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setFillForegroundColor(IndexedColors.TAN.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setWrapText(true);
-		style.setAlignment(CellStyle.ALIGN_LEFT);
-		style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-		styles.put("styleTitleSub", style);
-
-		style = wb.createCellStyle();
-		style.setFont(fontBold);
-		style.setBorderBottom(CellStyle.BORDER_THIN);
-		style.setBorderTop(CellStyle.BORDER_THIN);
-		style.setBorderLeft(CellStyle.BORDER_THIN);
-		style.setBorderRight(CellStyle.BORDER_THIN);
-		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setWrapText(true);
-		style.setAlignment(CellStyle.ALIGN_RIGHT);
-		style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-		styles.put("styleRightAligned", style);
-
-		style = wb.createCellStyle();
-		style.setFont(font);
-		style.setBorderBottom(CellStyle.BORDER_THIN);
-		style.setBorderTop(CellStyle.BORDER_THIN);
-		style.setBorderLeft(CellStyle.BORDER_THIN);
-		style.setBorderRight(CellStyle.BORDER_THIN);
-		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setWrapText(true);
-		style.setAlignment(CellStyle.ALIGN_RIGHT);
-		style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-		styles.put("styleClean", style);
-
-		style = wb.createCellStyle();
-		style.setFont(font);
-		style.setBorderBottom(CellStyle.BORDER_THIN);
-		style.setBorderTop(CellStyle.BORDER_THIN);
-		style.setBorderLeft(CellStyle.BORDER_THIN);
-		style.setBorderRight(CellStyle.BORDER_THIN);
-		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
-		style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-		style.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		style.setWrapText(true);
-		style.setAlignment(CellStyle.ALIGN_RIGHT);
-		style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-		styles.put("styleCleanOdd", style);
-
-		return styles;
-	}
+	
 }
