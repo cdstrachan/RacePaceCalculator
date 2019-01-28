@@ -73,7 +73,7 @@ public class PaceUtils {
 		return FirstTime;
 	}
 
-	static String formatTime(LocalTime theTime) {
+	static String formatTime(LocalTime theTime, boolean bHour) {
 		DateTimeFormatter timeFormatHH = DateTimeFormatter.ofPattern("hh:mm:ss");
 		DateTimeFormatter timeFormatH = DateTimeFormatter.ofPattern("h:mm:ss");
 		DateTimeFormatter timeFormatMM = DateTimeFormatter.ofPattern("mm:ss");
@@ -83,8 +83,14 @@ public class PaceUtils {
 		if (theTime.getHour() > 0)
 			return "0" + theTime.format(timeFormatH);
 		if (theTime.getMinute() > 9)
-			return "00:" + theTime.format(timeFormatMM);
-		return "00:0" +theTime.format(timeFormatM);
+			if (bHour) 
+				return "00:" + theTime.format(timeFormatMM);
+			else
+				return theTime.format(timeFormatMM);
+		if (bHour)
+			return "00:0" +theTime.format(timeFormatM);
+		else
+			return "0" +theTime.format(timeFormatM);
 
 	}
 
