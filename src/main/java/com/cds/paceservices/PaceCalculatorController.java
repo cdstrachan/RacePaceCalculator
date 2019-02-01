@@ -2,8 +2,10 @@ package com.cds.paceservices;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.common.base.Charsets;
 import com.google.common.net.HttpHeaders;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 // todo:remove unused imports
 
 @RestController
@@ -29,7 +40,7 @@ public class PaceCalculatorController {
 
 	// create the template splits to full in
 	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
-	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) {
+	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) throws IOException {
 		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
 
 		ArrayList<SplitInputTO> splitInputs;
@@ -49,9 +60,31 @@ public class PaceCalculatorController {
 
 		}
 		paceChartTO.setSplitInputs(splitInputs);
-
 		paceChartTO.setRaceName("My pace chart");
+
 		log.info("pacecharttemplate: Finished");
+		return paceChartTO;
+	}
+
+	// create the template splits to full in
+	@RequestMapping(value = "/pacechartpreload", method = RequestMethod.POST)
+	public PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
+		log.info("pacechartpreload: start - received test operation for distance: " + paceChartTO.getDistance());
+
+		// load the template
+		String raceTemplateName = paceChartTO.getRaceTemplateName();
+		log.info("pacechartpreload: Loading the template: " + raceTemplateName);
+
+		File resource = new ClassPathResource("static/templates/" + raceTemplateName + ".json").getFile();
+		String content = new String(Files.readAllBytes(resource.toPath()));
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+
+		paceChartTO = mapper.readValue(content, PaceChartTO.class);
+		paceChartTO.setRaceTemplateName(raceTemplateName);
+
+		log.info("pacechartpreload: Finished");
 		return paceChartTO;
 	}
 
@@ -86,6 +119,8 @@ public class PaceCalculatorController {
 		paceChartTO.setSplitInputs(splitInputs);
 
 		paceChartTO.setRaceName("My pace chart");
+		// todo: remvoe below
+		paceChartTO.setRaceTemplateName("myrace");
 		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0, 59, 00));
 		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1, 29, 00));
 		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0, 10, 00));
@@ -148,6 +183,7 @@ public class PaceCalculatorController {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
 			log.info("pacechart: received a REST POST request");
+			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {

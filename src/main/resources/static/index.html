@@ -18,14 +18,20 @@
 		<h1>Input parameters</h1>
 		<form>
 			<table>
-				<tr>
-					<td class="mainborder" width="120px">Race name</td>
+<tr>
+					<td class="mainborder" width="120px">Race template name</td>
 					<td class="subborder" width="120px">
-						<input class="inputlarge" type="text" ng-model="paceChartInput.raceName" maxlength="20" /></td>
+						<select  ng-model="paceChartInput.raceTemplateName">
+						 <option value = "">Custom</option>
+						 <option value = "myrace">myrace</option>
+						 <option value = "myrace2">myrace2</option>
+						</select>
+						
+						</td>
 					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">The name of your race.</span></div>
+						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Optional template.</span></div>
 					</td>
-					<td rowspan=8 style="vertical-align: top">
+					<td rowspan=9 style="vertical-align: top">
 						This calculator is used to calculated suggested paces for running events. It takes into account the elevation of
 						each split, delay at the start due to congestion, and fade due to the runner getting tired towards the end.<br />
 						<br />
@@ -36,6 +42,14 @@
 						<br />
 						<a href="https://www.facebook.com/groups/314436651950192" target="_blank">If you are in Cape Town, you can
 							usually get excellent handcrafted pacecharts for the main races here.</a>
+					</td>
+
+				</tr>				<tr>
+					<td class="mainborder" width="120px">Race name</td>
+					<td class="subborder" width="120px">
+						<input class="inputlarge" type="text" ng-model="paceChartInput.raceName" maxlength="20" /></td>
+					<td class="subborder">
+						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">The name of your race.</span></div>
 					</td>
 
 				</tr>

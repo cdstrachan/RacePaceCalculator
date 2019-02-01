@@ -10,6 +10,7 @@ public class PaceChartTO {
 	ArrayList<SplitInputTO> splitInputs;
 	//@JsonIgnore
 	private String raceName;
+	private String raceTemplateName;
 	private LocalTime plannedRaceTimeFirst;
 	private LocalTime plannedRaceTimeLast;
 	private LocalTime plannedRaceTimeDelta;
@@ -108,6 +109,14 @@ public class PaceChartTO {
 
 	public void setValidationErrorMessages(ArrayList<ErrorMessageTO> validationErrorMessages) {
 		ValidationErrorMessages = validationErrorMessages;
+	}
+
+	public String getRaceTemplateName() {
+		return raceTemplateName;
+	}
+
+	public void setRaceTemplateName(String raceTemplateName) {
+		this.raceTemplateName = raceTemplateName;
 	}
 
 
