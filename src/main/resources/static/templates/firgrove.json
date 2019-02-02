@@ -3,25 +3,25 @@
 	"splitInputs": [
 		{
 			"splitNumber": 1,
-			"elevation": 0,
+			"elevation": -13,
 			"splitDistance": 1,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 2,
-			"elevation": 0,
+			"elevation": 3,
 			"splitDistance": 2,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 3,
-			"elevation": 0,
+			"elevation": 9,
 			"splitDistance": 3,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 4,
-			"elevation": 0,
+			"elevation": 10,
 			"splitDistance": 4,
 			"manualWeight": 100
 		},
@@ -33,31 +33,31 @@
 		},
 		{
 			"splitNumber": 6,
-			"elevation": 0,
+			"elevation": 20,
 			"splitDistance": 6,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 7,
-			"elevation": 0,
+			"elevation": 19,
 			"splitDistance": 7,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 8,
-			"elevation": 0,
+			"elevation": 12,
 			"splitDistance": 8,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 9,
-			"elevation": 0,
+			"elevation": 7,
 			"splitDistance": 9,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 10,
-			"elevation": 0,
+			"elevation": 17,
 			"splitDistance": 10,
 			"manualWeight": 100
 		},
@@ -69,43 +69,43 @@
 		},
 		{
 			"splitNumber": 12,
-			"elevation": 0,
+			"elevation": 28,
 			"splitDistance": 12,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 13,
-			"elevation": 0,
+			"elevation": -15,
 			"splitDistance": 13,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 14,
-			"elevation": 0,
+			"elevation": 3,
 			"splitDistance": 14,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 15,
-			"elevation": 0,
+			"elevation": -15,
 			"splitDistance": 15,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 16,
-			"elevation": 0,
+			"elevation": -10,
 			"splitDistance": 16,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 17,
-			"elevation": 0,
+			"elevation": 12,
 			"splitDistance": 17,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 18,
-			"elevation": 0,
+			"elevation": 14,
 			"splitDistance": 18,
 			"manualWeight": 100
 		},
@@ -117,25 +117,25 @@
 		},
 		{
 			"splitNumber": 20,
-			"elevation": 0,
+			"elevation": 6,
 			"splitDistance": 20,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 21,
-			"elevation": 0,
-			"splitDistance": 21,
+			"elevation": -18,
+			"splitDistance": 7,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 22,
-			"elevation": 0,
+			"elevation": -3,
 			"splitDistance": 21.1,
 			"manualWeight": 100
 		}
 	],
-	"raceName": "Two Oceans half marathon - 2018",
-	"raceTemplateName": "twooceanshalf2018",
+	"raceName": "Firgrove 21.1k - 2018",
+	"raceTemplateName": "firgrove",
 	"plannedRaceTimeFirst": "01:29:00",
 	"plannedRaceTimeLast": "03:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
