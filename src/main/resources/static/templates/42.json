@@ -1,5 +1,5 @@
 {
-	"distance": 21.1,
+	"distance": 42.2,
 	"splitInputs": [
 		{
 			"splitNumber": 1,
@@ -134,10 +134,10 @@
 			"manualWeight": 100
 		}
 	],
-	"raceName": "Two Oceans half marathon - 2018",
-	"raceTemplateName": "twooceanshalf2018",
-	"plannedRaceTimeFirst": "01:29:00",
-	"plannedRaceTimeLast": "03:29:00",
+	"raceName": "42.2k marathon",
+	"raceTemplateName": "42",
+	"plannedRaceTimeFirst": "03:29:00",
+	"plannedRaceTimeLast": "05:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
 	"startDelay": "00:03:00",
 	"firstFade": 0,

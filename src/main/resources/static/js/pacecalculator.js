@@ -9,7 +9,7 @@ var app = angular.module('PaceChartCalculator', [])
 
 app.controller('Pacecalculator', function ($scope, $http) {
     $scope.ErrorMessage = "";
-    $http.get('/pacechartbootstrap?distance=10').
+    $http.get('/pacechartbootstrap?template=10').
         then(function (response) {
             $scope.paceChartInput = response.data;
         }).catch(function (e) {

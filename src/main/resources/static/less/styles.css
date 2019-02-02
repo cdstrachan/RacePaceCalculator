@@ -18,6 +18,9 @@ table {
 .inputlarge {
   width: 90px;
 }
+.inputhuge {
+  width: 210px;
+}
 .buttonbig {
   background-color: #c5d9ee;
   border: solid 1px;

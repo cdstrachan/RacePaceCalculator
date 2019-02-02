@@ -2,6 +2,7 @@ package com.cds.paceservices;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,13 @@ import com.google.common.base.Charsets;
 import com.google.common.net.HttpHeaders;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -75,9 +80,12 @@ public class PaceCalculatorController {
 		String raceTemplateName = paceChartTO.getRaceTemplateName();
 		log.info("pacechartpreload: Loading the template: " + raceTemplateName);
 
-		File resource = new ClassPathResource("static/templates/" + raceTemplateName + ".json").getFile();
-		String content = new String(Files.readAllBytes(resource.toPath()));
-
+		// read the template
+		ClassPathResource resource = new ClassPathResource("static/templates/" + raceTemplateName + ".json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+        String content = reader.lines().collect(Collectors.joining("\n"));
+        reader.close();
+		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 
@@ -90,55 +98,12 @@ public class PaceCalculatorController {
 
 	// used to create the initial blank pacechart
 	@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
-	public PaceChartTO createPaceChartBootstrap(@RequestParam("distance") double distance) throws IOException {
-		log.info("pacechartbootstrap: start - received test operation for distance: " + distance);
+	public PaceChartTO createPaceChartBootstrap(@RequestParam("template") String template) throws IOException {
+		log.info("pacechartbootstrap: start - received bootstrap operation for template: " + template);
 		PaceChartTO paceChartTO = new PaceChartTO();
-		paceChartTO.setRaceTemplateName("default");
+		paceChartTO.setRaceTemplateName(template);
 		paceChartTO = createPaceChartPreload(paceChartTO);
 		log.info("pacechartbootstrap: Finished");
-		return paceChartTO;
-	}
-
-	// test operaton to remove
-	@RequestMapping(value = "/pacecharttest", method = RequestMethod.GET)
-	public PaceChartTO createPaceChartTest() {
-		log.info("pacecharttest: start - received test operation");
-
-		double distance = 10;
-
-		ArrayList<SplitInputTO> splitInputs;
-
-		log.info("pacecharttest: creating test input");
-		PaceChartTO paceChartTO = new PaceChartTO();
-
-		// setup race distance
-		paceChartTO.setDistance(distance);
-
-		// setup elevations weighting
-		splitInputs = new ArrayList<SplitInputTO>();
-		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			SplitInputTO splitInput = new SplitInputTO();
-			splitInput.setSplitNumber(counter);
-			splitInput.setManualWeight(100);
-			splitInput.setElevation(100);
-			splitInputs.add((splitInput));
-
-		}
-		paceChartTO.setSplitInputs(splitInputs);
-
-		paceChartTO.setRaceName("Testing3");
-		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(1, 00, 00));
-		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1, 30, 00));
-		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0, 15, 00));
-		paceChartTO.setStartDelay(LocalTime.of(0, 0, 30));
-		paceChartTO.setFirstFade(2);
-		paceChartTO.setLastFade(3);
-
-		String uri = "http://localhost:8080/pacechart";
-		RestTemplate paceTemplate = new RestTemplate();
-		log.info("pacecharttest: REST call to pacechart");
-		paceChartTO = paceTemplate.postForObject(uri, paceChartTO, PaceChartTO.class);
-		log.info("pacecharttest: REST response received");
 		return paceChartTO;
 	}
 

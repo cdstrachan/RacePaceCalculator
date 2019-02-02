@@ -21,7 +21,7 @@
 		},
 		{
 			"splitNumber": 4,
-			"elevation": 5,
+			"elevation": 0,
 			"splitDistance": 4,
 			"manualWeight": 100
 		},
@@ -62,10 +62,10 @@
 			"manualWeight": 100
 		}
 	],
-	"raceName": "My race",
-	"plannedRaceTimeFirst": "00:59:00",
-	"plannedRaceTimeLast": "01:29:00",
-	"plannedRaceTimeDelta": "00:10:00",
+	"raceName": "10k",
+	"plannedRaceTimeFirst": "00:44:00",
+	"plannedRaceTimeLast": "02:29:00",
+	"plannedRaceTimeDelta": "00:15:00",
 	"startDelay": "00:00:30",
 	"firstFade": 0,
 	"lastFade": 2,
