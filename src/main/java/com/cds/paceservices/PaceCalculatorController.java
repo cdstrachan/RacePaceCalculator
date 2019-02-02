@@ -89,45 +89,12 @@ public class PaceCalculatorController {
 	}
 
 	// used to create the initial blank pacechart
-	// TODO: create different charts for template races
 	@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
-	public PaceChartTO createPaceChartBootstrap(@RequestParam("distance") double distance) {
+	public PaceChartTO createPaceChartBootstrap(@RequestParam("distance") double distance) throws IOException {
 		log.info("pacechartbootstrap: start - received test operation for distance: " + distance);
-
-		ArrayList<SplitInputTO> splitInputs;
-
-		log.info("pacechartbootstrap: creating input");
 		PaceChartTO paceChartTO = new PaceChartTO();
-
-		// setup race distance
-		paceChartTO.setDistance(distance);
-
-		// setup elevations & manual weighting
-		splitInputs = new ArrayList<SplitInputTO>();
-		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			SplitInputTO splitInput = new SplitInputTO();
-			splitInput.setSplitNumber(counter + 1);
-			splitInput.setElevation(0);
-			splitInput.setManualWeight(100);
-			if (counter + 1 > paceChartTO.getDistance())
-				splitInput.setSplitDistance(paceChartTO.getDistance());
-			else
-				splitInput.setSplitDistance(counter + 1);
-			splitInputs.add((splitInput));
-
-		}
-		paceChartTO.setSplitInputs(splitInputs);
-
-		paceChartTO.setRaceName("My pace chart");
-		// todo: remvoe below
-		paceChartTO.setRaceTemplateName("myrace");
-		paceChartTO.setPlannedRaceTimeFirst(LocalTime.of(0, 59, 00));
-		paceChartTO.setPlannedRaceTimeLast(LocalTime.of(1, 29, 00));
-		paceChartTO.setPlannedRaceTimeDelta(LocalTime.of(0, 10, 00));
-		paceChartTO.setStartDelay(LocalTime.of(0, 0, 30));
-		paceChartTO.setFirstFade(0);
-		paceChartTO.setLastFade(2);
-
+		paceChartTO.setRaceTemplateName("default");
+		paceChartTO = createPaceChartPreload(paceChartTO);
 		log.info("pacechartbootstrap: Finished");
 		return paceChartTO;
 	}

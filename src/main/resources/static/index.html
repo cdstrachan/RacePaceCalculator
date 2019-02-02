@@ -22,11 +22,12 @@
 					<td class="mainborder" width="120px">Race template name</td>
 					<td class="subborder" width="120px">
 						<select  ng-model="paceChartInput.raceTemplateName">
-						 <option value = "">Custom</option>
+						 <option value = "default">Default 10k</option>
 						 <option value = "myrace">myrace</option>
 						 <option value = "myrace2">myrace2</option>
+						 <option value = "twooceanshalf2018">Two Oceans 1/2 Marathon 2018 route</option>
 						</select>
-						
+						<input type="submit" ng-click="createChartPreload(paceChartInput.distance)" value="Set" class="buttonsmall" />
 						</td>
 					<td class="subborder">
 						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Optional template.</span></div>
@@ -183,8 +184,8 @@
 				</tr>
 				<tr>
 					<td class="mainborder">Distance</td>
-					<td class="mainborder">Split Time</td>
-					<td class="mainborder">Split Pace</td>
+					<td class="mainborder">Split time</td>
+					<td class="mainborder">Split pace</td>
 					<td class="mainborder">Elapsed</td>
 					<td class="mainborder">Elev.</td>
 				</tr>

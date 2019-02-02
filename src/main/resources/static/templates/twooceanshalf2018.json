@@ -1,0 +1,147 @@
+{
+	"distance": 21.1,
+	"splitInputs": [
+		{
+			"splitNumber": 1,
+			"elevation": 0,
+			"splitDistance": 1,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 2,
+			"elevation": 0,
+			"splitDistance": 2,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 3,
+			"elevation": 0,
+			"splitDistance": 3,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 4,
+			"elevation": 0,
+			"splitDistance": 4,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 5,
+			"elevation": 0,
+			"splitDistance": 5,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 6,
+			"elevation": 0,
+			"splitDistance": 6,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 7,
+			"elevation": 0,
+			"splitDistance": 7,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 8,
+			"elevation": 0,
+			"splitDistance": 8,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 9,
+			"elevation": 0,
+			"splitDistance": 9,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 10,
+			"elevation": 0,
+			"splitDistance": 10,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 11,
+			"elevation": 0,
+			"splitDistance": 11,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 12,
+			"elevation": 0,
+			"splitDistance": 12,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 13,
+			"elevation": 0,
+			"splitDistance": 13,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 14,
+			"elevation": 0,
+			"splitDistance": 14,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 15,
+			"elevation": 0,
+			"splitDistance": 15,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 16,
+			"elevation": 0,
+			"splitDistance": 16,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 17,
+			"elevation": 0,
+			"splitDistance": 17,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 18,
+			"elevation": 0,
+			"splitDistance": 18,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 19,
+			"elevation": 0,
+			"splitDistance": 19,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 20,
+			"elevation": 0,
+			"splitDistance": 20,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 21,
+			"elevation": 0,
+			"splitDistance": 21,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 22,
+			"elevation": 0,
+			"splitDistance": 21.1,
+			"manualWeight": 100
+		}
+	],
+	"raceName": "Two Oceans half marathon - 2018",
+	"raceTemplateName": "twooceanshalf2018",
+	"plannedRaceTimeFirst": "00:59:00",
+	"plannedRaceTimeLast": "01:29:00",
+	"plannedRaceTimeDelta": "00:10:00",
+	"startDelay": "00:00:30",
+	"firstFade": 0,
+	"lastFade": 2,
+	"paceChartInstances": null,
+	"validationErrorMessages": null
+}

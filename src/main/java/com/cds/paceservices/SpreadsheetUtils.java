@@ -198,8 +198,8 @@ public class SpreadsheetUtils {
 			row.setHeightInPoints(35);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Distance");
 			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Split time");
-			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Elapsed");
-			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Pace");
+			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Split pace");
+			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Elapsed");
 			cell = CreateCell(styleTitleMain, row, colOffset + 4, "Elev.");
 
 			sheet.setColumnWidth(colOffset, 12 * 256); // split number
@@ -229,9 +229,9 @@ public class SpreadsheetUtils {
 					cell = CreateCell(styleRight, row, colOffset,
 							String.valueOf(raceSplit.getSplitNumber()));
 				cell = CreateCell(cellStype, row, colOffset + 1,
-						PaceUtils.formatTime(raceSplit.getFinalPace(),false));
-				cell = CreateCell(cellStype, row, colOffset + 2,
 						PaceUtils.formatTime(raceSplit.getFinalTime(),false));
+				cell = CreateCell(cellStype, row, colOffset + 2,
+						PaceUtils.formatTime(raceSplit.getFinalPace(),false));
 				cell = CreateCell(cellStype, row, colOffset + 3,
 						PaceUtils.formatTime(raceSplit.getFinalElapsedTime(),true));
 				cell = CreateCell(cellStype, row, colOffset + 4,
