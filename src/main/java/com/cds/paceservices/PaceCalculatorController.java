@@ -363,7 +363,7 @@ public class PaceCalculatorController {
 		// calculate what we can without totals
 		log.info("createpacechart - creating splits");
 		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			log.info("createpacechart - creating split # " + (counter + 1));
+			//log.info("createpacechart - creating split # " + (counter + 1));
 			SplitTO raceSplit = new SplitTO();
 
 			// the last lap may be a different (shorter) distance

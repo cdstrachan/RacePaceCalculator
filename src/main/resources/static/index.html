@@ -12,6 +12,18 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-5737311-10', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
 <body>
 	<div ng-controller="Pacecalculator" class="container">
 		<div class="validationerror">Pace calculator for running events - experimental (v1.04)</div>
@@ -27,7 +39,7 @@
 						 <option value = "42">42.2k marathon</option>
 						 <option value = "firgrove">Firgrove 21.1k 2018 </option>
 						</select>
-						<input type="submit" ng-click="createChartPreload(paceChartInput.distance)" value="Set" class="buttonsmall" />
+						<input type="submit" ng-click="createChartPreload(paceChartInput.raceName)" value="Set" class="buttonsmall" />
 						</td>
 					<td class="subborder">
 						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Optional template.</span></div>
@@ -36,7 +48,7 @@
 						This calculator is used to calculated suggested paces for running events. It takes into account the elevation of
 						each split, delay at the start due to congestion, and fade due to the runner getting tired towards the end.<br />
 						<br />
-						This calculations are a "best-bet" calculation without knowledge of a particular race, hence the calculator is
+						These calculations are a "best-bet" calculation without knowledge of a particular race, hence the calculator is
 						not intended to be used to replace a hand-crafted chart.<br />
 						<br />
 						This is just a guide, you are responsible for running your own race, and you are responsible for your own pacing!<br />
@@ -57,7 +69,7 @@
 				<tr>
 					<td class="mainborder">Distance</td>
 					<td class="subborder">
-						<input class="inputmedium" type="number" ng-model="paceChartInput.distance" min="1" max="99" step="0.1" />
+						<input id=txtDistance" class="inputmedium" type="number" ng-model="paceChartInput.distance" min="1" max="99" step="0.1" />
 						<input type="submit" ng-click="createChartTemplate(paceChartInput.distance)" value="Set" class="buttonsmall" /></td>
 					</td>
 					<td class="subborder">
@@ -110,7 +122,7 @@
 					</td>
 					<td class="subborder">
 						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">A 2% fade means that the second half of a flat
-								course is 2% slower than the first half. You can calculate charts for multiple fades. A chart will be create
+								course is 2% slower than the first half. You can calculate charts for multiple fades. A chart will be created
 								for each % from the first fade to the last fade.</span></div>
 					</td>
 				</tr>
@@ -120,7 +132,7 @@
 						<input class="inputsmall" type="number" ng-model="paceChartInput.lastFade" min="0" max="99" />
 					</td>
 					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the last fade.</span></div>
+						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the last fade %.</span></div>
 					</td>
 				</tr>
 			</table>
@@ -136,8 +148,6 @@
 								faster, or higher to make the split slower. Usually you can ignore it.</span></div>
 					</td>
 					<td class="noborder" rowspan="8" width="50%">
-
-						<div class="validationerror">{{loadingmessage}}</div>
 						<div class="criticalerror">{{CriticalErrorMessage}}</div>
 						<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
 							<div class="validationerror">{{validationMessage.messageDescription}}</div>
@@ -157,8 +167,8 @@
 				</tr>
 
 			</table>
-			<input type="submit" ng-click="createChart()" value="Create online charts" class="buttonbig" />
-			<input type="submit" ng-click="createChartExcel()" value="Download Excel (experimental)" class="buttonbig" />
+			<input type="submit" ng-click="createChart(paceChartInput.raceName)" value="Create online charts" class="buttonbig" />
+			<input type="submit" ng-click="createChartExcel(paceChartInput.raceName)" value="Download Excel (experimental)" class="buttonbig" /><div class="validationerror">{{loadingmessage}}</div>
 		</form>
 		<h1>Pacecharts</h1>
 		<div ng-repeat="paceChartInstance in paceChart.paceChartInstances">

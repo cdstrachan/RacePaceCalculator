@@ -7,7 +7,7 @@ var app = angular.module('PaceChartCalculator', [])
         };
     })
 
-app.controller('Pacecalculator', function ($scope, $http) {
+app.controller('Pacecalculator', function ($scope, $http, $window) {
     $scope.ErrorMessage = "";
     $http.get('/pacechartbootstrap?template=10').
         then(function (response) {
@@ -17,11 +17,12 @@ app.controller('Pacecalculator', function ($scope, $http) {
             $scope.CriticalErrorMessage = "Error connecting to server";
         });
 
-    $scope.createChart = function () {
+    $scope.createChart = function (raceName) {
         $scope.ErrorMessage = "";
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
         $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
+        	$window.ga('send', 'event', 'onlinechartcreated',raceName);
             $scope.paceChart = response.data;
             $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
         }).catch(function (e) {
@@ -30,13 +31,15 @@ app.controller('Pacecalculator', function ($scope, $http) {
         })
     }
 
-    $scope.createChartExcel = function () {
+    $scope.createChartExcel = function (raceName) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", '/pacechartexcel');
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.responseType = "arraybuffer";
+        
         xhr.onload = function () {
             if (this.status === 200) {
+            	$window.ga('send', 'event', 'excelcreated',raceName);
                 var blob = new Blob([xhr.response], { type: "application/xlsx" });
                 var a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
@@ -51,6 +54,7 @@ app.controller('Pacecalculator', function ($scope, $http) {
         $scope.ErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacecharttemplate', $scope.paceChartInput).then(function (response) {
+        	$window.ga('send', 'event', 'distanceset',distance);
             $scope.paceChartInput = response.data;
         }).catch(function (e) {
             console.log("Error creating template", e);
@@ -58,10 +62,11 @@ app.controller('Pacecalculator', function ($scope, $http) {
         })
     };
     
-    $scope.createChartPreload = function (distance) {
+    $scope.createChartPreload = function (templateName) {
         $scope.ErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
+        	$window.ga('send', 'event', 'templateloaded',templateName);
             $scope.paceChartInput = response.data;
         }).catch(function (e) {
             console.log("Error preloading", e);
