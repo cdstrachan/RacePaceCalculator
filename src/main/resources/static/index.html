@@ -136,8 +136,13 @@ ga('send', 'pageview');
 					</td>
 				</tr>
 			</table>
+			<div class="criticalerror">{{CriticalErrorMessage}}</div>
+						<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
+							<div class="validationerror">{{validationMessage.messageDescription}}</div>
+						</div>
+			
 			<h1>Split data</h1>
-			<table wicth="100%">
+			<table wicth="100%" border=1>
 				<tr>
 					<td class="subborder" width="60px">Split</td>
 					<td class="subborder" width="120px">Elevation (m) <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter
@@ -147,14 +152,7 @@ ga('send', 'pageview');
 								manual weighting can be used to override the default calculations. Make it a little lower to make the split
 								faster, or higher to make the split slower. Usually you can ignore it.</span></div>
 					</td>
-					<td class="noborder" rowspan="8" width="50%">
-						<div class="criticalerror">{{CriticalErrorMessage}}</div>
-						<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
-							<div class="validationerror">{{validationMessage.messageDescription}}</div>
-						</div>
 
-
-					</td>
 				</tr>
 				<tr ng-repeat="splitInput in paceChartInput.splitInputs" ng-class-odd="'maindata'" ng-class-even="'maindatalight'">
 					<td class="boxborder">{{splitInput.splitDistance}}</td>
