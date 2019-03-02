@@ -139,7 +139,7 @@
 	"plannedRaceTimeFirst": "01:29:00",
 	"plannedRaceTimeLast": "03:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
-	"startDelay": "00:03:00",
+	"startDelay": "00:01:30",
 	"firstFade": 0,
 	"lastFade": 2,
 	"paceChartInstances": null,

@@ -3,139 +3,139 @@
 	"splitInputs": [
 		{
 			"splitNumber": 1,
-			"elevation": 0,
+			"elevation": 9,
 			"splitDistance": 1,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 2,
-			"elevation": 0,
+			"elevation": -3,
 			"splitDistance": 2,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 3,
-			"elevation": 0,
+			"elevation": -2,
 			"splitDistance": 3,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 4,
-			"elevation": 0,
+			"elevation": 11,
 			"splitDistance": 4,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 5,
-			"elevation": 0,
+			"elevation": 61,
 			"splitDistance": 5,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 6,
-			"elevation": 0,
+			"elevation": 16,
 			"splitDistance": 6,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 7,
-			"elevation": 0,
+			"elevation": -5,
 			"splitDistance": 7,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 8,
-			"elevation": 0,
+			"elevation": -26,
 			"splitDistance": 8,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 9,
-			"elevation": 0,
+			"elevation": -22,
 			"splitDistance": 9,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 10,
-			"elevation": 0,
+			"elevation": -7,
 			"splitDistance": 10,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 11,
-			"elevation": 0,
+			"elevation": -8,
 			"splitDistance": 11,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 12,
-			"elevation": 0,
+			"elevation": 4,
 			"splitDistance": 12,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 13,
-			"elevation": 0,
+			"elevation": 1,
 			"splitDistance": 13,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 14,
-			"elevation": 0,
+			"elevation": -4,
 			"splitDistance": 14,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 15,
-			"elevation": 0,
+			"elevation": 6,
 			"splitDistance": 15,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 16,
-			"elevation": 0,
+			"elevation": 6,
 			"splitDistance": 16,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 17,
-			"elevation": 0,
+			"elevation": 14,
 			"splitDistance": 17,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 18,
-			"elevation": 0,
+			"elevation": 21,
 			"splitDistance": 18,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 19,
-			"elevation": 0,
+			"elevation": -51,
 			"splitDistance": 19,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 20,
-			"elevation": 0,
+			"elevation": -3,
 			"splitDistance": 20,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 21,
-			"elevation": 0,
-			"splitDistance": 21,
+			"elevation": 3,
+			"splitDistance": 20,
 			"manualWeight": 100
 		},
 		{
 			"splitNumber": 22,
-			"elevation": 0,
+			"elevation": -4,
 			"splitDistance": 21.1,
 			"manualWeight": 100
 		}
 	],
-	"raceName": "21.1k half marathon",
-	"raceTemplateName": "21",
+	"raceName": "Milkwood 21.1k - 2019",
+	"raceTemplateName": "milkwood",
 	"plannedRaceTimeFirst": "01:29:00",
 	"plannedRaceTimeLast": "03:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
