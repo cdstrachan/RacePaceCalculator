@@ -141,8 +141,7 @@ public class PaceCalculatorController {
 
 			// last start time >= first start time
 			if (paceChartTO.getPlannedRaceTimeFirst().isAfter(paceChartTO.getPlannedRaceTimeLast())) {
-				validationErrorMessages
-						.add(createValidationMessage(1, "First start time may not be larger than last start time"));
+				validationErrorMessages.add(createValidationMessage(1, "First start time may not be larger than last start time"));
 				isValid = false;
 
 			}

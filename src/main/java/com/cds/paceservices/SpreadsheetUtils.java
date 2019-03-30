@@ -50,11 +50,11 @@ public class SpreadsheetUtils {
 			// setup the font
 			String defaultFont = "Calibri";
 			XSSFFont font = wb.createFont();
-			font.setFontHeightInPoints((short) 12);
+			font.setFontHeightInPoints((short) 11);
 			font.setFontName(defaultFont);
 
 			XSSFFont fontBold = wb.createFont();
-			fontBold.setFontHeightInPoints((short) 12);
+			fontBold.setFontHeightInPoints((short) 11);
 			fontBold.setFontName(defaultFont);
 			fontBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
 			
@@ -170,7 +170,7 @@ public class SpreadsheetUtils {
 			rowOffset++;
 
 			row = createRow(sheet, rowOffset);
-			cell = CreateCell(styleTitleMain, row, colOffset, "Moving Pace");
+			cell = CreateCell(styleTitleMain, row, colOffset, "Mov. Pace");
 			cell = CreateCell(styleTitleSub, row, colOffset + 1,
 					PaceUtils.formatTime(instanceTO.getAverageMovingPace(),false));
 			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Avg. Pace");
@@ -195,18 +195,18 @@ public class SpreadsheetUtils {
 			sheet.addMergedRegion(CellRangeAddress.valueOf(range));
 
 			row = createRow(sheet, rowOffset);
-			row.setHeightInPoints(35);
-			cell = CreateCell(styleTitleMain, row, colOffset, "Distance");
-			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Split time");
-			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Split pace");
+			row.setHeightInPoints(30);
+			cell = CreateCell(styleTitleMain, row, colOffset, "Split");
+			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Time");
+			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Pace");
 			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Elapsed");
 			cell = CreateCell(styleTitleMain, row, colOffset + 4, "Elev.");
 
-			sheet.setColumnWidth(colOffset, 12 * 256); // split number
-			sheet.setColumnWidth(colOffset + 1, 10 * 256); // split time
-			sheet.setColumnWidth(colOffset + 2, 10 * 256); // elapsed time
-			sheet.setColumnWidth(colOffset + 3, 10 * 256); // pace
-			sheet.setColumnWidth(colOffset + 4, 8 * 256); // tel
+			sheet.setColumnWidth(colOffset, 6 * 256); // split number
+			sheet.setColumnWidth(colOffset + 1, 9 * 256); // split time
+			sheet.setColumnWidth(colOffset + 2, 6 * 256); // split pace
+			sheet.setColumnWidth(colOffset + 3, 9 * 256); // elapsed
+			sheet.setColumnWidth(colOffset + 4, 6 * 256); // elevation
 
 			rowOffset++;
 			double distance = 0;
