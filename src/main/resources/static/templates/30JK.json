@@ -1,0 +1,195 @@
+{
+	"distance": 30,
+	"splitInputs": [
+		{
+			"splitNumber": 1,
+			"elevation": -12,
+			"splitDistance": 1,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 2,
+			"elevation": -1,
+			"splitDistance": 2,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 3,
+			"elevation": -8,
+			"splitDistance": 3,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 4,
+			"elevation": 60,
+			"splitDistance": 4,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 5,
+			"elevation": 60,
+			"splitDistance": 5,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 6,
+			"elevation": 52,
+			"splitDistance": 6,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 7,
+			"elevation": 40,
+			"splitDistance": 7,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 8,
+			"elevation": 7,
+			"splitDistance": 8,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 9,
+			"elevation": 28,
+			"splitDistance": 9,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 10,
+			"elevation": -65,
+			"splitDistance": 10,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 11,
+			"elevation": -67,
+			"splitDistance": 11,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 12,
+			"elevation": -20,
+			"splitDistance": 12,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 13,
+			"elevation": -16,
+			"splitDistance": 13,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 14,
+			"elevation": -3,
+			"splitDistance": 14,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 15,
+			"elevation": -17,
+			"splitDistance": 15,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 16,
+			"elevation": 5,
+			"splitDistance": 16,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 17,
+			"elevation": 21,
+			"splitDistance": 17,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 18,
+			"elevation": 25,
+			"splitDistance": 18,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 19,
+			"elevation": 24,
+			"splitDistance": 19,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 20,
+			"elevation": 4,
+			"splitDistance": 20,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 21,
+			"elevation": -48,
+			"splitDistance": 21,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 22,
+			"elevation": -13,
+			"splitDistance": 22,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 23,
+			"elevation": -2,
+			"splitDistance": 23,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 24,
+			"elevation": -30,
+			"splitDistance": 24,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 25,
+			"elevation": 18,
+			"splitDistance": 25,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 26,
+			"elevation": -14,
+			"splitDistance": 26,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 27,
+			"elevation": 2,
+			"splitDistance": 27,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 28,
+			"elevation": -10,
+			"splitDistance": 28,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 29,
+			"elevation": 30,
+			"splitDistance": 29,
+			"manualWeight": 100
+		},
+		{
+			"splitNumber": 30,
+			"elevation": -17,
+			"splitDistance": 30,
+			"manualWeight": 100
+		}
+	],
+	"raceName": "John Korassie",
+	"raceTemplateName": "10",
+	"plannedRaceTimeFirst": "03:49:00",
+	"plannedRaceTimeLast": "03:49:00",
+	"plannedRaceTimeDelta": "00:15:00",
+	"startDelay": "00:02:00",
+	"firstFade": 0,
+	"lastFade": 5,
+	"paceChartInstances": null,
+	"validationErrorMessages": null
+}
