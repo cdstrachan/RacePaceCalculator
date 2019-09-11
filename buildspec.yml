@@ -13,7 +13,7 @@ phases:
       - mvn install
   post_build:
     commands:
-      - echo Build completed on `date`
+      - echo Build completed on the `date`
 artifacts:
   files:
     - target/paceservices-0.0.4.jar
