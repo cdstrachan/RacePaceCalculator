@@ -49,12 +49,13 @@ public class SpreadsheetUtils {
 			
 			// setup the font
 			String defaultFont = "Calibri";
+			short defaultFontSize = 10;
 			XSSFFont font = wb.createFont();
-			font.setFontHeightInPoints((short) 11);
+			font.setFontHeightInPoints(defaultFontSize);
 			font.setFontName(defaultFont);
 
 			XSSFFont fontBold = wb.createFont();
-			fontBold.setFontHeightInPoints((short) 11);
+			fontBold.setFontHeightInPoints(defaultFontSize);
 			fontBold.setFontName(defaultFont);
 			fontBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
 			
@@ -71,7 +72,7 @@ public class SpreadsheetUtils {
 			styleTitleMain.setRightBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleMain.setFillForegroundColor(new XSSFColor(new java.awt.Color(197, 217, 238)));
 			styleTitleMain.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-			styleTitleMain.setWrapText(true);
+			styleTitleMain.setWrapText(false);
 			styleTitleMain.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 			styleTitleMain.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
 			
@@ -161,68 +162,71 @@ public class SpreadsheetUtils {
 
 			row = createRow(sheet, rowOffset);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Time");
-			cell = CreateCell(styleTitleSub, row, colOffset + 1,
+			cell = CreateCell(styleTitleSub, row, colOffset + 1	,
 					PaceUtils.formatTime(instanceTO.getPlannedRaceTime(),true));
-			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Start Delay");
-			cell = CreateCell(styleTitleSub, row, colOffset + 3,
+			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Start Delay");
+			cell = CreateCell(styleTitleSub, row, colOffset + 4,
 					PaceUtils.formatTime(paceChart.getStartDelay(),false));
-			cell = CreateCell(styleTitleSub, row, colOffset + 4, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 2, "");
 			rowOffset++;
 
 			row = createRow(sheet, rowOffset);
-			cell = CreateCell(styleTitleMain, row, colOffset, "Mov. Pace");
+			cell = CreateCell(styleTitleMain, row, colOffset, "Mov.");
 			cell = CreateCell(styleTitleSub, row, colOffset + 1,
 					PaceUtils.formatTime(instanceTO.getAverageMovingPace(),false));
-			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Avg. Pace");
-			cell = CreateCell(styleTitleSub, row, colOffset + 3,
+			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Avg.");
+			cell = CreateCell(styleTitleSub, row, colOffset + 4,
 					PaceUtils.formatTime(instanceTO.getAverageEndToEndPace(),false));
-			cell = CreateCell(styleTitleSub, row, colOffset + 4, "");
+			cell = CreateCell(styleTitleSub, row, colOffset + 2, "");
 			rowOffset++;
 
+			// race name merge
 			String first = PaceUtils.getCharForNumber(colOffset + 1);
 			String second = PaceUtils.getCharForNumber(colOffset + 4);
 			String range = "$" + first + "$" + 2 + ":$" + second + "$" + 2;
 			sheet.addMergedRegion(CellRangeAddress.valueOf(range));
 
-			first = PaceUtils.getCharForNumber(colOffset + 3);
-			second = PaceUtils.getCharForNumber(colOffset + 4);
+			// time merge
+			first = PaceUtils.getCharForNumber(colOffset + 1);
+			second = PaceUtils.getCharForNumber(colOffset + 2);
 			range = "$" + first + "$" + 3 + ":$" + second + "$" + 3;
 			sheet.addMergedRegion(CellRangeAddress.valueOf(range));
 
-			first = PaceUtils.getCharForNumber(colOffset + 3);
-			second = PaceUtils.getCharForNumber(colOffset + 4);
+			// moving pace merge
+			first = PaceUtils.getCharForNumber(colOffset + 1);
+			second = PaceUtils.getCharForNumber(colOffset + 2);
 			range = "$" + first + "$" + 4 + ":$" + second + "$" + 4;
 			sheet.addMergedRegion(CellRangeAddress.valueOf(range));
 
 			row = createRow(sheet, rowOffset);
-			row.setHeightInPoints(30);
+			//row.setHeightInPoints(30);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Split");
 			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Time");
 			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Pace");
 			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Elapsed");
 			cell = CreateCell(styleTitleMain, row, colOffset + 4, "Elev.");
 
-			sheet.setColumnWidth(colOffset, 6 * 256); // split number
-			sheet.setColumnWidth(colOffset + 1, 9 * 256); // split time
+			sheet.setColumnWidth(colOffset + 0, 5 * 256); // split number
+			sheet.setColumnWidth(colOffset + 1, 6 * 256); // split time
 			sheet.setColumnWidth(colOffset + 2, 6 * 256); // split pace
-			sheet.setColumnWidth(colOffset + 3, 9 * 256); // elapsed
-			sheet.setColumnWidth(colOffset + 4, 6 * 256); // elevation
-
+			sheet.setColumnWidth(colOffset + 3, 8 * 256); // elapsed
+			sheet.setColumnWidth(colOffset + 4, 5 * 256); // elevation
+			
+			
 			rowOffset++;
 			double distance = 0;
-			boolean isOddRow = false;
+			//boolean isOddRow = false;
 			for (SplitTO raceSplit : instanceTO.getRaceSplits()) {
 
 				XSSFCellStyle cellStype;
-				if (isOddRow)
+
+				row = createRow(sheet, rowOffset);
+				distance += raceSplit.getSplitDistance();
+				if (distance % 5 ==0)
 					cellStype =  styleCleanOdd;
 				else
 					cellStype = styleClean;
 
-				isOddRow = !isOddRow;
-
-				row = createRow(sheet, rowOffset);
-				distance += raceSplit.getSplitDistance();
 				if (Math.ceil(distance) > distance) // we are at a fraction - the last split. EG 21.1
 					cell = CreateCell(styleRight, row, colOffset, String.valueOf(distance));
 				else
