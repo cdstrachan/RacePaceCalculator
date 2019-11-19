@@ -82,10 +82,10 @@ public class PaceCalculatorController {
 
 		// read the template
 		ClassPathResource resource = new ClassPathResource("static/templates/" + raceTemplateName + ".json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-        String content = reader.lines().collect(Collectors.joining("\n"));
-        reader.close();
-		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+		String content = reader.lines().collect(Collectors.joining("\n"));
+		reader.close();
+
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 
@@ -141,7 +141,8 @@ public class PaceCalculatorController {
 
 			// last start time >= first start time
 			if (paceChartTO.getPlannedRaceTimeFirst().isAfter(paceChartTO.getPlannedRaceTimeLast())) {
-				validationErrorMessages.add(createValidationMessage(1, "First start time may not be larger than last start time"));
+				validationErrorMessages
+						.add(createValidationMessage(1, "First start time may not be larger than last start time"));
 				isValid = false;
 
 			}
@@ -362,7 +363,7 @@ public class PaceCalculatorController {
 		// calculate what we can without totals
 		log.info("createpacechart - creating splits");
 		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			//log.info("createpacechart - creating split # " + (counter + 1));
+			// log.info("createpacechart - creating split # " + (counter + 1));
 			SplitTO raceSplit = new SplitTO();
 
 			// the last lap may be a different (shorter) distance
