@@ -46,7 +46,7 @@ public class SpreadsheetUtils {
 			}
 
 			// start creating the actual spreadsheet
-			
+
 			// setup the font
 			String defaultFont = "Calibri";
 			short defaultFontSize = 10;
@@ -58,7 +58,7 @@ public class SpreadsheetUtils {
 			fontBold.setFontHeightInPoints(defaultFontSize);
 			fontBold.setFontName(defaultFont);
 			fontBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
-			
+
 			// setup cell styles - title main
 			XSSFCellStyle styleTitleMain = wb.createCellStyle();
 			styleTitleMain.setFont(fontBold);
@@ -75,7 +75,7 @@ public class SpreadsheetUtils {
 			styleTitleMain.setWrapText(false);
 			styleTitleMain.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 			styleTitleMain.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
-			
+
 			XSSFCellStyle styleTitleSub = wb.createCellStyle();
 			styleTitleSub.setFont(font);
 			styleTitleSub.setBorderBottom(XSSFCellStyle.BORDER_THIN);
@@ -91,7 +91,7 @@ public class SpreadsheetUtils {
 			styleTitleSub.setWrapText(true);
 			styleTitleSub.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 			styleTitleSub.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
-			
+
 			XSSFCellStyle styleRight = wb.createCellStyle();
 			styleRight = wb.createCellStyle();
 			styleRight.setFont(fontBold);
@@ -108,7 +108,6 @@ public class SpreadsheetUtils {
 			styleRight.setWrapText(true);
 			styleRight.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
 			styleRight.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
-			
 
 			XSSFCellStyle styleClean = wb.createCellStyle();
 			styleClean = wb.createCellStyle();
@@ -162,21 +161,21 @@ public class SpreadsheetUtils {
 
 			row = createRow(sheet, rowOffset);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Time");
-			cell = CreateCell(styleTitleSub, row, colOffset + 1	,
-					PaceUtils.formatTime(instanceTO.getPlannedRaceTime(),true));
+			cell = CreateCell(styleTitleSub, row, colOffset + 1,
+					PaceUtils.formatTime(instanceTO.getPlannedRaceTime(), true));
 			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Start Delay");
 			cell = CreateCell(styleTitleSub, row, colOffset + 4,
-					PaceUtils.formatTime(paceChart.getStartDelay(),false));
+					PaceUtils.formatTime(paceChart.getStartDelay(), false));
 			cell = CreateCell(styleTitleSub, row, colOffset + 2, "");
 			rowOffset++;
 
 			row = createRow(sheet, rowOffset);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Mov.");
 			cell = CreateCell(styleTitleSub, row, colOffset + 1,
-					PaceUtils.formatTime(instanceTO.getAverageMovingPace(),false));
+					PaceUtils.formatTime(instanceTO.getAverageMovingPace(), false));
 			cell = CreateCell(styleTitleMain, row, colOffset + 3, "Avg.");
 			cell = CreateCell(styleTitleSub, row, colOffset + 4,
-					PaceUtils.formatTime(instanceTO.getAverageEndToEndPace(),false));
+					PaceUtils.formatTime(instanceTO.getAverageEndToEndPace(), false));
 			cell = CreateCell(styleTitleSub, row, colOffset + 2, "");
 			rowOffset++;
 
@@ -199,7 +198,7 @@ public class SpreadsheetUtils {
 			sheet.addMergedRegion(CellRangeAddress.valueOf(range));
 
 			row = createRow(sheet, rowOffset);
-			//row.setHeightInPoints(30);
+			// row.setHeightInPoints(30);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Split");
 			cell = CreateCell(styleTitleMain, row, colOffset + 1, "Time");
 			cell = CreateCell(styleTitleMain, row, colOffset + 2, "Pace");
@@ -211,35 +210,30 @@ public class SpreadsheetUtils {
 			sheet.setColumnWidth(colOffset + 2, 6 * 256); // split pace
 			sheet.setColumnWidth(colOffset + 3, 8 * 256); // elapsed
 			sheet.setColumnWidth(colOffset + 4, 5 * 256); // elevation
-			
-			
+
 			rowOffset++;
 			double distance = 0;
-			//boolean isOddRow = false;
+			// boolean isOddRow = false;
 			for (SplitTO raceSplit : instanceTO.getRaceSplits()) {
 
 				XSSFCellStyle cellStype;
 
 				row = createRow(sheet, rowOffset);
 				distance += raceSplit.getSplitDistance();
-				if (distance % 5 ==0)
-					cellStype =  styleCleanOdd;
+				if (distance % 5 == 0)
+					cellStype = styleCleanOdd;
 				else
 					cellStype = styleClean;
 
 				if (Math.ceil(distance) > distance) // we are at a fraction - the last split. EG 21.1
 					cell = CreateCell(styleRight, row, colOffset, String.valueOf(distance));
 				else
-					cell = CreateCell(styleRight, row, colOffset,
-							String.valueOf(raceSplit.getSplitNumber()));
-				cell = CreateCell(cellStype, row, colOffset + 1,
-						PaceUtils.formatTime(raceSplit.getFinalTime(),false));
-				cell = CreateCell(cellStype, row, colOffset + 2,
-						PaceUtils.formatTime(raceSplit.getFinalPace(),false));
+					cell = CreateCell(styleRight, row, colOffset, String.valueOf(raceSplit.getSplitNumber()));
+				cell = CreateCell(cellStype, row, colOffset + 1, PaceUtils.formatTime(raceSplit.getFinalTime(), false));
+				cell = CreateCell(cellStype, row, colOffset + 2, PaceUtils.formatTime(raceSplit.getFinalPace(), false));
 				cell = CreateCell(cellStype, row, colOffset + 3,
-						PaceUtils.formatTime(raceSplit.getFinalElapsedTime(),true));
-				cell = CreateCell(cellStype, row, colOffset + 4,
-						String.valueOf((int) raceSplit.getElevation()));
+						PaceUtils.formatTime(raceSplit.getFinalElapsedTime(), true));
+				cell = CreateCell(cellStype, row, colOffset + 4, String.valueOf((int) raceSplit.getElevation()));
 				rowOffset++;
 			}
 			log.info("createspreadsheet - creating records complete");
@@ -255,8 +249,7 @@ public class SpreadsheetUtils {
 		return excelFile.getPath();
 
 	}
-	
-	
+
 	private XSSFCell CreateCell(XSSFCellStyle styles, XSSFRow row, int col, String value) {
 		XSSFCell cell = row.createCell(col);
 		cell.setCellStyle(styles);
@@ -272,5 +265,4 @@ public class SpreadsheetUtils {
 		return row;
 	}
 
-	
 }

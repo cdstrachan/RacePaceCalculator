@@ -260,7 +260,6 @@ public class PaceCalculatorController {
 
 			if (isValid)
 				paceChartTO = createPaceCharts(paceChartTO);
-			// TODO: fix error handling here
 			else
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
 
