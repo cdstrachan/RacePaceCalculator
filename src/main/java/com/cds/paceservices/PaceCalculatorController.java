@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+//import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.JsonNode;
+//import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.common.base.Charsets;
+//import com.google.common.base.Charsets;
 import com.google.common.net.HttpHeaders;
 
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+/*import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Paths;*/
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 // todo:remove unused imports
 
 @RestController
@@ -181,7 +181,7 @@ public class PaceCalculatorController {
 			else
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
 			log.info("pacechart: calculation complete");
-			log.info("pacechart: end - ready to send JSON response");
+			log.info("pacechart: I am ready to send JSON response");
 			return paceChartTO;
 
 		} catch (Exception e) {
