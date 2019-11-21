@@ -45,7 +45,7 @@ public class SpreadsheetUtils {
 				colOffset = 1;
 			}
 
-			// start creating the actual spreadsheet
+			// start creating the spreadsheet
 
 			// setup the font
 			String defaultFont = "Calibri";
