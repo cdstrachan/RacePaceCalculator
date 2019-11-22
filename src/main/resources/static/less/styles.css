@@ -1,107 +1,24 @@
 body {
-  font-size: 11px;
-  font-family: Calibri, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
 }
 h1 {
-  font-size: 12pt;
+  font-size: 25px;
 }
-table {
-  border-collapse: collapse;
-  border-spacing: 0px;
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 15px;
 }
 .inputsmall {
-  width: 45px;
+  width: 40px;
 }
 .inputmedium {
-  width: 60px;
+  width: 80px;
 }
 .inputlarge {
-  width: 90px;
+  width: 120px;
 }
 .inputhuge {
   width: 210px;
-}
-.buttonbig {
-  background-color: #c5d9ee;
-  border: solid 1px;
-  border-color: black;
-  color: black;
-  padding: 10px 10px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 13.2px;
-  margin: 5px 5px;
-  cursor: pointer;
-}
-.buttonsmall {
-  background-color: #c5d9ee;
-  border: solid 1px;
-  border-color: black;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  font-size: 11px;
-  cursor: pointer;
-}
-.baseborder,
-.mainborder,
-.noborder,
-.subborder,
-.maindata,
-.maindatalight {
-  font-size: 11px;
-  font-family: Calibri, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  border: solid 1px;
-  padding: 2px;
-  vertical-align: top;
-}
-.mainborder {
-  background-color: #c5d9ee;
-}
-.noborder {
-  border: none;
-}
-.subborder {
-  background-color: #fee9db;
-}
-.maindata {
-  background-color: white;
-}
-.maindatalight {
-  background-color: #e7eff8;
-}
-.boxborder {
-  border: solid 1px;
-}
-.number {
-  text-align: right;
-}
-.criticalerror {
-  background-color: red;
-  font-size: 22px;
-  color: white;
-  text-align: center;
-}
-.validationerror {
-  color: red;
-  font-size: 13.2px;
-  vertical-align: top;
-}
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
-}
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }

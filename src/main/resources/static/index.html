@@ -5,7 +5,9 @@
 	<title>Pace Chart Calculator</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 	<script src="js/pacecalculator.js"></script>
-	<!-- Optional theme -->
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="less/styles.css" crossorigin="anonymous">
 
 	<meta charset="utf-8">
@@ -28,196 +30,230 @@
 
 <body>
 	<div ng-controller="Pacecalculator" class="container">
-		<div class="validationerror">Pace calculator for running events - experimental (v1.11)</div>
-		<h1>Input parameters</h1>
-		<form>
-			<table>
-				<tr>
-					<td class="mainborder" width="120px">Race template</td>
-					<td class="subborder" width="300px">
-						<select ng-model="paceChartInput.raceTemplateName">
-							<option value="5">5k</option>
-							<option value="10">10k</option>
-							<option value="10Ommedraai">Ommedraai 10k 2019</option>
-							<option value="ct12">Cape Town 12k, 2019</option>
-							<option value="15cv">Constantia Village 15k, 2019</option>
-							<option value="15dl">Don Lock 15k, 2019</option>
-							<option value="15hohenort">Hohenort 15k, 2017</option>
-							<option value="15spookhill">Spookhill 15k, 2019</option>							
-							<option value="21">21.1k half marathon</option>
-							<option value="21firgrove">Firgrove 21.1k 2018 </option>
-							<option value="21landmarks">Landmarks 2 21.1k 2019 </option>
-							<option value="21milkwood">Milkwood 21.1k 2019 </option>
-							<option value="21slave">Slave Route 21.1k 2019 </option>
-							<option value="42">42.2k marathon</option>
-							<option value="42ctm">42.2k Cape Town marathon 2019</option>
-							<option value="56OceansChappies">56k Two Oceans Marathons (chappies)</option>
-							<option value="56OceansOukaapse">56k Two Oceans Marathons (ok kaapse)</option>
-						</select>
-						<input type="submit" ng-click="createChartPreload(paceChartInput.raceName)" value="Set"
-							class="buttonsmall" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Optional template.</span>
-						</div>
-					</td>
-					<td rowspan=9 style="vertical-align: top">
-						This calculator is used to calculated suggested paces for running events. It takes into account
-						the elevation of
-						each split, delay at the start due to congestion, and fade due to the runner getting tired
-						towards the end.<br />
-						<br />
-						These calculations are a "best-bet" calculation without knowledge of a particular race, hence
-						the calculator is
-						not intended to be used to replace a hand-crafted chart.<br />
-						<br />
-						This is just a guide, you are responsible for running your own race, and you are responsible for
-						your own pacing!<br />
-						<br />
-						<a href="https://www.facebook.com/groups/314436651950192" target="_blank">If you are in Cape
-							Town, you can
-							usually get excellent handcrafted pacecharts for the main races here.</a><br />
-						<br /><br />
-						For comments and suggestion, <a href="https://www.craigstrachan.com/contact-me/">please contact me.</a>
-					</td>
-
-				</tr>
-				<tr>
-					<td class="mainborder" width="120px">Race name</td>
-					<td class="subborder" width="120px">
-						<input class="inputhuge" type="text" ng-model="paceChartInput.raceName" maxlength="20" /></td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">The name of your race.</span>
-						</div>
-					</td>
-
-				</tr>
-				<tr>
-					<td class="mainborder">Distance</td>
-					<td class="subborder">
-						<input id=txtDistance" class="inputmedium" type="number" ng-model="paceChartInput.distance"
-							min="1" max="99" step="0.1" />
-						<input type="submit" ng-click="createChartTemplate(paceChartInput.distance)" value="Set"
-							class="buttonsmall" /></td>
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the distance and hit
-								<i>set</i> - splits
-								will be created to match the distance.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">First finish time<br />(hh:mm:ss)</td>
-					<td class="subborder">
-						<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeFirst"
-							pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for first
-								finish.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">Last finish time<br />(hh:mm:ss)</td>
-					<td class="subborder">
-						<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeLast"
-							pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for last
-								finish.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">Time increment<br />(hh:mm:ss)</td>
-					<td class="subborder">
-						<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeDelta"
-							pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time increment - e.g.
-								create a chart
-								every 10 mintues from the first finish time to the last finish time.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">Start delay<br />(hh:mm:ss)</td>
-					<td class="subborder">
-						<input class="inputmedium" type="text" ng-model="paceChartInput.startDelay"
-							pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Anticipated delay due to
-								start line
-								congestion.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">First fade %</td>
-					<td class="subborder">
-						<input class="inputsmall" type="number" ng-model="paceChartInput.firstFade" min="0" max="99" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">A 2% fade means that the
-								second half of a flat
-								course is 2% slower than the first half. You can calculate charts for multiple fades. A
-								chart will be created
-								for each % from the first fade to the last fade.</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="mainborder">Last fade %</td>
-					<td class="subborder">
-						<input class="inputsmall" type="number" ng-model="paceChartInput.lastFade" min="0" max="99" />
-					</td>
-					<td class="subborder">
-						<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the last fade %.</span>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<div class="criticalerror">{{CriticalErrorMessage}}</div>
-			<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
-				<div class="validationerror">{{validationMessage.messageDescription}}</div>
+		<div class="row">
+			<div class="col">
+				<h1>Pace calculator for running events - experimental (v1.11)</h1>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2>Input parameters</h2>
+				<form>
+					<table border="1">
+						<tr>
+							<td class="mainborder" width="120px">Race template</td>
+							<td class="subborder" width="380px">
+								<select ng-model="paceChartInput.raceTemplateName">
+									<option value="5">5k</option>
+									<option value="10">10k</option>
+									<option value="10Ommedraai">Ommedraai 10k 2019</option>
+									<option value="ct12">Cape Town 12k, 2019</option>
+									<option value="15cv">Constantia Village 15k, 2019</option>
+									<option value="15dl">Don Lock 15k, 2019</option>
+									<option value="15hohenort">Hohenort 15k, 2017</option>
+									<option value="15spookhill">Spookhill 15k, 2019</option>
+									<option value="21">21.1k half marathon</option>
+									<option value="21firgrove">Firgrove 21.1k 2018 </option>
+									<option value="21landmarks">Landmarks 21.1k 2019 </option>
+									<option value="21milkwood">Milkwood 21.1k 2019 </option>
+									<option value="21slave">Slave Route 21.1k 2019 </option>
+									<option value="42">42.2k marathon</option>
+									<option value="42ctm">42.2k Cape Town marathon 2019</option>
+									<option value="56OceansChappies">56k Two Oceans Marathon (chappies)</option>
+									<option value="56OceansOukaapse">56k Two Oceans Marathon (ok kaapse)</option>
+								</select>
+								<input type="submit" ng-click="createChartPreload(paceChartInput.raceName)" value="Set"
+									class="buttonsmall" />
+							</td>
+							<td class="subborder">
+								<div>
+									<a href="#" data-toggle="tooltip"
+										title="Optional pre-defined template">&nbsp;?&nbsp;</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder" width="120px">Race name</td>
+							<td class="subborder" width="120px">
+								<input class="inputhuge" type="text" ng-model="paceChartInput.raceName"
+									maxlength="20" /></td>
+							<td>
+								<div>
+									<a href="#" data-toggle="tooltip" title="The name of your race">&nbsp;?&nbsp;</a>
+								</div>
 
-			<h1>Split data</h1>
-			<table wicth="100%" border=1>
-				<tr>
-					<td class="subborder" width="60px">Split</td>
-					<td class="subborder" width="120px">Elevation (m) <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span
-								class="tooltiptext">Enter
-								the total change in elevation for each split.</span></div>
-					</td>
-					<td class="subborder" width="150px">Manual Weighting <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span
-								class="tooltiptext">The
-								manual weighting can be used to override the default calculations. Make it a little
-								lower to make the split
-								faster, or higher to make the split slower. Usually you can ignore it.</span></div>
-					</td>
+							</td>
 
-				</tr>
-				<tr ng-repeat="splitInput in paceChartInput.splitInputs" ng-class-odd="'maindata'"
-					ng-class-even="'maindatalight'">
-					<td class="boxborder">{{splitInput.splitDistance}}</td>
-					<td class="boxborder">
-						<input class="inputsmall boxborder" type="number" ng-model="splitInput.elevation" min="-200"
-							max="200" />
-					</td>
-					<td class="boxborder">
-						<input class="inputmedium boxborder" type="number" ng-model="splitInput.manualWeight" min="-200"
-							max="200" step="5" />
-					</td>
-				</tr>
+						</tr>
+						<tr>
+							<td class="mainborder">Distance</td>
+							<td class="subborder">
+								<input id=txtDistance" class="inputmedium" type="number"
+									ng-model="paceChartInput.distance" min="1" max="99" step="0.1" />
+								<input type="submit" ng-click="createChartTemplate(paceChartInput.distance)" value="Set"
+									class="buttonsmall" /></td>
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the distance
+										and hit
+										<i>set</i> - splits
+										will be created to match the distance.</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">First finish time<br />(hh:mm:ss)</td>
+							<td class="subborder">
+								<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeFirst"
+									pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for first
+										finish.</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">Last finish time<br />(hh:mm:ss)</td>
+							<td class="subborder">
+								<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeLast"
+									pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time for last
+										finish.</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">Time increment<br />(hh:mm:ss)</td>
+							<td class="subborder">
+								<input class="inputmedium" type="text" ng-model="paceChartInput.plannedRaceTimeDelta"
+									pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Finish time increment
+										- e.g.
+										create a chart
+										every 10 mintues from the first finish time to the last finish time.</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">Start delay<br />(hh:mm:ss)</td>
+							<td class="subborder">
+								<input class="inputmedium" type="text" ng-model="paceChartInput.startDelay"
+									pattern="[0-9]{2}:[0-5][0-9]:[0-5][0-9]" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Anticipated delay due
+										to
+										start line
+										congestion.</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">First fade %</td>
+							<td class="subborder">
+								<input class="inputsmall" type="number" ng-model="paceChartInput.firstFade" min="0"
+									max="99" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">A 2% fade means that
+										the
+										second half of a flat
+										course is 2% slower than the first half. You can calculate charts for multiple
+										fades. A
+										chart will be created
+										for each % from the first fade to the last fade.</span></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="mainborder">Last fade %</td>
+							<td class="subborder">
+								<input class="inputsmall" type="number" ng-model="paceChartInput.lastFade" min="0"
+									max="99" />
+							</td>
+							<td class="subborder">
+								<div class="tooltip">&nbsp;<u>?</u>&nbsp;<span class="tooltiptext">Enter the last fade
+										%.</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<div class="criticalerror">{{CriticalErrorMessage}}</div>
+					<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
+						<div class="alert alert-danger">{{validationMessage.messageDescription}}</div>
+					</div>
+			</div>
+			<div class="col">
+				This calculator is used to calculated suggested paces for running events. It takes into
+				account
+				the elevation of
+				each split, delay at the start due to congestion, and fade due to the runner getting
+				tired
+				towards the end.<br />
+				<br />
+				These calculations are a "best-bet" calculation without knowledge of a particular race,
+				hence
+				the calculator is
+				not intended to be used to replace a hand-crafted chart.<br />
+				<br />
+				This is just a guide, you are responsible for running your own race, and you are
+				responsible for
+				your own pacing!<br />
+				<br />
+				If you would like me to add your own race I'm happy to, but please provide me with the
+				elevation
+				profiles in meters please. You can use the below feedback form to do so.<br />
+				<br />
+				<a href="https://www.facebook.com/groups/314436651950192" target="_blank">If you are in
+					Cape
+					Town, you can
+					usually get excellent handcrafted pacecharts for the main races here.</a><br />
+				<br />
+				For comments and suggestion, <a href="https://www.craigstrachan.com/contact-me/">please
+					contact
+					me.</a>
+			</div>
+		</div>
 
-			</table>
-			<input type="submit" ng-click="createChart(paceChartInput.raceName)" value="Create online charts"
-				class="buttonbig" />
-			<input type="submit" ng-click="createChartExcel(paceChartInput.raceName)"
-				value="Download Excel (experimental)" class="buttonbig" />
-			<div class="validationerror">{{loadingmessage}}</div>
+		<h2>Split data</h2>
+		<table wicth="100%" border=1>
+			<tr>
+				<td class="subborder" width="60px">Split</td>
+				<td class="subborder" width="120px">Elevation (m) <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span
+							class="tooltiptext">Enter
+							the total change in elevation for each split.</span></div>
+				</td>
+				<td class="subborder" width="150px">Manual Weighting <div class="tooltip">&nbsp;<u>?</u>&nbsp;<span
+							class="tooltiptext">The
+							manual weighting can be used to override the default calculations. Make it a little
+							lower to make the split
+							faster, or higher to make the split slower. Usually you can ignore it.</span></div>
+				</td>
+
+			</tr>
+			<tr ng-repeat="splitInput in paceChartInput.splitInputs" ng-class-odd="'maindata'"
+				ng-class-even="'maindatalight'">
+				<td class="boxborder">{{splitInput.splitDistance}}</td>
+				<td class="boxborder">
+					<input class="inputsmall boxborder" type="number" ng-model="splitInput.elevation" min="-200"
+						max="200" />
+				</td>
+				<td class="boxborder">
+					<input class="inputmedium boxborder" type="number" ng-model="splitInput.manualWeight" min="-200"
+						max="200" step="5" />
+				</td>
+			</tr>
+
+		</table>
+		<br />
+		<input type="submit" ng-click="createChart(paceChartInput.raceName)" value="Create online charts"
+			class="btn btn-primary" />
+		<input type="submit" class="btn btn-primary" ng-click="createChartExcel(paceChartInput.raceName)"
+			value="Download Excel" />
+		<br /><br />
+		<div class="alert alert-primary">{{loadingmessage}}</div>
 		</form>
-		<h1>Pacecharts</h1>
+		<h2>Pacecharts</h2>
 		<div ng-repeat="paceChartInstance in paceChart.paceChartInstances">
 
 			<br />
@@ -261,6 +297,15 @@
 			<br />
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>
