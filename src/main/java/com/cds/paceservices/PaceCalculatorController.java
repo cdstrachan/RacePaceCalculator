@@ -31,7 +31,7 @@ import java.io.FileInputStream;
 public class PaceCalculatorController {
 
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
-	private static final int MAX_CHART_COUNT = 100;
+	private static final int MAX_CHART_COUNT = 500;
 
 	// create the template splits to full in
 	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 
-	// create the template splits to full in
+	// create the template splits to fill in
 	@RequestMapping(value = "/pacechartpreload", method = RequestMethod.POST)
 	public PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
 		log.info("pacechartpreload: start - received test operation for distance: " + paceChartTO.getDistance());
