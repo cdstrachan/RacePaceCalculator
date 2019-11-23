@@ -22,3 +22,9 @@ h3 {
 .inputhuge {
   width: 210px;
 }
+.table {
+  border: solid 2px;
+}
+.tableresults {
+  font-size: 12px;
+}
