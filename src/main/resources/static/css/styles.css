@@ -10,6 +10,12 @@ h2 {
 h3 {
   font-size: 15px;
 }
+.table {
+  border: solid 2px;
+}
+.tableresults {
+  font-size: 12px;
+}
 .inputsmall {
   width: 40px;
 }
@@ -17,14 +23,8 @@ h3 {
   width: 80px;
 }
 .inputlarge {
-  width: 120px;
+  width: 150px;
 }
 .inputhuge {
-  width: 210px;
-}
-.table {
-  border: solid 2px;
-}
-.tableresults {
-  font-size: 12px;
+  width: 200px;
 }
