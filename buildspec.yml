@@ -19,3 +19,4 @@ artifacts:
     - target/paceservices-0.0.4.jar
     - appspec.yml
     - start.sh
+    - stop.sh
