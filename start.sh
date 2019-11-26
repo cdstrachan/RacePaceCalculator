@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo 'Starting Spring Boot app'
-cd '//home/ec2-user/target'
+cd '//home/ec2-user/pace/target'
 
 chmod 500 paceservices-0.0.4.jar
 sudo service pacec stop
