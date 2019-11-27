@@ -134,11 +134,11 @@
 			"manualWeight": 100
 		}
 	],
-	"raceName": "Slave Route 21.1k - 2019",
+	"raceName": "Slave Route 21.1k - 2018",
 	"raceTemplateName": "slave",
 	"plannedRaceTimeFirst": "01:29:00",
 	"plannedRaceTimeLast": "03:29:00",
-	"plannedRaceTimeDelta": "00:15:00",
+	"plannedRaceTimeDelta": "00:10:00",
 	"startDelay": "00:01:30",
 	"firstFade": 0,
 	"lastFade": 2,
