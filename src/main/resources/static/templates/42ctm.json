@@ -260,11 +260,12 @@
 			"manualWeight": 100
 		}
 	],
-	"raceName": "CT Marathon 2019",
+	"raceName": "Cape Town Marathon 2019",
 	"raceTemplateName": "42",
 	"plannedRaceTimeFirst": "03:29:00",
 	"plannedRaceTimeLast": "05:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
 	"startDelay": "00:03:00",
 	"firstFade": 0,
-	"lastFade": 5}
+	"lastFade": 5
+}
