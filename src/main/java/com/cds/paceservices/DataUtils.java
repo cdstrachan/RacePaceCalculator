@@ -30,12 +30,12 @@ public class DataUtils {
         String pkGUID = UUID.randomUUID().toString();
         final Map<String, Object> infoMap = new HashMap<String, Object>();
         // infoMap.put("timestamp", DateTime.now().toString());
-        infoMap.put("requestPayload", requestData);
+        // infoMap.put("requestPayload", requestData);
 
         try {
-            log.info("Adding a new item...");
+            log.info("Adding a new item to DynamoDB...");
             PutItemOutcome outcome = table.putItem(new Item().withPrimaryKey("pkGUID", pkGUID)
-                    .withString("timeStamp", DateTime.now().toString()).withMap("request", infoMap));
+                    .withString("timeStamp", DateTime.now().toString()).withString("requestJSON", requestData));
 
             log.info("PutItem succeeded:\n" + outcome.getPutItemResult());
 
