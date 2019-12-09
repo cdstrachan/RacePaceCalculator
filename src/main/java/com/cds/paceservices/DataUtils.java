@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,7 @@ public class DataUtils {
         String pkGUID = UUID.randomUUID().toString();
 
         final Map<String, Object> infoMap = new HashMap<String, Object>();
+        infoMap.put("timestamp", DateTime.now().toString());
         infoMap.put("requestPayload", requestData);
 
         try {
