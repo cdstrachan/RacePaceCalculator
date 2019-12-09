@@ -30,13 +30,13 @@ public class DataUtils {
         String pkGUID = UUID.randomUUID().toString();
 
         final Map<String, Object> infoMap = new HashMap<String, Object>();
-        infoMap.put("timestamp", DateTime.now().toString());
+        // infoMap.put("timestamp", DateTime.now().toString());
         infoMap.put("requestPayload", requestData);
 
         try {
-            System.out.println("Adding a new item...");
-            PutItemOutcome outcome = table
-                    .putItem(new Item().withPrimaryKey("pkGUID", pkGUID).withMap("request", infoMap));
+            log.info("Adding a new item...");
+            PutItemOutcome outcome = table.putItem(new Item().withPrimaryKey("pkGUID", pkGUID)
+                    .withString("timeStamp", DateTime.now().toString()).withMap("request", infoMap));
 
             log.info("PutItem succeeded:\n" + outcome.getPutItemResult());
 
