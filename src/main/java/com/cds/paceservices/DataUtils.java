@@ -28,7 +28,6 @@ public class DataUtils {
         Table table = dynamoDB.getTable("Audit");
 
         String pkGUID = UUID.randomUUID().toString();
-
         final Map<String, Object> infoMap = new HashMap<String, Object>();
         // infoMap.put("timestamp", DateTime.now().toString());
         infoMap.put("requestPayload", requestData);

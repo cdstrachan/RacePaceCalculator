@@ -4,6 +4,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -107,9 +110,11 @@ public class PaceCalculatorController {
 			log.info("pacechart: received a REST POST request");
 			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 
+			Gson gson = new Gson();
+
 			// create database record
 			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(paceChartTO.toString());
+			utils.writeRequestRecord(gson.toJson(paceChartTO));
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
