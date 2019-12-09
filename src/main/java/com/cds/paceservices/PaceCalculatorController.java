@@ -107,6 +107,10 @@ public class PaceCalculatorController {
 			log.info("pacechart: received a REST POST request");
 			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 
+			// create database record
+			DataUtils utils = new DataUtils();
+			utils.writeRequestRecord(paceChartTO.toString());
+
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
 				validationErrorMessages.add(createValidationMessage(1, "Distance must be between 1 and 200"));
