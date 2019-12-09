@@ -19,7 +19,7 @@ public class DataUtils {
 
     private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 
-    public void writeRequestRecord(String requestData) {
+    public void writeRequestRecord(String requestData, String source) {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                 .withRegion(com.amazonaws.regions.Regions.US_EAST_2).build();
 
@@ -32,8 +32,9 @@ public class DataUtils {
 
         try {
             log.info("Adding a new item to DynamoDB...");
-            PutItemOutcome outcome = table.putItem(new Item().withPrimaryKey("pkGUID", pkGUID)
-                    .withString("timeStamp", DateTime.now().toString()).withString("requestJSON", requestData));
+            PutItemOutcome outcome = table.putItem(
+                    new Item().withPrimaryKey("pkGUID", pkGUID).withString("timeStamp", DateTime.now().toString())
+                            .withString("source", source).withString("requestJSON", requestData));
 
             log.info("PutItem succeeded:\n" + outcome.getPutItemResult());
 

@@ -110,11 +110,10 @@ public class PaceCalculatorController {
 			log.info("pacechart: received a REST POST request");
 			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 
-			Gson gson = new Gson();
-
 			// create database record
+			Gson gson = new Gson();
 			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(gson.toJson(paceChartTO));
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "OnlineChart");
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -197,6 +196,11 @@ public class PaceCalculatorController {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
 			log.info("pacechartexcel: received a REST POST request");
+
+			// create database record
+			Gson gson = new Gson();
+			DataUtils utils = new DataUtils();
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "ExcelExport");
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
