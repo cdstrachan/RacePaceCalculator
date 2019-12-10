@@ -31,7 +31,7 @@ public class DataUtils {
             log.info("Adding a new item to DynamoDB...");
             PutItemOutcome outcome = table.putItem(new Item().withPrimaryKey("pkGUID", pkGUID)
                     .withString("timeStamp", DateTime.now().toString()).withString("source", source)
-                    .withString("eventname", eventName).withString("requestJSON", requestData));
+                    .withString("eventName", eventName).withString("requestJSON", requestData));
 
             log.info("PutItem succeeded:\n" + outcome.getPutItemResult());
 
