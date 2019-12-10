@@ -112,7 +112,7 @@ public class PaceCalculatorController {
 			// create database record
 			Gson gson = new Gson();
 			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(gson.toJson(paceChartTO), "OnlineChart");
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "OnlineChart", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -199,7 +199,7 @@ public class PaceCalculatorController {
 			// create database record
 			Gson gson = new Gson();
 			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(gson.toJson(paceChartTO), "ExcelExport");
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "ExcelExport", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
