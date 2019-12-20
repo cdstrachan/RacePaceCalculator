@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -108,8 +110,9 @@ public class PaceCalculatorController {
 			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 
 			// create database record
+			Gson gson = new Gson();
 			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(paceChartTO.toString());
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "OnlineChart", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -192,6 +195,11 @@ public class PaceCalculatorController {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
 			log.info("pacechartexcel: received a REST POST request");
+
+			// create database record
+			Gson gson = new Gson();
+			DataUtils utils = new DataUtils();
+			utils.writeRequestRecord(gson.toJson(paceChartTO), "ExcelExport", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
