@@ -314,7 +314,6 @@ public class PaceCalculatorController {
 	}
 
 	private PaceChartTO createPaceCharts(PaceChartTO paceChartTO) {
-
 		log.info("createpacecharts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst());
 		double plannedRaceTimeLastDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeLast());
