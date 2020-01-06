@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class PaceChartTO {
 	// inputs
 	private double distance;
-	//@JsonIgnore
+	// @JsonIgnore
 	ArrayList<SplitInputTO> splitInputs;
-	//@JsonIgnore
+	// @JsonIgnore
 	private String raceName;
 	private String raceTemplateName;
 	private LocalTime plannedRaceTimeFirst;
@@ -17,20 +17,19 @@ public class PaceChartTO {
 	private LocalTime startDelay;
 	private int firstFade;
 	private int lastFade;
-	
+
 	private ArrayList<ErrorMessageTO> ValidationErrorMessages;
-	
+
 	ArrayList<PaceChartInstanceTO> paceChartInstances;
-	
 
 	public ArrayList<PaceChartInstanceTO> getPaceChartInstances() {
 		return paceChartInstances;
 	}
 
 	public void setPaceChartInstances(ArrayList<PaceChartInstanceTO> paceChartInstances) {
-		this.paceChartInstances =  paceChartInstances;
+		this.paceChartInstances = paceChartInstances;
 	}
-	
+
 	public ArrayList<SplitInputTO> getSplitInputs() {
 		return splitInputs;
 	}
@@ -119,11 +118,4 @@ public class PaceChartTO {
 		this.raceTemplateName = raceTemplateName;
 	}
 
-
-
 }
-
-
-
-
-	
