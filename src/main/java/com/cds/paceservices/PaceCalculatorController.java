@@ -39,7 +39,6 @@ public class PaceCalculatorController {
 	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
 	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) throws IOException {
 		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
-
 		ArrayList<SplitInputTO> splitInputs;
 
 		// setup elevations & manual weighting
