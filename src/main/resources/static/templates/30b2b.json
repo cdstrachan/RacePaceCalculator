@@ -1,1 +1,192 @@
-{"distance":30.0,"splitInputs":[{"splitNumber":1,"elevation":-22,"splitDistance":1.0,"manualWeight":100},{"splitNumber":2,"elevation":-5,"splitDistance":2.0,"manualWeight":100},{"splitNumber":3,"elevation":-1,"splitDistance":3.0,"manualWeight":100},{"splitNumber":4,"elevation":-2,"splitDistance":4.0,"manualWeight":100},{"splitNumber":5,"elevation":6,"splitDistance":5.0,"manualWeight":100},{"splitNumber":6,"elevation":3,"splitDistance":6.0,"manualWeight":100},{"splitNumber":7,"elevation":25,"splitDistance":7.0,"manualWeight":100},{"splitNumber":8,"elevation":45,"splitDistance":8.0,"manualWeight":100},{"splitNumber":9,"elevation":31,"splitDistance":9.0,"manualWeight":100},{"splitNumber":10,"elevation":32,"splitDistance":10.0,"manualWeight":100},{"splitNumber":11,"elevation":-51,"splitDistance":11.0,"manualWeight":100},{"splitNumber":12,"elevation":-67,"splitDistance":12.0,"manualWeight":100},{"splitNumber":13,"elevation":-5,"splitDistance":13.0,"manualWeight":100},{"splitNumber":14,"elevation":12,"splitDistance":14.0,"manualWeight":100},{"splitNumber":15,"elevation":13,"splitDistance":15.0,"manualWeight":100},{"splitNumber":16,"elevation":-12,"splitDistance":16.0,"manualWeight":100},{"splitNumber":17,"elevation":-12,"splitDistance":17.0,"manualWeight":100},{"splitNumber":18,"elevation":14,"splitDistance":18.0,"manualWeight":100},{"splitNumber":19,"elevation":65,"splitDistance":19.0,"manualWeight":100},{"splitNumber":20,"elevation":58,"splitDistance":20.0,"manualWeight":100},{"splitNumber":21,"elevation":-32,"splitDistance":21.0,"manualWeight":100},{"splitNumber":22,"elevation":-27,"splitDistance":22.0,"manualWeight":100},{"splitNumber":23,"elevation":-42,"splitDistance":23.0,"manualWeight":100},{"splitNumber":24,"elevation":-27,"splitDistance":24.0,"manualWeight":100},{"splitNumber":25,"elevation":-3,"splitDistance":25.0,"manualWeight":100},{"splitNumber":26,"elevation":-10,"splitDistance":26.0,"manualWeight":100},{"splitNumber":27,"elevation":1,"splitDistance":27.0,"manualWeight":100},{"splitNumber":28,"elevation":6,"splitDistance":28.0,"manualWeight":100},{"splitNumber":29,"elevation":-12,"splitDistance":29.0,"manualWeight":100},{"splitNumber":30,"elevation":15,"splitDistance":30.0,"manualWeight":100}],"raceName":"Bay to Bay 30k 2019","plannedRaceTimeFirst":"02:29:00","plannedRaceTimeLast":"03:59:00","plannedRaceTimeDelta":"00:10:00","startDelay":"00:02:30","firstFade":0,"lastFade":3}
+{
+  "distance": 30.0,
+  "splitInputs": [
+    {
+      "splitNumber": 1,
+      "elevation": -22,
+      "splitDistance": 1.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 2,
+      "elevation": -5,
+      "splitDistance": 2.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 3,
+      "elevation": -1,
+      "splitDistance": 3.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 4,
+      "elevation": -2,
+      "splitDistance": 4.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 5,
+      "elevation": 6,
+      "splitDistance": 5.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 6,
+      "elevation": 3,
+      "splitDistance": 6.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 7,
+      "elevation": 25,
+      "splitDistance": 7.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 8,
+      "elevation": 45,
+      "splitDistance": 8.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 9,
+      "elevation": 31,
+      "splitDistance": 9.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 10,
+      "elevation": 32,
+      "splitDistance": 10.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 11,
+      "elevation": -51,
+      "splitDistance": 11.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 12,
+      "elevation": -67,
+      "splitDistance": 12.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 13,
+      "elevation": -5,
+      "splitDistance": 13.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 14,
+      "elevation": 12,
+      "splitDistance": 14.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 15,
+      "elevation": 13,
+      "splitDistance": 15.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 16,
+      "elevation": -12,
+      "splitDistance": 16.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 17,
+      "elevation": -12,
+      "splitDistance": 17.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 18,
+      "elevation": 14,
+      "splitDistance": 18.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 19,
+      "elevation": 65,
+      "splitDistance": 19.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 20,
+      "elevation": 58,
+      "splitDistance": 20.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 21,
+      "elevation": -32,
+      "splitDistance": 21.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 22,
+      "elevation": -27,
+      "splitDistance": 22.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 23,
+      "elevation": -42,
+      "splitDistance": 23.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 24,
+      "elevation": -27,
+      "splitDistance": 24.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 25,
+      "elevation": -3,
+      "splitDistance": 25.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 26,
+      "elevation": -10,
+      "splitDistance": 26.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 27,
+      "elevation": 1,
+      "splitDistance": 27.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 28,
+      "elevation": 6,
+      "splitDistance": 28.0,
+      "manualWeight": 100
+    },
+    {
+      "splitNumber": 29,
+      "elevation": -12,
+      "splitDistance": 29.0,
+      "manualWeight": 105
+    },
+    {
+      "splitNumber": 30,
+      "elevation": 15,
+      "splitDistance": 30.0,
+      "manualWeight": 100
+    }
+  ],
+  "raceName": "Bay to Bay 30k 2019",
+  "plannedRaceTimeFirst": "02:29:00",
+  "plannedRaceTimeLast": "03:59:00",
+  "plannedRaceTimeDelta": "00:10:00",
+  "startDelay": "00:02:30",
+  "firstFade": 0,
+  "lastFade": 3
+}
