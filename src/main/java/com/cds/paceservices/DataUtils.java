@@ -18,6 +18,7 @@ public class DataUtils {
     private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 
     public void writeRequestRecord(String requestData, String source, String eventName) {
+        /*
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                 .withRegion(com.amazonaws.regions.Regions.US_EAST_2).build();
 
@@ -41,5 +42,6 @@ public class DataUtils {
             log.info("PutItem: failed");
             log.info(e.getMessage());
         }
+        */
     }
 }
