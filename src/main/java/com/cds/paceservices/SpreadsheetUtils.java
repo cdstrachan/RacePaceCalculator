@@ -1,12 +1,22 @@
 package com.cds.paceservices;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
 
+import com.cds.paceservices.TO.PaceChartInstanceTO;
+import com.cds.paceservices.TO.PaceChartTO;
+import com.cds.paceservices.TO.SplitTO;
+
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -25,12 +35,13 @@ public class SpreadsheetUtils {
 	public String CreateSpreadsheet(PaceChartTO paceChart) throws IOException {
 		// create a spreadsheet
 		log.info("createspreadsheet - about to create spreadsheet");
+
 		XSSFWorkbook wb = new XSSFWorkbook();
 		LocalTime lastFinishTime = null;
 		int colOffset = 1;
 		XSSFSheet sheet = null;
 
-		for (PaceChartInstanceTO instanceTO : paceChart.paceChartInstances) {
+		for (PaceChartInstanceTO instanceTO : paceChart.getPaceChartInstances()) {
 
 			log.info("createspreadsheet - new finish time:  " + instanceTO.getPlannedRaceTime().toString());
 
@@ -46,7 +57,33 @@ public class SpreadsheetUtils {
 			}
 
 			// start creating the spreadsheet
+			
+			// setup colours
+			//254, 233, 219 - orange
+			byte[] rgb = new byte[3];
+			rgb[0] = (byte) 254; // red
+			rgb[1] = (byte) 233; // green
+			rgb[2] = (byte) 219; // blue
+			XSSFColor colorHeader = new XSSFColor(rgb, new DefaultIndexedColorMap());
 
+			//197, 217, 238 - blue
+			rgb[0] = (byte) 197; // red
+			rgb[1] = (byte) 217; // green
+			rgb[2] = (byte) 238; // blue
+			XSSFColor colorBody = new XSSFColor(rgb, new DefaultIndexedColorMap());
+
+			//255, 255, 255 - white
+			rgb[0] = (byte) 255; // red
+			rgb[1] = (byte) 255; // green
+			rgb[2] = (byte) 255; // blue
+			XSSFColor colorClean = new XSSFColor(rgb, new DefaultIndexedColorMap());
+
+			//231, 239, 248 - grey - odd numbering
+			rgb[0] = (byte) 231; // red
+			rgb[1] = (byte) 239; // green
+			rgb[2] = (byte) 248; // blue
+			XSSFColor colorCleanOdd = new XSSFColor(rgb, new DefaultIndexedColorMap());
+			
 			// setup the font
 			String defaultFont = "Calibri";
 			short defaultFontSize = 10;
@@ -57,91 +94,92 @@ public class SpreadsheetUtils {
 			XSSFFont fontBold = wb.createFont();
 			fontBold.setFontHeightInPoints(defaultFontSize);
 			fontBold.setFontName(defaultFont);
-			fontBold.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+			fontBold.setBold(true);
 
 			// setup cell styles - title main
 			XSSFCellStyle styleTitleMain = wb.createCellStyle();
 			styleTitleMain.setFont(fontBold);
-			styleTitleMain.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-			styleTitleMain.setBorderTop(XSSFCellStyle.BORDER_THIN);
-			styleTitleMain.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-			styleTitleMain.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleTitleMain.setBorderBottom(BorderStyle.THIN);
+			styleTitleMain.setBorderTop(BorderStyle.THIN);
+			styleTitleMain.setBorderLeft(BorderStyle.THIN);
+			styleTitleMain.setBorderRight(BorderStyle.THIN);
 			styleTitleMain.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleMain.setTopBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleMain.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleMain.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			styleTitleMain.setFillForegroundColor(new XSSFColor(new java.awt.Color(197, 217, 238)));
-			styleTitleMain.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleTitleMain.setFillForegroundColor(colorBody);
+			styleTitleMain.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			styleTitleMain.setWrapText(false);
-			styleTitleMain.setAlignment(XSSFCellStyle.ALIGN_LEFT);
-			styleTitleMain.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			styleTitleMain.setAlignment(HorizontalAlignment.LEFT);
+			styleTitleMain.setVerticalAlignment(VerticalAlignment.TOP);
 
 			XSSFCellStyle styleTitleSub = wb.createCellStyle();
 			styleTitleSub.setFont(font);
-			styleTitleSub.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-			styleTitleSub.setBorderTop(XSSFCellStyle.BORDER_THIN);
-			styleTitleSub.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-			styleTitleSub.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleTitleSub.setBorderBottom(BorderStyle.THIN);
+			styleTitleSub.setBorderTop(BorderStyle.THIN);
+			styleTitleSub.setBorderLeft(BorderStyle.THIN);
+			styleTitleSub.setBorderRight(BorderStyle.THIN);
 			styleTitleSub.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleSub.setTopBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleSub.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 			styleTitleSub.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			styleTitleSub.setFillForegroundColor(new XSSFColor(new java.awt.Color(254, 233, 219)));
-			styleTitleSub.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+		
+			styleTitleSub.setFillForegroundColor(colorHeader);
+			styleTitleSub.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			styleTitleSub.setWrapText(true);
-			styleTitleSub.setAlignment(XSSFCellStyle.ALIGN_LEFT);
-			styleTitleSub.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			styleTitleSub.setAlignment(HorizontalAlignment.LEFT);
+			styleTitleSub.setVerticalAlignment(VerticalAlignment.TOP);
 
 			XSSFCellStyle styleRight = wb.createCellStyle();
 			styleRight = wb.createCellStyle();
 			styleRight.setFont(fontBold);
-			styleRight.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-			styleRight.setBorderTop(XSSFCellStyle.BORDER_THIN);
-			styleRight.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-			styleRight.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleRight.setBorderBottom(BorderStyle.THIN);
+			styleRight.setBorderTop(BorderStyle.THIN);
+			styleRight.setBorderLeft(BorderStyle.THIN);
+			styleRight.setBorderRight(BorderStyle.THIN);
 			styleRight.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 			styleRight.setTopBorderColor(IndexedColors.BLACK.getIndex());
 			styleRight.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 			styleRight.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			styleRight.setFillForegroundColor(new XSSFColor(new java.awt.Color(197, 217, 238)));
-			styleRight.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleRight.setFillForegroundColor(colorBody);
+			styleRight.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			styleRight.setWrapText(true);
-			styleRight.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
-			styleRight.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			styleRight.setAlignment(HorizontalAlignment.LEFT);
+			styleRight.setVerticalAlignment(VerticalAlignment.TOP);
 
 			XSSFCellStyle styleClean = wb.createCellStyle();
 			styleClean = wb.createCellStyle();
 			styleClean.setFont(font);
-			styleClean.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-			styleClean.setBorderTop(XSSFCellStyle.BORDER_THIN);
-			styleClean.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-			styleClean.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleClean.setBorderBottom(BorderStyle.THIN);
+			styleClean.setBorderTop(BorderStyle.THIN);
+			styleClean.setBorderLeft(BorderStyle.THIN);
+			styleClean.setBorderRight(BorderStyle.THIN);
 			styleClean.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 			styleClean.setTopBorderColor(IndexedColors.BLACK.getIndex());
 			styleClean.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 			styleClean.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			styleClean.setFillForegroundColor(new XSSFColor(new java.awt.Color(255, 255, 255)));
-			styleClean.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleClean.setFillForegroundColor(colorClean);
+			styleClean.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			styleClean.setWrapText(true);
-			styleClean.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
-			styleClean.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			styleClean.setAlignment(HorizontalAlignment.LEFT);
+			styleClean.setVerticalAlignment(VerticalAlignment.TOP);
 
 			XSSFCellStyle styleCleanOdd = wb.createCellStyle();
 			styleCleanOdd = wb.createCellStyle();
 			styleCleanOdd.setFont(font);
-			styleCleanOdd.setBorderBottom(XSSFCellStyle.BORDER_THIN);
-			styleCleanOdd.setBorderTop(XSSFCellStyle.BORDER_THIN);
-			styleCleanOdd.setBorderLeft(XSSFCellStyle.BORDER_THIN);
-			styleCleanOdd.setBorderRight(XSSFCellStyle.BORDER_THIN);
+			styleCleanOdd.setBorderBottom(BorderStyle.THIN);
+			styleCleanOdd.setBorderTop(BorderStyle.THIN);
+			styleCleanOdd.setBorderLeft(BorderStyle.THIN);
+			styleCleanOdd.setBorderRight(BorderStyle.THIN);
 			styleCleanOdd.setBottomBorderColor(IndexedColors.BLACK.getIndex());
 			styleCleanOdd.setTopBorderColor(IndexedColors.BLACK.getIndex());
 			styleCleanOdd.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 			styleCleanOdd.setRightBorderColor(IndexedColors.BLACK.getIndex());
-			styleCleanOdd.setFillForegroundColor(new XSSFColor(new java.awt.Color(231, 239, 248)));
-			styleCleanOdd.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+			styleCleanOdd.setFillForegroundColor(colorCleanOdd);
+			styleCleanOdd.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 			styleCleanOdd.setWrapText(true);
-			styleCleanOdd.setAlignment(XSSFCellStyle.ALIGN_RIGHT);
-			styleCleanOdd.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+			styleCleanOdd.setAlignment(HorizontalAlignment.LEFT);
+			styleCleanOdd.setVerticalAlignment(VerticalAlignment.TOP);
 
 			int rowOffset = 0;
 			XSSFRow row;
@@ -240,10 +278,11 @@ public class SpreadsheetUtils {
 			colOffset += 6;
 
 		}
-		log.info("createspreadsheet - About to create file");
+		log.info("createspreadsheet - about to save spreadsheet");
 		File excelFile = File.createTempFile("results_", ".xlsx");
 		FileOutputStream excelFileStream = new FileOutputStream(excelFile);
 		wb.write(excelFileStream);
+		wb.close();
 		excelFileStream.close();
 
 		return excelFile.getPath();

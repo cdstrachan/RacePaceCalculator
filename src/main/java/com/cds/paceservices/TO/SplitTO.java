@@ -1,7 +1,8 @@
-package com.cds.paceservices;
+package com.cds.paceservices.TO;
 
 import java.time.LocalTime;
 
+import com.cds.paceservices.PaceUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SplitTO {

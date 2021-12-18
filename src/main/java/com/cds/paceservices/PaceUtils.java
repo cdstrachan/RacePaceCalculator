@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class PaceUtils {
 
-	static double TimeToDouble(LocalTime theTime) {
+	public static double TimeToDouble(LocalTime theTime) {
 		double result = theTime.getSecond();
 		result = result / 60;
 		result = result + (double) theTime.getMinute();
@@ -13,7 +13,7 @@ public class PaceUtils {
 		return result;
 	}
 
-	static LocalTime DoubleToTime(Double theTimeDec) {
+	public static LocalTime DoubleToTime(Double theTimeDec) {
 		int hours;
 		int minutes;
 		int seconds;
@@ -32,7 +32,7 @@ public class PaceUtils {
 		return LocalTime.of(hours, minutes, seconds);
 	}
 
-	static int getSeconds(double n) {
+	public static int getSeconds(double n) {
 		double result;
 		int seconds;
 		if (n > 0) {
@@ -45,7 +45,7 @@ public class PaceUtils {
 		return seconds;
 	}
 
-	static double calcPaceImpact(double elevation) {
+	public static double calcPaceImpact(double elevation) {
 		if (elevation > 25)
 			return 0.4;
 		if (elevation > 0)
@@ -57,7 +57,7 @@ public class PaceUtils {
 		return 0;
 	}
 
-	static LocalTime AddTime(LocalTime FirstTime, LocalTime SecondTime) {
+	public static LocalTime AddTime(LocalTime FirstTime, LocalTime SecondTime) {
 		FirstTime = FirstTime.plusHours(SecondTime.getHour());
 		FirstTime = FirstTime.plusMinutes(SecondTime.getMinute());
 		FirstTime = FirstTime.plusSeconds(SecondTime.getSecond());
@@ -65,7 +65,7 @@ public class PaceUtils {
 		return FirstTime;
 	}
 
-	static LocalTime SubtractTime(LocalTime FirstTime, LocalTime SecondTime) {
+	public static LocalTime SubtractTime(LocalTime FirstTime, LocalTime SecondTime) {
 		FirstTime = FirstTime.minusHours(SecondTime.getHour());
 		FirstTime = FirstTime.minusMinutes(SecondTime.getMinute());
 		FirstTime = FirstTime.minusSeconds(SecondTime.getSecond());
@@ -73,7 +73,7 @@ public class PaceUtils {
 		return FirstTime;
 	}
 
-	static String formatTime(LocalTime theTime, boolean bHour) {
+	public static String formatTime(LocalTime theTime, boolean bHour) {
 		DateTimeFormatter timeFormatHH = DateTimeFormatter.ofPattern("hh:mm:ss");
 		DateTimeFormatter timeFormatH = DateTimeFormatter.ofPattern("h:mm:ss");
 		DateTimeFormatter timeFormatMM = DateTimeFormatter.ofPattern("mm:ss");
@@ -94,8 +94,9 @@ public class PaceUtils {
 
 	}
 
+	// This is used for spreadsheet Col referencing (Col A, B C etc)
 	// max ZZ
-	static String getCharForNumber(int i) {
+	public static String getCharForNumber(int i) {
 		char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
 		int small = i % 26;

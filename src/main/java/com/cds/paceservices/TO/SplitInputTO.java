@@ -1,4 +1,4 @@
-package com.cds.paceservices;
+package com.cds.paceservices.TO;
 
 public class SplitInputTO {
 	private int splitNumber;

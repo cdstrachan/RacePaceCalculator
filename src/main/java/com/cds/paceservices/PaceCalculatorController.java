@@ -4,8 +4,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -19,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cds.paceservices.TO.ErrorMessageTO;
+import com.cds.paceservices.TO.PaceChartInstanceTO;
+import com.cds.paceservices.TO.PaceChartTO;
+import com.cds.paceservices.TO.SplitTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.net.HttpHeaders;
@@ -35,36 +37,9 @@ public class PaceCalculatorController {
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
 	private static final int MAX_CHART_COUNT = 500;
 
-	// create the template splits to full in
-	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
-	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) throws IOException {
-		log.info("pacecharttemplate: start - received test operation for distance: " + paceChartTO.getDistance());
-		ArrayList<SplitInputTO> splitInputs;
 
-		// setup elevations & manual weighting
-		splitInputs = new ArrayList<SplitInputTO>();
-		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			SplitInputTO splitInput = new SplitInputTO();
-			splitInput.setSplitNumber(counter + 1);
-			splitInput.setElevation(0);
-			splitInput.setManualWeight(100);
-			if (counter + 1 > paceChartTO.getDistance())
-				splitInput.setSplitDistance(paceChartTO.getDistance());
-			else
-				splitInput.setSplitDistance(counter + 1);
-			splitInputs.add((splitInput));
-
-		}
-		paceChartTO.setSplitInputs(splitInputs);
-		paceChartTO.setRaceName("My pace chart");
-
-		log.info("pacecharttemplate: Finished");
-		return paceChartTO;
-	}
-
-	// create the template splits to fill in
-	@RequestMapping(value = "/pacechartpreload", method = RequestMethod.POST)
-	public PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
+	// create the default pacechart - 10k flat race - used for initial bootstrap from front end
+	private PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
 		log.info("pacechartpreload: start - received test operation for distance: " + paceChartTO.getDistance());
 
 		// load the template
@@ -87,7 +62,7 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 
-	// used to create the initial blank pacechart
+	// used to create the initial blank pacechart - called at first load from front end
 	@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
 	public PaceChartTO createPaceChartBootstrap(@RequestParam("template") String template) throws IOException {
 		log.info("pacechartbootstrap: start - received bootstrap operation for template: " + template);
@@ -98,7 +73,7 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 
-	// create the actual pace chart
+	// create the actual pace chart - online
 	@RequestMapping(value = "/pacechart", method = RequestMethod.POST)
 	public PaceChartTO createPaceChart(@RequestBody PaceChartTO paceChartTO) {
 
@@ -107,11 +82,6 @@ public class PaceCalculatorController {
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
 			log.info("pacechart: received a REST POST request");
 			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
-
-			// create database record
-			Gson gson = new Gson();
-			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(gson.toJson(paceChartTO), "OnlineChart", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -177,7 +147,7 @@ public class PaceCalculatorController {
 			else
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
 			log.info("pacechart: calculation complete");
-			log.info("pacechart: I am ready to send JSON response");
+			log.info("pacechart: ready to send JSON response");
 			return paceChartTO;
 
 		} catch (Exception e) {
@@ -186,7 +156,7 @@ public class PaceCalculatorController {
 		}
 	}
 
-	// create the actual pace chart
+	// create the actual pace chart - spreadsheet
 	@RequestMapping(value = "/pacechartexcel", method = RequestMethod.POST)
 	public ResponseEntity<InputStreamResource> createPaceChartExcel(@RequestBody PaceChartTO paceChartTO) {
 
@@ -194,11 +164,6 @@ public class PaceCalculatorController {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
 			log.info("pacechartexcel: received a REST POST request");
-
-			// create database record
-			Gson gson = new Gson();
-			DataUtils utils = new DataUtils();
-			utils.writeRequestRecord(gson.toJson(paceChartTO), "ExcelExport", paceChartTO.getRaceName());
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -251,7 +216,7 @@ public class PaceCalculatorController {
 				if (!DryRunCountOK(paceChartTO)) {
 					validationErrorMessages.add(createValidationMessage(1, "You are trying to create more than "
 							+ MAX_CHART_COUNT
-							+ " pace charts. That is too many! Please narrow your input. The max returned is 100. Reduce the increments, last start time or fades."));
+							+ " pace charts. That is too many! Please narrow your input. Reduce the increments, last start time or fades."));
 					isValid = false;
 				}
 			}
@@ -290,6 +255,7 @@ public class PaceCalculatorController {
 		return validationMessage;
 	}
 
+	// This checks how many charts will be created, and stops if its going to be too big
 	private boolean DryRunCountOK(PaceChartTO paceChartTO) {
 		log.info("counting pace charts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst());
@@ -312,6 +278,7 @@ public class PaceCalculatorController {
 
 	}
 
+	// loop through all the times to create the individual charts
 	private PaceChartTO createPaceCharts(PaceChartTO paceChartTO) {
 		log.info("createpacecharts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst());
@@ -339,7 +306,8 @@ public class PaceCalculatorController {
 		return paceChartTO;
 	}
 
-	public PaceChartInstanceTO createPaceChart(PaceChartTO paceChartTO, LocalTime plannedRaceTime, double fade) {
+	// create a chart - this is where all the fun happens
+	private PaceChartInstanceTO createPaceChart(PaceChartTO paceChartTO, LocalTime plannedRaceTime, double fade) {
 
 		log.info("createpacechart - start");
 		// calculate the average pace from the planned race time and the start delay
@@ -391,7 +359,7 @@ public class PaceCalculatorController {
 								* raceSplit.getSplitDistance()));
 
 			// cater for the fade
-			// Todo: change to be linear per split
+			// Todo: change to be linear per split, inbstead of first and second half
 			if (counter < paceChartTO.getDistance() / 2) {
 				raceSplit.setFadeFactor(1 - fade / 100);
 				// raceSplit.fadeFactor = 1 + (raceSplit.splitNumber-1) * (fade/100/distance)*2;

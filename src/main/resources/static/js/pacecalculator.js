@@ -51,29 +51,4 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         xhr.send(JSON.stringify($scope.paceChartInput));
     };
 
-    $scope.createChartTemplate = function (distance) {
-        $scope.ErrorMessage = "";
-        $scope.paceChart = null;
-        $http.post('/pacecharttemplate', $scope.paceChartInput).then(function (response) {
-            $window.ga('send', 'event', 'distanceset', distance);
-            $scope.paceChartInput = response.data;
-        }).catch(function (e) {
-            console.log("Error creating template", e);
-            $scope.CriticalErrorMessage = "Error connecting to server";
-        })
-    };
-
-    $scope.createChartPreload = function (templateName) {
-        $scope.ErrorMessage = "";
-        $scope.paceChart = null;
-        $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
-            $window.ga('send', 'event', 'templateloaded', templateName);
-            $scope.paceChartInput = response.data;
-        }).catch(function (e) {
-            console.log("Error preloading", e);
-            $scope.CriticalErrorMessage = "Error connecting to server";
-        })
-    }
-
-
 });
