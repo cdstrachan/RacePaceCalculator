@@ -18,3 +18,6 @@ if you wish to add a cource, create a pull request
 ## Template generator
 https://github.com/cdstrachan/RacePaceCalculatorRouteGenerator
 Simple CLI route generator
+
+## Todo
+(umm) unit tests and better error handling
