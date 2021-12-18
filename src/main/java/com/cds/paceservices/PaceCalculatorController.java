@@ -38,8 +38,9 @@ public class PaceCalculatorController {
 	private static final int MAX_CHART_COUNT = 500;
 
 
-	// create the default pacechart - 10k flat race - used for initial bootstrap from front end
-	private PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
+	// create the default pacechart for a set route (default to 10k from FE)
+	@RequestMapping(value = "/pacechartpreload", method = RequestMethod.POST)
+	public PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
 		log.info("pacechartpreload: start - received test operation for distance: " + paceChartTO.getDistance());
 
 		// load the template
