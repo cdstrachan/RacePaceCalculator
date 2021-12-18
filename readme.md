@@ -1,20 +1,15 @@
-readme.me
-
-## Samples 
-Refer samples folder for sample inputs and outputs
-
 ## Documentation
-http://localhost:8080/swagger-ui.html
-http://localhost:8080/v2/api-docs
+Download and run the app, it will launch a sprintboot app at http://localhost:80
 
-## GIT
 
-to publish to production
+## Templates
+src/main/resource/templates
+Add templates for your own races there, and ass the template to index.html
 
-git remote rm heroku
-heroku git:remote -a onlinepacecharts
+## Sample
+Working sample here: http://onlinepacecharts.herokuapp.com/
+if you wish to add a cource, create a pull request
 
-TODO
-Add Excel capability
-Add Default races
-
+## Template generate
+https://github.com/cdstrachan/RacePaceCalculatorRouteGenerator
+Simple CLI route generator
