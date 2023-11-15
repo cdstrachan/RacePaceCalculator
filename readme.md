@@ -22,5 +22,8 @@ Simple CLI route generator
 ## Todo
 (umm) unit tests and better error handling
 
-## To Deploy
+# Deployment
+## Build first
+./mvnw clean install
+## Then deploy
 az spring app deploy --resource-group pace-calculator --service pace-calculator --name pacecalc1 --artifact-path target/paceservices-0.0.5.jar

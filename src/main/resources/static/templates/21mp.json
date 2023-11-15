@@ -1,1 +1,144 @@
-{"distance":21.1,"splitInputs":[{"splitNumber":1,"elevation":10,"splitDistance":1.0,"manualWeight":100},{"splitNumber":2,"elevation":3,"splitDistance":2.0,"manualWeight":100},{"splitNumber":3,"elevation":6,"splitDistance":3.0,"manualWeight":100},{"splitNumber":4,"elevation":0,"splitDistance":4.0,"manualWeight":100},{"splitNumber":5,"elevation":5,"splitDistance":5.0,"manualWeight":100},{"splitNumber":6,"elevation":1,"splitDistance":6.0,"manualWeight":100},{"splitNumber":7,"elevation":1,"splitDistance":7.0,"manualWeight":100},{"splitNumber":8,"elevation":-2,"splitDistance":8.0,"manualWeight":100},{"splitNumber":9,"elevation":5,"splitDistance":9.0,"manualWeight":100},{"splitNumber":10,"elevation":5,"splitDistance":10.0,"manualWeight":100},{"splitNumber":11,"elevation":7,"splitDistance":11.0,"manualWeight":100},{"splitNumber":12,"elevation":0,"splitDistance":12.0,"manualWeight":100},{"splitNumber":13,"elevation":2,"splitDistance":13.0,"manualWeight":100},{"splitNumber":14,"elevation":-1,"splitDistance":14.0,"manualWeight":100},{"splitNumber":15,"elevation":1,"splitDistance":15.0,"manualWeight":100},{"splitNumber":16,"elevation":-2,"splitDistance":16.0,"manualWeight":100},{"splitNumber":17,"elevation":0,"splitDistance":17.0,"manualWeight":100},{"splitNumber":18,"elevation":8,"splitDistance":18.0,"manualWeight":100},{"splitNumber":19,"elevation":12,"splitDistance":19.0,"manualWeight":100},{"splitNumber":20,"elevation":13,"splitDistance":20.0,"manualWeight":100},{"splitNumber":21,"elevation":-15,"splitDistance":21.0,"manualWeight":100},{"splitNumber":22,"elevation":0,"splitDistance":21.1,"manualWeight":100}],"raceName":"MT Titans 21.1k 2016","plannedRaceTimeFirst":"01:29:00","plannedRaceTimeLast":"03:29:00","plannedRaceTimeDelta":"00:10:00","startDelay":"00:01:30","firstFade":0,"lastFade":2}
+{
+    "distance": 21.1,
+    "splitInputs": [
+        {
+            "splitNumber": 1,
+            "elevation": 10,
+            "splitDistance": 1.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 2,
+            "elevation": 3,
+            "splitDistance": 2.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 3,
+            "elevation": 6,
+            "splitDistance": 3.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 4,
+            "elevation": 0,
+            "splitDistance": 4.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 5,
+            "elevation": 5,
+            "splitDistance": 5.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 6,
+            "elevation": 1,
+            "splitDistance": 6.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 7,
+            "elevation": 1,
+            "splitDistance": 7.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 8,
+            "elevation": -2,
+            "splitDistance": 8.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 9,
+            "elevation": 5,
+            "splitDistance": 9.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 10,
+            "elevation": 5,
+            "splitDistance": 10.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 11,
+            "elevation": 7,
+            "splitDistance": 11.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 12,
+            "elevation": 0,
+            "splitDistance": 12.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 13,
+            "elevation": 2,
+            "splitDistance": 13.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 14,
+            "elevation": -1,
+            "splitDistance": 14.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 15,
+            "elevation": 1,
+            "splitDistance": 15.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 16,
+            "elevation": -2,
+            "splitDistance": 16.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 17,
+            "elevation": 0,
+            "splitDistance": 17.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 18,
+            "elevation": 8,
+            "splitDistance": 18.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 19,
+            "elevation": 12,
+            "splitDistance": 19.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 20,
+            "elevation": 13,
+            "splitDistance": 20.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 21,
+            "elevation": -15,
+            "splitDistance": 21.0,
+            "manualWeight": 100
+        },
+        {
+            "splitNumber": 22,
+            "elevation": 0,
+            "splitDistance": 21.1,
+            "manualWeight": 100
+        }
+    ],
+    "raceName": "MT Titans 21.1k 2016",
+    "plannedRaceTimeFirst": "01:29:00",
+    "plannedRaceTimeLast": "03:29:00",
+    "plannedRaceTimeDelta": "00:10:00",
+    "startDelay": "00:01:30",
+    "firstFade": 0,
+    "lastFade": 2
+}

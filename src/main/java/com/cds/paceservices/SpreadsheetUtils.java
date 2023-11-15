@@ -34,7 +34,7 @@ public class SpreadsheetUtils {
 
 	public String CreateSpreadsheet(PaceChartTO paceChart) throws IOException {
 		// create a spreadsheet
-		log.info("createspreadsheet - about to create spreadsheet");
+		log.debug("createspreadsheet - about to create spreadsheet");
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 		LocalTime lastFinishTime = null;
@@ -43,13 +43,13 @@ public class SpreadsheetUtils {
 
 		for (PaceChartInstanceTO instanceTO : paceChart.getPaceChartInstances()) {
 
-			log.info("createspreadsheet - new finish time:  " + instanceTO.getPlannedRaceTime().toString());
+			log.debug("createspreadsheet - new finish time:  " + instanceTO.getPlannedRaceTime().toString());
 
 			// new spreadsheet when the finish time changes
 			if (lastFinishTime != instanceTO.getPlannedRaceTime()) {
 				// create the sheet name
 				String sheetName = instanceTO.getPlannedRaceTime().toString().replace(":", "m") + "s ";
-				log.info("createspreadsheet - spreatsheet is called: " + sheetName);
+				log.debug("createspreadsheet - spreatsheet is called: " + sheetName);
 
 				sheet = wb.createSheet(sheetName);
 				lastFinishTime = instanceTO.getPlannedRaceTime();
@@ -186,7 +186,7 @@ public class SpreadsheetUtils {
 			XSSFCell cell;
 			rowOffset++;
 
-			log.info("createspreadsheet - creating records");
+			log.debug("createspreadsheet - creating records");
 			// start populating the spreadsheet
 			row = createRow(sheet, rowOffset);
 			cell = CreateCell(styleTitleMain, row, colOffset, "Race");
@@ -274,11 +274,11 @@ public class SpreadsheetUtils {
 				cell = CreateCell(cellStype, row, colOffset + 4, String.valueOf((int) raceSplit.getElevation()));
 				rowOffset++;
 			}
-			log.info("createspreadsheet - creating records complete");
+			log.debug("createspreadsheet - creating records complete");
 			colOffset += 6;
 
 		}
-		log.info("createspreadsheet - about to save spreadsheet");
+		log.debug("createspreadsheet - about to save spreadsheet");
 		File excelFile = File.createTempFile("results_", ".xlsx");
 		FileOutputStream excelFileStream = new FileOutputStream(excelFile);
 		wb.write(excelFileStream);

@@ -25,7 +25,9 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
         $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
-            $window.ga('send', 'event', 'onlinechartcreated', raceName);
+            $window.gtag('event', 'ChartCreated', {
+                'event_label': raceName
+            });   
             $scope.paceChart = response.data;
             $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
         }).catch(function (e) {
@@ -41,8 +43,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         xhr.responseType = "arraybuffer";
 
         xhr.onload = function () {
-            if (this.status === 200) {
-                $window.ga('send', 'event', 'excelcreated', raceName);
+            if (this.status === 200) {    
                 var blob = new Blob([xhr.response], { type: "application/xlsx" });
                 var a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
@@ -51,6 +52,10 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
             }
         };
         xhr.send(JSON.stringify($scope.paceChartInput));
+        $window.gtag('event', 'ChartCreatedExcel', {
+            'event_label': raceName
+        });
+        $scope.loadingmessage = "Excel chart downloaded.";
     };
 
     $scope.createChartPreload = function (templateName) {
@@ -58,12 +63,25 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
-            $window.ga('send', 'event', 'templateloaded', templateName);
-            $scope.paceChartInput = response.data;
+        $scope.paceChartInput = response.data;
         }).catch(function (e) {
             console.log("Error preloading", e);
             $scope.CriticalErrorMessage = "Error connecting to server";
         })
     }
+
+    $scope.createChartTemplate = function (distance) {
+        $scope.ErrorMessage = "";
+        $scope.CriticalErrorMessage = "";
+        $scope.paceChart = null;
+        $http.post('/pacecharttemplate', $scope.paceChartInput).then(function (response) {
+            //$window.ga('send', 'event', 'distanceset', distance);
+            $scope.paceChartInput = response.data;
+        }).catch(function (e) {
+            console.log("Error creating template", e);
+            $scope.CriticalErrorMessage = "Error connecting to server";
+        })
+    };
+
 
 });

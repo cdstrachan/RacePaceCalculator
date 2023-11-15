@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cds.paceservices.TO.ErrorMessageTO;
 import com.cds.paceservices.TO.PaceChartInstanceTO;
 import com.cds.paceservices.TO.PaceChartTO;
+import com.cds.paceservices.TO.SplitInputTO;
 import com.cds.paceservices.TO.SplitTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -41,11 +42,11 @@ public class PaceCalculatorController {
 	// create the default pacechart for a set route (default to 10k from FE)
 	@RequestMapping(value = "/pacechartpreload", method = RequestMethod.POST)
 	public PaceChartTO createPaceChartPreload(@RequestBody PaceChartTO paceChartTO) throws IOException {
-		log.info("pacechartpreload: start - received test operation for distance: " + paceChartTO.getDistance());
+		log.debug("pacechartpreload: start - received operation for distance: " + paceChartTO.getDistance());
 
 		// load the template
 		String raceTemplateName = paceChartTO.getRaceTemplateName();
-		log.info("pacechartpreload: Loading the template: " + raceTemplateName);
+		log.debug("pacechartpreload: Loading the template: " + raceTemplateName);
 
 		// read the template
 		ClassPathResource resource = new ClassPathResource("static/templates/" + raceTemplateName + ".json");
@@ -59,18 +60,18 @@ public class PaceCalculatorController {
 		paceChartTO = mapper.readValue(content, PaceChartTO.class);
 		paceChartTO.setRaceTemplateName(raceTemplateName);
 
-		log.info("pacechartpreload: Finished");
+		log.debug("pacechartpreload: Finished");
 		return paceChartTO;
 	}
 
 	// used to create the initial blank pacechart - called at first load from front end
 	@RequestMapping(value = "/pacechartbootstrap", method = RequestMethod.GET)
 	public PaceChartTO createPaceChartBootstrap(@RequestParam("template") String template) throws IOException {
-		log.info("pacechartbootstrap: start - received bootstrap operation for template: " + template);
+		log.debug("pacechartbootstrap: start - received bootstrap operation for template: " + template);
 		PaceChartTO paceChartTO = new PaceChartTO();
 		paceChartTO.setRaceTemplateName(template);
 		paceChartTO = createPaceChartPreload(paceChartTO);
-		log.info("pacechartbootstrap: Finished");
+		log.debug("pacechartbootstrap: Finished");
 		return paceChartTO;
 	}
 
@@ -81,8 +82,11 @@ public class PaceCalculatorController {
 		try {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
-			log.info("pacechart: received a REST POST request");
-			log.info("pacechart: race template:" + paceChartTO.getRaceTemplateName());
+			log.debug("pacechart: received a REST POST request");
+			log.debug("pacechart: race template:" + paceChartTO.getRaceTemplateName());
+			// log pacechartto as a deserialized string
+			ObjectMapper serialChart = new ObjectMapper();
+			log.info("Inputs used:" + serialChart.writeValueAsString(paceChartTO));
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -141,14 +145,14 @@ public class PaceCalculatorController {
 			}
 
 			// calculate results
-			log.info("pacechart: about to calculate");
+			log.debug("pacechart: about to calculate");
 
 			if (isValid)
 				paceChartTO = createPaceCharts(paceChartTO);
 			else
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
-			log.info("pacechart: calculation complete");
-			log.info("pacechart: ready to send JSON response");
+			log.debug("pacechart: calculation complete");
+			log.debug("pacechart: ready to send JSON response");
 			return paceChartTO;
 
 		} catch (Exception e) {
@@ -164,7 +168,11 @@ public class PaceCalculatorController {
 		try {
 			boolean isValid = true;
 			ArrayList<ErrorMessageTO> validationErrorMessages = new ArrayList<ErrorMessageTO>();
-			log.info("pacechartexcel: received a REST POST request");
+			log.debug("pacechartexcel: received a REST POST request");
+			log.debug("pacechartexcel: race template:" + paceChartTO.getRaceTemplateName());
+			// log pacechartto as a deserialized string
+			ObjectMapper serialChart = new ObjectMapper();
+			log.info("Inputs used:" + serialChart.writeValueAsString(paceChartTO));
 
 			// distance >0 and <100
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
@@ -223,7 +231,7 @@ public class PaceCalculatorController {
 			}
 
 			// calculate results
-			log.info("pacechartexcel: about to calculate");
+			log.debug("pacechartexcel: about to calculate");
 
 			if (isValid)
 				paceChartTO = createPaceCharts(paceChartTO);
@@ -237,8 +245,8 @@ public class PaceCalculatorController {
 			File file = ResourceUtils.getFile(outputFileLocation);
 			InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-			log.info("pacechartexcel: calculation complete");
-			log.info("pacechartexcel: end - ready to send JSON response");
+			log.debug("pacechartexcel: calculation complete");
+			log.debug("pacechartexcel: end - ready to send JSON response");
 
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
 					.contentType(MediaType.TEXT_HTML).body(resource);
@@ -258,7 +266,7 @@ public class PaceCalculatorController {
 
 	// This checks how many charts will be created, and stops if its going to be too big
 	private boolean DryRunCountOK(PaceChartTO paceChartTO) {
-		log.info("counting pace charts - start");
+		log.debug("counting pace charts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst());
 		double plannedRaceTimeLastDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeLast());
 		double plannedRaceTimeDeltaDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeDelta());
@@ -269,19 +277,19 @@ public class PaceCalculatorController {
 			for (int fade = paceChartTO.getFirstFade(); fade <= paceChartTO.getLastFade(); fade++) {
 				counter++;
 				if (counter > MAX_CHART_COUNT) {
-					log.info("counting pace charts - count not ok");
+					log.debug("counting pace charts - count not ok");
 					return false;
 				}
 			}
 		}
-		log.info("counting pace charts - count ok");
+		log.debug("counting pace charts - count ok");
 		return true;
 
 	}
 
 	// loop through all the times to create the individual charts
 	private PaceChartTO createPaceCharts(PaceChartTO paceChartTO) {
-		log.info("createpacecharts - start");
+		log.debug("createpacecharts - start");
 		double plannedRaceTimeFirstDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeFirst());
 		double plannedRaceTimeLastDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeLast());
 		double plannedRaceTimeDeltaDec = PaceUtils.TimeToDouble(paceChartTO.getPlannedRaceTimeDelta());
@@ -296,21 +304,21 @@ public class PaceCalculatorController {
 			// count through the fades
 			for (int fade = paceChartTO.getFirstFade(); fade <= paceChartTO.getLastFade(); fade++) {
 
-				log.info("createpacecharts: creating chart for time:" + plannedRaceTime + ", fade: " + fade);
+				log.debug("createpacecharts: creating chart for time:" + plannedRaceTime + ", fade: " + fade);
 				paceChartInstances.add(createPaceChart(paceChartTO, plannedRaceTime, fade));
-				log.info("createpacecharts: creating chart complete");
+				log.debug("createpacecharts: creating chart complete");
 			}
 		}
 		paceChartTO.setPaceChartInstances(paceChartInstances);
 
-		log.info("createpacecharts - end");
+		log.debug("createpacecharts - end");
 		return paceChartTO;
 	}
 
 	// create a chart - this is where all the fun happens
 	private PaceChartInstanceTO createPaceChart(PaceChartTO paceChartTO, LocalTime plannedRaceTime, double fade) {
 
-		log.info("createpacechart - start");
+		log.debug("createpacechart - start");
 		// calculate the average pace from the planned race time and the start delay
 		double totalWeightedTimeDec = 0;
 		double timeOverrunFactor;
@@ -329,9 +337,9 @@ public class PaceCalculatorController {
 				PaceUtils.DoubleToTime((PaceUtils.TimeToDouble(plannedRaceTime)) / paceChartTO.getDistance()));
 
 		// calculate what we can without totals
-		log.info("createpacechart - creating splits");
+		log.debug("createpacechart - creating splits");
 		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
-			// log.info("createpacechart - creating split # " + (counter + 1));
+			// log.debug("createpacechart - creating split # " + (counter + 1));
 			SplitTO raceSplit = new SplitTO();
 
 			// the last lap may be a different (shorter) distance
@@ -379,7 +387,7 @@ public class PaceCalculatorController {
 		timeOverrunFactor = totalWeightedTimeDec / PaceUtils.TimeToDouble(plannedRaceTime);
 
 		// calculate final times
-		log.info("createpacechart - calculating final split data");
+		log.debug("createpacechart - calculating final split data");
 		for (SplitTO raceSplit : raceSplits) {
 			raceSplit.setFinalTimeDec(raceSplit.getWeightedTimeDec() / timeOverrunFactor);
 			raceSplit.setFinalTime(PaceUtils.DoubleToTime(raceSplit.getFinalTimeDec()));
@@ -389,9 +397,36 @@ public class PaceCalculatorController {
 		}
 
 		paceChartInstanceTO.setRaceSplits(raceSplits);
-		log.info("createpacechart - complete");
+		log.debug("createpacechart - complete");
 		return paceChartInstanceTO;
 
+	}
+
+	// create the template splits to full in for any distance
+	@RequestMapping(value = "/pacecharttemplate", method = RequestMethod.POST)
+	public PaceChartTO createPaceChartTemplate(@RequestBody PaceChartTO paceChartTO) throws IOException {
+		log.debug("pacecharttemplate: start - received operation for distance: " + paceChartTO.getDistance());
+		ArrayList<SplitInputTO> splitInputs;
+
+		// setup elevations & manual weighting
+		splitInputs = new ArrayList<SplitInputTO>();
+		for (int counter = 0; counter < Math.ceil(paceChartTO.getDistance()); counter++) {
+			SplitInputTO splitInput = new SplitInputTO();
+			splitInput.setSplitNumber(counter + 1);
+			splitInput.setElevation(0);
+			splitInput.setManualWeight(100);
+			if (counter + 1 > paceChartTO.getDistance())
+				splitInput.setSplitDistance(paceChartTO.getDistance());
+			else
+				splitInput.setSplitDistance(counter + 1);
+			splitInputs.add((splitInput));
+
+		}
+		paceChartTO.setSplitInputs(splitInputs);
+		paceChartTO.setRaceName("My pace chart");
+
+		log.debug("pacecharttemplate: Finished");
+		return paceChartTO;
 	}
 
 }
