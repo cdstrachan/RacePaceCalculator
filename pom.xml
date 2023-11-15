@@ -21,7 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,18 +69,18 @@
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>azure-spring-apps-maven-plugin</artifactId>
-                <version>1.18.0</version>
+                <version>1.17.0</version>
                 <configuration>
                     <subscriptionId>e8c9da78-df30-4956-a7fd-6718b0219490</subscriptionId>
-                    <resourceGroup>training</resourceGroup>
-                    <clusterName>pacecalculator</clusterName>
-                    <appName>paceservices</appName>
+                    <resourceGroup>pace-calculator</resourceGroup>
+                    <clusterName>pace-calculator</clusterName>
+                    <appName>pacecalc</appName>
                     <isPublic>true</isPublic>
                     <deployment>
                         <cpu>1</cpu>
                         <memoryInGB>1</memoryInGB>
                         <instanceCount>1</instanceCount>
-                        <runtimeVersion>Java 17</runtimeVersion>
+                        <runtimeVersion>Java 11</runtimeVersion>
                         <resources>
                             <resource>
                                 <filtering/>

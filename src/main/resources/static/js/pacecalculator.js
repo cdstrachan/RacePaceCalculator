@@ -9,6 +9,7 @@ var app = angular.module('PaceChartCalculator', [])
 
 app.controller('Pacecalculator', function ($scope, $http, $window) {
     $scope.ErrorMessage = "";
+    $scope.CriticalErrorMessage = "";
     $('[data-toggle="tooltip"]').tooltip();
     $http.get('/pacechartbootstrap?template=10').
         then(function (response) {
@@ -20,6 +21,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
 
     $scope.createChart = function (raceName) {
         $scope.ErrorMessage = "";
+        $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
         $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
@@ -53,6 +55,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
 
     $scope.createChartPreload = function (templateName) {
         $scope.ErrorMessage = "";
+        $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
             $window.ga('send', 'event', 'templateloaded', templateName);
