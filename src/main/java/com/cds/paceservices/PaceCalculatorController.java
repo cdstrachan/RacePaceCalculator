@@ -36,7 +36,7 @@ import java.io.FileInputStream;
 public class PaceCalculatorController {
 
 	private static final Logger log = LoggerFactory.getLogger(PaceCalculatorController.class);
-	private static final int MAX_CHART_COUNT = 500;
+	private static final int MAX_CHART_COUNT = 100;
 
 
 	// create the default pacechart for a set route (default to 10k from FE)
