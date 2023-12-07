@@ -86,6 +86,7 @@ public class PaceCalculatorController {
 			log.debug("pacechart: race template:" + paceChartTO.getRaceTemplateName());
 			// log pacechartto as a deserialized string
 			ObjectMapper serialChart = new ObjectMapper();
+			serialChart.registerModule(new JavaTimeModule());
 			log.info("Inputs used:" + serialChart.writeValueAsString(paceChartTO));
 
 			// distance >0 and <100
@@ -172,6 +173,7 @@ public class PaceCalculatorController {
 			log.debug("pacechartexcel: race template:" + paceChartTO.getRaceTemplateName());
 			// log pacechartto as a deserialized string
 			ObjectMapper serialChart = new ObjectMapper();
+			serialChart.registerModule(new JavaTimeModule());
 			log.info("Inputs used:" + serialChart.writeValueAsString(paceChartTO));
 
 			// distance >0 and <100
