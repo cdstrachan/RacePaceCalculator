@@ -8,9 +8,9 @@ COPY . ./
 RUN mvn clean dependency:resolve
 RUN mvn package
 
-# ARG JAR_NAME="spring-boot-docker-complete-0.0.1-SNAPSHOT"
+ARG JAR_NAME="spring-boot-docker-complete-0.0.1-SNAPSHOT"
 
 EXPOSE 8080
 
 #COPY /usr/src/app/target/${JAR_NAME}.jar ./app.jar
-ENTRYPOINT ["java","-jar", "/usr/src/app/target/paceservices-0.0.5.jar"]
+ENTRYPOINT ["java","-jar", "/usr/src/app/target/pace-calculator-0.0.1.jar"]
