@@ -28,7 +28,10 @@ Simple CLI route generator
 
 ## Docker/Azure deploy
 docker login my_repo.azurecr.io
+
 docker buildx build --platform linux/amd64 -t my_repo:latest -f Dockerfile .
+
 docker tag my_repo my_repo.azurecr.io/my_repo
+
 docker push my_repo.azurecr.io/my_repo  
 
