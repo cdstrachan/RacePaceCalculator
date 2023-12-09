@@ -10,9 +10,10 @@ docker run  -p 80:8080 springboottest
 
 ## Remote
 ### Build for Linux AMD
-docker buildx build --platform linux/amd64 -t pacecalc:latest -f Dockerfile .
+
 ### Deploy
 docker login pacecalc.azurecr.io
+docker buildx build --platform linux/amd64 -t pacecalc:latest -f Dockerfile .
 docker tag pacecalc pacecalc.azurecr.io/pacecalc
 docker push pacecalc.azurecr.io/pacecalc  
 
