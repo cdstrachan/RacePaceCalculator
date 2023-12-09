@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -27,8 +28,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.net.HttpHeaders;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -89,7 +92,7 @@ public class PaceCalculatorController {
 			serialChart.registerModule(new JavaTimeModule());
 			log.info("Inputs used:" + serialChart.writeValueAsString(paceChartTO));
 
-			// distance >0 and <100
+			// distance >0 and <200
 			if (paceChartTO.getDistance() < 1 || paceChartTO.getDistance() > 201) {
 				validationErrorMessages.add(createValidationMessage(1, "Distance must be between 1 and 200"));
 				isValid = false;
@@ -113,8 +116,7 @@ public class PaceCalculatorController {
 
 			// last start time >= first start time
 			if (paceChartTO.getPlannedRaceTimeFirst().isAfter(paceChartTO.getPlannedRaceTimeLast())) {
-				validationErrorMessages
-						.add(createValidationMessage(1, "First start time may not be larger than last start time"));
+				validationErrorMessages.add(createValidationMessage(1, "First start time may not be larger than last start time"));
 				isValid = false;
 
 			}
@@ -235,23 +237,47 @@ public class PaceCalculatorController {
 			// calculate results
 			log.debug("pacechartexcel: about to calculate");
 
-			if (isValid)
+			if (isValid) {
+				// valid data - create the charts
 				paceChartTO = createPaceCharts(paceChartTO);
-			else
+				// create the spreadsheet
+				SpreadsheetUtils spreadsheet = new SpreadsheetUtils();
+				String outputFileLocation = spreadsheet.CreateSpreadsheet(paceChartTO);
+
+				File file = ResourceUtils.getFile(outputFileLocation);
+				InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+				log.debug("pacechartexcel: calculation complete");
+				log.debug("pacechartexcel: end - ready to send JSON response");
+
+				return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+					.header("Result", "OK")
+    				.contentType(MediaType.TEXT_HTML)
+					.body(resource);
+					
+			}
+			else {
+				// bad data - return the TO with the error messages
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
+				// serialize pacechartto
+				ObjectMapper sc = new ObjectMapper();
+				sc.registerModule(new JavaTimeModule());
+				String toExport= sc.writeValueAsString(paceChartTO);
+				InputStream is = new ByteArrayInputStream(toExport.getBytes());
+				InputStreamResource isr = new InputStreamResource(is);
+				//  return the TO
+				log.debug("pacechartexcel: calculation complete");
+				log.debug("pacechartexcel: end - ready to send JSON response");
+				
+				return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION)
+					.header("Result", "Invalid")
+					.contentType(MediaType.TEXT_HTML)
+					.body(isr);
+			}
 
-			// create the spreadsheet
-			SpreadsheetUtils spreadsheet = new SpreadsheetUtils();
-			String outputFileLocation = spreadsheet.CreateSpreadsheet(paceChartTO);
 
-			File file = ResourceUtils.getFile(outputFileLocation);
-			InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-
-			log.debug("pacechartexcel: calculation complete");
-			log.debug("pacechartexcel: end - ready to send JSON response");
-
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
-					.contentType(MediaType.TEXT_HTML).body(resource);
 
 		} catch (Exception e) {
 			log.error(e.getMessage());

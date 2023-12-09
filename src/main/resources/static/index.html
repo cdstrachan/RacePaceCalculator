@@ -194,9 +194,6 @@
 						</tr>
 					</table>
 					<div class="criticalerror">{{CriticalErrorMessage}}</div>
-					<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
-						<div class="alert alert-danger">{{validationMessage.messageDescription}}</div>
-					</div>
 			</div>
 			<div class="col-12 col-lg-6">
 
@@ -280,6 +277,11 @@
 					value="Download Excel" />
 				<br /><br />
 				<div class="alert alert-primary">{{loadingmessage}}</div>
+				<div class="criticalerror">{{CriticalErrorMessage}}</div>
+				<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
+					<div class="alert alert-danger">{{validationMessage.messageDescription}}</div>
+				</div>
+
 				</form>
 				<h2>Pacecharts</h2>
 			</div>

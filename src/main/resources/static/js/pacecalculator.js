@@ -8,7 +8,6 @@ var app = angular.module('PaceChartCalculator', [])
     })
 
 app.controller('Pacecalculator', function ($scope, $http, $window) {
-    $scope.ErrorMessage = "";
     $scope.CriticalErrorMessage = "";
     $('[data-toggle="tooltip"]').tooltip();
     $http.get('/pacechartbootstrap?template=10').
@@ -24,14 +23,21 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         $window.gtag('event', 'ChartCreated', {
             'event_label': raceName
         });   
-        console.log("Done,", raceName);
-        $scope.ErrorMessage = "";
         $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
         $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
             $scope.paceChart = response.data;
-            $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
+            console.log(response.data);
+            // if validation messages are returned
+            if ($scope.paceChart.validationErrorMessages) {
+                $scope.loadingmessage = "Error creating online chart";
+                console.log("Error creating chart", $scope.paceChart.validationErrorMessages);
+            }
+            else {
+                $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
+                console.log("Done,", raceName);
+            }
         }).catch(function (e) {
             console.log("Error creating chart", e);
             $scope.CriticalErrorMessage = "Error connecting to server";
@@ -39,28 +45,45 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
     }
 
     $scope.createChartExcel = function (raceName) {
-        var xhr = new XMLHttpRequest();
-        console.log("ChartCreatedInExcel,", raceName);
-        $window.gtag('event', 'ChartCreatedInExcel', {
+        console.log("ChartCreatedExcel,", raceName);
+        $window.gtag('event', 'ChartCreatedExcel', {
             'event_label': raceName
-        });
-        console.log("Done,", raceName);
-        xhr.open("POST", '/pacechartexcel');
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.responseType = "arraybuffer";
-
-        xhr.onload = function () {
-            if (this.status === 200) {    
-                var blob = new Blob([xhr.response], { type: "application/xlsx" });
+        });   
+        $scope.CriticalErrorMessage = "";
+        $scope.paceChart = null;
+        $scope.loadingmessage = "Loading";
+        $http.responseType = 'blob';
+        
+        $http({
+            method: 'POST',
+            url: '/pacechartexcel',
+            data: $scope.paceChartInput,
+            responseType: 'blob'
+        }).then(async function (response) {
+            // print response headers for status OK or invalid
+            console.log(response.headers('result'));
+            if (response.headers('result') === 'OK') {   
+                // ok returned
+                console.log(response.status) 
+                var binaryData = [];
+                binaryData.push(response.data);
+                var blob = new Blob((binaryData), { type: "'application/vnd.openxmlformat-officedocument.spreadsheetml.sheet;" });
                 var a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
                 a.download = "pacechart.xlsx";
                 a.click();
+                console.log("Done,", raceName);
+                $scope.loadingmessage = "Excel chart downloaded.";
             }
-        };
-        xhr.send(JSON.stringify($scope.paceChartInput));
-        $scope.loadingmessage = "Excel chart downloaded.";
-    };
+            if (response.headers('result') === 'Invalid') {  
+                console.log(response.status) 
+                $scope.paceChart = JSON.parse(await response.data.text());
+                $scope.loadingmessage = "Error creating excel chart....";
+            }
+        }).then(function() {
+            // do nothing
+        });
+    }
 
     $scope.createChartPreload = function (templateName) {
         $scope.ErrorMessage = "";
