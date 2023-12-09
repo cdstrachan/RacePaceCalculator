@@ -67,7 +67,7 @@
 	"plannedRaceTimeLast": "02:29:00",
 	"plannedRaceTimeDelta": "00:15:00",
 	"startDelay": "00:00:30",
-	"firstFade": 5,
+	"firstFade": 0,
 	"lastFade": 2,
 	"paceChartInstances": null,
 	"validationErrorMessages": null

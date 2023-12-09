@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -261,12 +260,12 @@ public class PaceCalculatorController {
 				// bad data - return the TO with the error messages
 				paceChartTO.setValidationErrorMessages(validationErrorMessages);
 				// serialize pacechartto
-				ObjectMapper sc = new ObjectMapper();
-				sc.registerModule(new JavaTimeModule());
-				String toExport= sc.writeValueAsString(paceChartTO);
+				ObjectMapper om = new ObjectMapper();
+				om.registerModule(new JavaTimeModule());
+				String toExport= om.writeValueAsString(paceChartTO);
 				InputStream is = new ByteArrayInputStream(toExport.getBytes());
 				InputStreamResource isr = new InputStreamResource(is);
-				//  return the TO
+				//  return the TO which contains the error messages
 				log.debug("pacechartexcel: calculation complete");
 				log.debug("pacechartexcel: end - ready to send JSON response");
 				

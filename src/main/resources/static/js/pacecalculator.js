@@ -8,18 +8,20 @@ var app = angular.module('PaceChartCalculator', [])
     })
 
 app.controller('Pacecalculator', function ($scope, $http, $window) {
+    console.log("Bootstrapping starting");
     $scope.CriticalErrorMessage = "";
     $('[data-toggle="tooltip"]').tooltip();
     $http.get('/pacechartbootstrap?template=10').
         then(function (response) {
             $scope.paceChartInput = response.data;
+            console.log("Bootstrapping complete");
         }).catch(function (e) {
-            console.log("Error creating initial config data", e);
+            console.log("Error creating initial config data");
             $scope.CriticalErrorMessage = "Error connecting to server";
         });
 
     $scope.createChart = function (raceName) {
-        console.log("ChartCreated,", raceName);
+        console.log("Enter ChartCreated,", raceName);
         $window.gtag('event', 'ChartCreated', {
             'event_label': raceName
         });   
@@ -36,7 +38,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
             }
             else {
                 $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
-                console.log("Done,", raceName);
+                console.log("Exit creating chart,", raceName);
             }
         }).catch(function (e) {
             console.log("Error creating chart", e);
@@ -45,7 +47,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
     }
 
     $scope.createChartExcel = function (raceName) {
-        console.log("ChartCreatedExcel,", raceName);
+        console.log("Enter ChartCreatedExcel,", raceName);
         $window.gtag('event', 'ChartCreatedExcel', {
             'event_label': raceName
         });   
@@ -64,7 +66,6 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
             console.log(response.headers('result'));
             if (response.headers('result') === 'OK') {   
                 // ok returned
-                console.log(response.status) 
                 var binaryData = [];
                 binaryData.push(response.data);
                 var blob = new Blob((binaryData), { type: "'application/vnd.openxmlformat-officedocument.spreadsheetml.sheet;" });
@@ -72,25 +73,26 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
                 a.href = URL.createObjectURL(blob);
                 a.download = "pacechart.xlsx";
                 a.click();
-                console.log("Done,", raceName);
                 $scope.loadingmessage = "Excel chart downloaded.";
+                console.log("Exit ChartCreatedExcel,", raceName);
             }
             if (response.headers('result') === 'Invalid') {  
-                console.log(response.status) 
                 $scope.paceChart = JSON.parse(await response.data.text());
-                $scope.loadingmessage = "Error creating excel chart....";
+                $scope.loadingmessage = "Error creating excel chart.";
+                console.log("Error creating excel chart");
             }
         }).then(function() {
             // do nothing
         });
     }
 
-    $scope.createChartPreload = function (templateName) {
-        $scope.ErrorMessage = "";
+    $scope.createChartPreload = function () {
+        console.log("Enter preload,", $scope.paceChartInput.raceTemplateName);
         $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
         $scope.paceChartInput = response.data;
+        console.log("Exit preload,", $scope.paceChartInput.raceTemplateName);
         }).catch(function (e) {
             console.log("Error preloading", e);
             $scope.CriticalErrorMessage = "Error connecting to server";
@@ -98,12 +100,13 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
     }
 
     $scope.createChartTemplate = function (distance) {
-        $scope.ErrorMessage = "";
+        console.log("Enter createChartTemplate", distance);
         $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $http.post('/pacecharttemplate', $scope.paceChartInput).then(function (response) {
             //$window.ga('send', 'event', 'distanceset', distance);
             $scope.paceChartInput = response.data;
+            console.log("Exit createChartTemplate", distance);
         }).catch(function (e) {
             console.log("Error creating template", e);
             $scope.CriticalErrorMessage = "Error connecting to server";
