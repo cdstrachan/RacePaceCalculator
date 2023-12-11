@@ -10,6 +10,7 @@ var app = angular.module('PaceChartCalculator', [])
 app.controller('Pacecalculator', function ($scope, $http, $window) {
     console.log("Bootstrapping starting");
     $scope.CriticalErrorMessage = "";
+    $window.CriticalErrorMessage.style.display = "none";
     $('[data-toggle="tooltip"]').tooltip();
     $http.get('/pacechartbootstrap?template=10').
         then(function (response) {
@@ -18,6 +19,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         }).catch(function (e) {
             console.log("Error creating initial config data");
             $scope.CriticalErrorMessage = "Error connecting to server";
+            $window.CriticalErrorMessage.style.display = "block";
         });
 
     $scope.createChart = function (raceName) {
@@ -25,24 +27,31 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         $window.gtag('event', 'ChartCreated', {
             'event_label': raceName
         });   
+        $window.LoadingDiv.style.display = "block";
+        $window.CriticalErrorMessage.style.display = "none";
         $scope.CriticalErrorMessage = "";
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
+        $window.LoadingMessage.style.display = "block";
         $http.post('/pacechart', $scope.paceChartInput).then(function (response) {
             $scope.paceChart = response.data;
             console.log(response.data);
             // if validation messages are returned
             if ($scope.paceChart.validationErrorMessages) {
                 $scope.loadingmessage = "Error creating online chart";
+                $window.LoadingDiv.style.display = "none";
                 console.log("Error creating chart", $scope.paceChart.validationErrorMessages);
             }
             else {
                 $scope.loadingmessage = "Done. Scroll down to view pacecharts.";
+                $window.LoadingDiv.style.display = "none";
                 console.log("Exit creating chart,", raceName);
             }
         }).catch(function (e) {
-            console.log("Error creating chart", e);
             $scope.CriticalErrorMessage = "Error connecting to server";
+            $window.CriticalErrorMessage.style.display = "block";
+            $window.LoadingDiv.style.display = "none";
+            console.log("Error creating chart", e);
         })
     }
 
@@ -51,9 +60,13 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
         $window.gtag('event', 'ChartCreatedExcel', {
             'event_label': raceName
         });   
+        // show divLoading
+        $window.LoadingDiv.style.display = "block";
         $scope.CriticalErrorMessage = "";
+        $window.CriticalErrorMessage.style.display = "none";
         $scope.paceChart = null;
         $scope.loadingmessage = "Loading";
+        $window.LoadingMessage.style.display = "block";
         $http.responseType = 'blob';
         
         $http({
@@ -75,26 +88,33 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
                 a.click();
                 $scope.loadingmessage = "Excel chart downloaded.";
                 console.log("Exit ChartCreatedExcel,", raceName);
+                $window.LoadingDiv.style.display = "none";
             }
             if (response.headers('result') === 'Invalid') {  
                 $scope.paceChart = JSON.parse(await response.data.text());
                 $scope.loadingmessage = "Error creating excel chart.";
                 console.log("Error creating excel chart");
+                $window.LoadingDiv.style.display = "none";
             }
-        }).then(function() {
-            // do nothing
+        }).catch(function (e) {
+            $scope.CriticalErrorMessage = "Error connecting to server";
+            $window.CriticalErrorMessage.style.display = "block";
+            $window.LoadingDiv.style.display = "none";
+            console.log("Error creating chart", e)
         });
     }
 
     $scope.createChartPreload = function () {
         console.log("Enter preload,", $scope.paceChartInput.raceTemplateName);
         $scope.CriticalErrorMessage = "";
+        $window.CriticalErrorMessage.style.display = "none";
         $scope.paceChart = null;
         $http.post('/pacechartpreload', $scope.paceChartInput).then(function (response) {
         $scope.paceChartInput = response.data;
         console.log("Exit preload,", $scope.paceChartInput.raceTemplateName);
         }).catch(function (e) {
             console.log("Error preloading", e);
+            $window.CriticalErrorMessage.style.display = "block";
             $scope.CriticalErrorMessage = "Error connecting to server";
         })
     }
@@ -109,6 +129,7 @@ app.controller('Pacecalculator', function ($scope, $http, $window) {
             console.log("Exit createChartTemplate", distance);
         }).catch(function (e) {
             console.log("Error creating template", e);
+            $window.CriticalErrorMessage.style.display = "block";
             $scope.CriticalErrorMessage = "Error connecting to server";
         })
     };

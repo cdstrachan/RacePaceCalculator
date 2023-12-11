@@ -193,7 +193,7 @@
 							</td>
 						</tr>
 					</table>
-					<div class="criticalerror">{{CriticalErrorMessage}}</div>
+					<div class="CriticalErrorMessage">{{CriticalErrorMessage}}</div>
 			</div>
 			<div class="col-12 col-lg-6">
 
@@ -275,9 +275,14 @@
 					class="btn btn-primary m-1" />
 				<input type="submit" class="btn btn-primary m-1" ng-click="createChartExcel(paceChartInput.raceName)"
 					value="Download Excel" />
+					  <div id="LoadingDiv" class="text-primary" style="display:none">
+						<strong><br/>Loading...</strong>
+						<div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+					  </div>	  
 				<br /><br />
-				<div class="alert alert-primary">{{loadingmessage}}</div>
-				<div class="criticalerror">{{CriticalErrorMessage}}</div>
+				<div id="LoadingMessage" style="display:none" class="alert alert-primary">{{loadingmessage}}</div>
+				<div id="CriticalErrorMessage"  style="display:none" class="bg-danger alert text-white">{{CriticalErrorMessage}}</div>
+			
 				<div ng-repeat="validationMessage in paceChart.validationErrorMessages">
 					<div class="alert alert-danger">{{validationMessage.messageDescription}}</div>
 				</div>
